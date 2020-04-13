@@ -55,7 +55,7 @@ class Home extends React.Component {
     }
 
     getPost = () =>{
-        Axios.get(`http://localhost:3000/api/itemsAll`,{ 
+        Axios.get(`/api/itemsAll`,{ 
             
         })
        .then(res => {

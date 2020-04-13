@@ -48,7 +48,7 @@ class Profile extends React.Component {
 
     getPost = () =>{
         const token = localStorage.getItem('token')
-        Axios.get(`http://localhost:3000/api/items`,{ 
+        Axios.get(`/api/items`,{ 
             params: {
                 token: token
               }

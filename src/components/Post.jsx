@@ -142,7 +142,8 @@ render() {
                             <div className="field">
                                 <label className="label" htmlFor="">เบอร์โทรติดต่อ</label>
                                 <div className="control">
-                                    <input className="input" type="number" name="tel" onChange={this.onChange} required></input>
+                                    <input className="input" type="text" name="tel" onChange={this.onChange} pattern="^0([8|9|6])([0-9]{8}$)" autocomplete="off"
+ required></input>
                                 </div>
                             </div>
 
