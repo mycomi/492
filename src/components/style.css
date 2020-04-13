@@ -1,0 +1,84 @@
+.navbar-default {
+    background-color: rgb(245, 42, 42);
+    border-color: rgb(252, 49, 49);
+}
+.navbar-default .navbar-brand {
+    color: rgb(162, 223, 247);
+}
+.navbar{
+    background-color: rgb(62, 238, 194);
+    color: rgba(79, 111, 218, 0.767);
+}
+
+.container{
+    max-width: 100%;
+    height: auto!important;
+    padding: 125px;
+    background-image: url(./f14.png);
+  }
+
+  .container2{
+    
+    background-size: 1600px 900px;
+    padding: 250px;
+    background-image: url(./f16.png);
+  }
+
+
+.bg{
+    max-width: 100%;
+    height: auto!important;
+    /* padding: 500px;  */
+    background-size: 1600px 900px;
+    background-image: url(./f15.png);
+    
+
+
+}  
+
+.bg2{
+    max-width: 100%;
+    height: auto!important;
+    /* padding: 500px;  */
+    background-size: 1600px 900px;
+    background-image: url(./f16.png);
+    
+
+
+}  
+
+.is-half{
+    background-color: white;
+}
+
+.d{
+    
+    /* padding: 500px;  */
+    /* background-size: 1600px 900px; */
+    image: url(./t.png);
+    
+
+
+} 
+
+
+.t{
+    
+    /* padding: 500px;  */
+    /* background-size: 1600px 900px; */
+    background-image: url(./t.png);
+    
+
+
+} 
+
+
+.j{
+    
+    /* padding: 500px;  */
+    /* background-size: 1600px 900px; */
+    background-image: url(./j.png);
+    
+
+
+} 
