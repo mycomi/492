@@ -22,7 +22,7 @@ const itemSchema = new mongoose.Schema({
     required: true
   },
   tel: {
-    type: Number,
+    type: String,
     required: true
   },
   created: {
