@@ -8,7 +8,7 @@
 
 run app
 
-$ npm sttart
+$ npm start
 
 run server
 
