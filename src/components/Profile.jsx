@@ -32,6 +32,7 @@ class Profile extends React.Component {
 
     displayPost = (posts) => {
         // if (!posts.length) return null;
+        console.log("post: "+this.state.posts)
 
         return posts.map( (post,index) => (
             <div key={index} className="blog-post__display">
@@ -48,10 +49,10 @@ class Profile extends React.Component {
 
     getPost = () =>{
         const token = localStorage.getItem('token')
-        Axios.get(`/api/items`,{ 
-            params: {
-                token: token
-              }
+        Axios.get(`/auth/user_items`,{ 
+            headers: {
+                "access-token": token
+            }
         })
        .then(res => {
            console.log(res.data)
@@ -65,46 +66,37 @@ class Profile extends React.Component {
        })
     }
 
-
-
-
-        render()  {
-            console.log(this.state.posts);
-            if (localStorage.getItem('token')){
-                return(
-                    <div class="bg">
+    render()  {
+        console.log(this.state.posts);
+        if (localStorage.getItem('token')){
+            return(
+                <div class="bg">
                     <div className="Profile">
                         <Navbar />
-                        
-                        
 
-                        
-                   <center> 
-                   <div className="column is-half">
-                       <div className="blog-" >
-                            {this.displayPost(this.state.posts)}
+                        <center> 
+                            <div className="column is-half">
+                                <div className="blog-" >
+                                    {this.displayPost(this.state.posts)}
 
-                        </div>
-                    </div>
-                    </center>
-                   </div>
-                        
-                   
-                        
-
+                                </div>
+                            </div>
+                        </center>
                     </div>
 
+                </div>
 
-      
-                );
-            } else {
-                return(
-                    Redirect('/')
-                
-                )
-            }
-        
+
+    
+            );
+        } else {
+            return(
+                Redirect('/')
+            
+            )
         }
+    
     }
+}
     
 export default Profile

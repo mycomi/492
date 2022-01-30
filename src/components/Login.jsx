@@ -59,7 +59,7 @@ class Login extends React.Component {
         //             message: error.message
         //         })
         //     })
-        Axios.post(`/api/users/login`,{ 
+        Axios.post(`/auth/login`,{ 
             email: user.email,
             password: user.password
          })
@@ -68,7 +68,7 @@ class Login extends React.Component {
             console.log(res)
             console.log(res.data)
             
-            window.localStorage.setItem('token', res.data.token)
+            window.localStorage.setItem('token', res.data.acsessToken)
             window.localStorage.setItem('name', res.data.name)
             alert("login success")
 
@@ -112,12 +112,13 @@ render() {
                     <center>
                     <img src={imges2}/>
                 
-                <div class="card" >
-                    
-                    <Link to="/">
-                    <button className="button is-link">เข้าสู่เว็บไซต์</button>
-                    </Link>
-                </div></center>
+                        <div class="card" >
+                            
+                            <Link to="/">
+                                <button className="button is-link">เข้าสู่เว็บไซต์</button>
+                            </Link>
+                        </div>
+                    </center>
                 )
             }else{
                 return(

@@ -3,7 +3,7 @@ import { Router, Route } from 'react-router-dom';
 
 import Home from './components/Home';
 import Login from './components/Login';
-import Reg from './components/Reg';
+import Register from './components/Register';
 import Profile from './components/Profile';
 import Post from './components/Post';
 import About from './components/About'
@@ -17,7 +17,7 @@ const Routes = () => (
   // </Router>
   <div>
     <Route path="/" exact component={Home} />
-    <Route path="/register" exact component={Reg} />    
+    <Route path="/register" exact component={Register} />    
     <Route path="/login" exact component={Login} />
     <Route path="/profile" exact component={Profile}/>
     <Route path="/post" exact component={Post}/>

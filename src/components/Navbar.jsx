@@ -20,7 +20,7 @@ class Navbar extends React.Component {
         const token = localStorage.getItem('token')
         // localStorage.clear('token')
         console.log(token)
-        Axios.post(`/api/users/logout`,{
+        Axios.post(`/auth/logout`,{
             token: token
         })
         
@@ -43,78 +43,66 @@ class Navbar extends React.Component {
    render(){
     const currentUser = localStorage.getItem('name')
     return (
-        
+        <div>
+            <nav class="navbar navbar-dark bg-blue"  role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <div class="navbar-item" href="https://bulma.io">
+                        {/* <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> */}
+                    </div>
 
+                    <div role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </div>
+                </div>
 
-<div>
-    <nav class="navbar navbar-dark bg-blue"  role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-            {/* <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> */}
-        </a>
+                <div id="navbarBasicExample" class="navbar-menu">
+                    <div class="navbar-start">
+                        <div class="navbar-item">
+                            <Link to="/">
+                                <button className="button is-link"><TiHome/>Home</button>
+                            </Link> 
+                        </div>
 
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-    </div>
+                        {/* <div class="navbar-item">
 
-    <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item">
-            <Link to="/">
-                            <button className="button is-link"><TiHome/>Home</button>
-            </Link> 
-            </a>
+                            <Link to="/about">
+                                <button className="button is-warning"><TiUser/>  About</button>
+                            </Link> 
+                        </div> */}
 
-            
-            <a class="navbar-item">
+                        {/* <div class="navbar-item">
 
-            <Link to="/about">
-                <button className="button is-warning"><TiUser/>  About</button>
-            </Link> 
-            </a>
-
-
-
-
-            <a class="navbar-item">
-
-            <Link to="/post">
-                <button className="button is-danger is-light"><FaArrowUp/> Post</button>
-            </Link> 
-            </a>
-            
-            </div>
-    </div>
-    <div className="navbar-end">
-            <div className="navbar-item">
-                <div className="buttons">
-                    <h3 className="navbar-item">
-                        <Link to="/profile">
-                        <TiUser/>   {currentUser }
-                        </Link>
+                            <Link to="/post">
+                                <button className="button is-danger is-light"><FaArrowUp/> Post</button>
+                            </Link> 
+                        </div> */}
                         
-                        <button className="button is-light" onClick={this.logout} >
-                        <IoIosLogOut/>Logout
-                        </button>
-                    </h3>
-                    
+                    </div>
                 </div>
-            </div>
-    </div>
 
-
-    
-
-</nav>
-
-
-
+                <div className="navbar-end">
+                    <div className="navbar-item">
+                        <div className="buttons">
+                            <h3 className="navbar-item">
+                                <Link to="/profile">
+                                    <TiUser/>   {currentUser }
+                                </Link>
+                                
+                                <button className="button is-light" onClick={this.logout} >
+                                    <IoIosLogOut/>Logout
+                                </button>
+                            </h3>
+                            
+                        </div>
+                    </div>
                 </div>
-                 
-  
+
+            </nav>
+
+        </div>
+
     )
    }
 }

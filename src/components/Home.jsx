@@ -76,137 +76,122 @@ class Home extends React.Component {
     
         
     
-        render() {
-            // const {message,currentUser} = this.state
-            if (localStorage.getItem('token')){
-                return(
-                    <div>
-                    
-                           <Navbar />
-                           
-                           
-                           <div >
+render() {
+    // const {message,currentUser} = this.state
+    if (localStorage.getItem('token')){
+        return(
+            <div>
+                <div id="navbar">
+                     <Navbar />
+                </div>
+
+                <div >
                     <a href="https://bulma.io">
-                      {/* <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> */}
+                        {/* <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> */}
                     </a>
                     <div id="navbarBasicExample" className="navbar-menu">
-                 <div className="navbar-start">
-                 <div className="navbar-item">
-                         <div className="buttons">
-                             {/* <h3 className="navbar-item">
-                                 <Link to="/post">
-                                 <center>
-                                      <button className="button is-light"  >
-                                  Post
-                              </button>
-                              </center>
-                                 </Link>
+                        <div className="navbar-start">
+                            <div className="navbar-item">
+                                <div className="buttons">
+                                {/* <h3 className="navbar-item">
+                                    <Link to="/post">
+                                    <center>
+                                        <button className="button is-light"  >
+                                    Post
+                                </button>
+                                </center>
+                                    </Link>
                                 
-                             </h3> */}
+                                </h3> */}
                             
-                         </div>
-                     </div>
-                 </div>
-                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                      <span aria-hidden="true"></span>
-                      <span aria-hidden="true"></span>
-                      <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
                     </a>
-                  </div>   
-                           
-              
-                  <div class="bg2">
-                  <center><div className="column is-half">
-                       <div className="blog-" >
+                </div>   
+                        
+            
+                <div class="bg2">
+                    <center><div className="column is-half">
+                        <div className="blog-" >
                             {this.displayPost(this.state.posts)}
 
                         </div>
                     </div></center>
-                   </div>
+                </div>
 
-                    </div>
-                )
-            } else {
-                return(
-                    <div>
-                    <nav class="navbar navbar-dark bg-blue"  role="navigation" aria-label="main navigation">
-                     <div class="navbar-brand">
-                       <a class="navbar-item" href="https://bulma.io">
-                         {/* <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> */}
-                       </a>
-                   
-                       <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                         <span aria-hidden="true"></span>
-                         <span aria-hidden="true"></span>
-                         <span aria-hidden="true"></span>
-                       </a>
-                     </div>
-                   
-                     <div id="navbarBasicExample" class="navbar-menu">
-                       <div class="navbar-start">
-                         <a class="navbar-item">
-                         <Link to="/">
-                                           <button className="button is-link"><TiHome/>Home</button>
-                           </Link> 
-                         </a>
-                   
-                         <a class="navbar-item">
-                   
-                                       <Link to="/about">
-                                           <button className="button is-warning"><TiUser/>  About</button>
-                                       </Link> 
-                                       </a>
-                         
-                       </div>
-                       <nav>
-                               <div class="navbar-end" >
-                                               <a  class="navbar-item">
-                                                   <Link to ="/register">
-                                                   <button className="button is-primary"> <MdAssignmentInd/>Register</button>
-                                                   </Link>
-                   
-                                               </a>
-                                       
-                                               <a  class="navbar-item" >
-                                                   <Link to ="/login">
-                                                       <button className="button is-link"><IoIosLogIn/>Login</button>
-                                                   </Link>  
-                                               </a>
-                                           </div>  
-                           </nav>
-                       </div>
-                       </nav>
-                    
-                   
-                   <div class="bg">
-                   <center> <div className="column is-half">
-                       <div className="blog-" >
-                            {this.displayPost(this.state.posts)}
-
-                        </div>
-                    </div>
-                    </center>
-                   </div>
-
-
-                  
-                   
-                          
-                   
-                          
-                         
-                       
             </div>
-
-                    
-
-                    
+        )
+    } else {
+        return(
+            <div>
+                <nav class="navbar navbar-dark bg-blue"  role="navigation" aria-label="main navigation">
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="https://bulma.io">
+                            {/* <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> */}
+                        </a>
                 
-                    
-                )
-            }
+                        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                        </a>
+                    </div>
+                
+                    <div id="navbarBasicExample" class="navbar-menu">
+                        <div class="navbar-start">
+                            <div class="navbar-item">
+                                <Link to="/">
+                                        <button className="button is-link"><TiHome/>Home</button>
+                                </Link> 
+                            </div>
+                
+                            {/* <div class="navbar-item">
+                        
+                                <Link to="/about">
+                                    <button className="button is-warning"><TiUser/>  About</button>
+                                </Link> 
+                            </div> */}
+                        
+                        </div>
+                        <nav>
+                            <div class="navbar-end" >
+                                <div  class="navbar-item">
+                                    <Link to ="/register">
+                                        <button className="button is-primary"> <MdAssignmentInd/>Register</button>
+                                    </Link>
+
+                                </div>
+                                    
+                                <div  class="navbar-item" >
+                                    <Link to ="/login">
+                                        <button className="button is-link"><IoIosLogIn/>Login</button>
+                                    </Link>  
+                                </div>
+                            </div>  
+                        </nav>
+                    </div>
+                </nav>
+                
+                
+                <div class="bg">
+                    <center> <div className="column is-half">
+                        <div className="blog-" >
+                            {this.displayPost(this.state.posts)}
+                        </div>
+                    </div></center>
+                </div>
+         
+            </div>
+  
+            )
         }
-    
     }
+
+}
 export default Home
