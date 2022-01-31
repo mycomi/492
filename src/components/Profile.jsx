@@ -39,10 +39,11 @@ class Profile extends React.Component {
             <div key={index} className="blog-post__display">
                 <h3> ชื่อหอ: {post.dorm } </h3>
                 <p> เลขห้อง: {post.room} </p>
-                <p> --------------------------------------------- </p>
                 {post.haveRoom &&
                     <button className="button is-link" onClick={this.dropRoom} > Drop </button>
                 }
+                <p> --------------------------------------------- </p>
+                
             </div>
         ))
 
@@ -50,7 +51,7 @@ class Profile extends React.Component {
 
     getPost = () =>{
         const token = localStorage.getItem('token')
-        Axios.get(`/auth/user_items`,{ 
+        Axios.get(`/auth/user_room`,{ 
             headers: {
                 "access-token": token
             }

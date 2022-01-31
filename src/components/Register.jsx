@@ -126,9 +126,13 @@ render() {
 
                                 </div>
                             </div>
-                            
+                            <Link to ="/login">
+                                <button className="button is-success">Login</button>
+                            </Link> 
                         </form>
+                        
                     </div>
+                    
                 </div>
             </section>
         )

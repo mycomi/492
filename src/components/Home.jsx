@@ -51,12 +51,10 @@ class Home extends React.Component {
                 <h2> Dorm id: {post.id} </h2>
                 <h3> ชื่อหอ: {post.name } </h3>
                 <p> ราคา/เดือน: {post.lowPrice} - {post.highPrice} </p>
-                <Link to={{
-                    pathname: "/dorm/"+post.id,
-                }}>
+                <Link to={{ pathname: "/dorm/"+post.id }}>
                     <button className="button is-link">ดูหอ</button>
                 </Link> 
-                <p> --------------------------------------------------------------------------------------------- </p>
+                <p> ------------------------------------------------------ </p>
             </div>
         ))
 
@@ -92,7 +90,7 @@ render() {
                      <Navbar />
                 </div>
 
-                <div class="bg2">
+                <div className="bg2">
                     <center><div className="column is-half">
                         <div className="blog-" >
                             {this.displayDorms(this.state.dorms)}
@@ -137,16 +135,17 @@ render() {
                         </div>
                         <nav>
                             <div class="navbar-end" >
-                                <div  class="navbar-item">
+                                <div class="navbar-item">
                                     <Link to ="/register">
-                                        <button className="button is-primary"> <MdAssignmentInd/>Register</button>
+                                        <button className="button is-warning" > <MdAssignmentInd/>Register</button>
                                     </Link>
+                                    
 
                                 </div>
                                     
                                 <div  class="navbar-item" >
                                     <Link to ="/login">
-                                        <button className="button is-link"><IoIosLogIn/>Login</button>
+                                        <button className="button is-success"><IoIosLogIn/>Login</button>
                                     </Link>  
                                 </div>
                             </div>  

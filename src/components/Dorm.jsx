@@ -34,11 +34,14 @@ class Home extends React.Component {
         rooms: [],
         dormId: '',
         roomId: '',
+        isRoom: false,
 
     };
 
     componentDidMount = () => {
         this.getRooms();
+        this.isRoom();
+        console.log(this.state.isRoom);
     }
 
     displayRooms = (rooms) => {
@@ -53,9 +56,13 @@ class Home extends React.Component {
                     <h3> เลขห้อง: {post.roomNum } </h3>
                     <p> ราคา/เดือน: {post.price}</p>
 
-                    <p> --------------------------------------------------------------------------------------------- </p>
+                    {!this.state.isRoom && localStorage.getItem('token') &&
+                        <button className="button is-link" onClick={this.book} value={this.post = post}>จองห้อง</button>
+                    }   
+
+                    <p> ------------------------------------------------ </p>
                 </div>
-                <button className="button is-link" onClick={this.book} value={this.post = post}>จองห้อง</button>
+                
 
             </from>
             
@@ -113,6 +120,29 @@ class Home extends React.Component {
         console.log(e)
        })
 
+    }
+
+    isRoom = (e) =>{
+        const token = localStorage.getItem('token')
+        if(token){
+            Axios.get(`/auth/isRoom`,{ 
+                headers: {
+                    "access-token": token
+                }
+            })
+           .then(res => {
+               console.log(res.data)
+               const data = res.data
+               this.setState({ isRoom: true});
+               console.log('GG');
+               console.log(this.state.isRoom)
+           })
+           .catch(() => {
+               alert('help')
+           })
+
+        }
+        
     }
 
        

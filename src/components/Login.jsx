@@ -147,6 +147,10 @@ render() {
                                             <button className="button is-link">Login</button>
                                         </div>
                                     </div>
+
+                                    <Link to ="/register">
+                                        <button className="button is-warning" > Register</button>
+                                    </Link>
                                     
                                 </form>
                             </div>
