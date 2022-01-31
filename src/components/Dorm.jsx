@@ -44,6 +44,30 @@ class Home extends React.Component {
         console.log(this.state.isRoom);
     }
 
+    navbar (){
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Check if there are any navbar burgers
+        if ($navbarBurgers.length > 0) {
+
+            // Add a click event on each of them
+            $navbarBurgers.forEach( el => {
+                el.addEventListener('click', () => {
+
+                    // Get the target from the "data-target" attribute
+                    const target = el.dataset.target;
+                    const $target = document.getElementById(target);
+
+                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                    el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
+
+                });
+            });
+        }
+
+    }
+
     displayRooms = (rooms) => {
         // if (!posts.length) return null;
         console.log(rooms)
@@ -179,6 +203,7 @@ render() {
             </div>
         )
     } else {
+        this.navbar();
         return(
             <div>
                 <nav class="navbar navbar-dark bg-blue"  role="navigation" aria-label="main navigation">
@@ -210,21 +235,23 @@ render() {
                             </div> */}
                         
                         </div>
-                        <div class="navbar-end" >
-                            <div  class="navbar-item">
-                                <Link to ="/register">
-                                    <button className="button is-primary"> <MdAssignmentInd/>Register</button>
-                                </Link>
+                        <nav>
+                            <div class="navbar-end" >
+                                <div class="navbar-item">
+                                    <Link to ="/register">
+                                        <button className="button is-warning" > <MdAssignmentInd/>Register</button>
+                                    </Link>
+                                    
 
-                            </div>
-                                
-                            <div  class="navbar-item" >
-                                <Link to ="/login">
-                                    <button className="button is-link"><IoIosLogIn/>Login</button>
-                                </Link>  
-                            </div>
-                        </div>  
-
+                                </div>
+                                    
+                                <div  class="navbar-item" >
+                                    <Link to ="/login">
+                                        <button className="button is-success"><IoIosLogIn/>Login</button>
+                                    </Link>  
+                                </div>
+                            </div>  
+                        </nav>
                     </div>
                 </nav>
 
@@ -232,7 +259,10 @@ render() {
                 <div class="bg">
                     <center> <div className="column is-half">
                         <div className="blog-" >
-                            {this.displayRooms(this.state.rooms)}
+                            {(this.state.rooms).length > 0 
+                                ? <div>{this.displayRooms(this.state.rooms)}</div>
+                                : <h1>ไม่มีห้องว่าง</h1>
+                            }
                         </div>
                     </div></center>
                 </div>

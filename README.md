@@ -13,3 +13,6 @@ $ npm start
 run server
 
 $ node server
+
+
+ngrok http 5000 -host-header="localhost:5000"
