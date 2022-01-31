@@ -38,6 +38,31 @@ class Navbar extends React.Component {
         })
     } 
 
+    IsAuth = e =>{
+        e.preventDefault();
+        const token = localStorage.getItem('token')
+        // localStorage.clear('token')
+        console.log(token)
+        Axios.get(`/auth/IsAuth`,{
+            headers: {
+                "access-token": token
+            }
+        })
+        
+        .then(res => {
+        
+            console.log(res)
+            // window.location.reload(false);      
+        
+        })
+        .catch(e => {
+        console.log(e)
+        console.log(token)
+        
+        })
+
+    }
+
    
     
    render(){
@@ -65,12 +90,11 @@ class Navbar extends React.Component {
                             </Link> 
                         </div>
 
-                        {/* <div class="navbar-item">
+                        <div class="navbar-item">
 
-                            <Link to="/about">
-                                <button className="button is-warning"><TiUser/>  About</button>
-                            </Link> 
-                        </div> */}
+                            <button className="button is-warning" onClick={this.IsAuth}><TiUser/>  IsAuth</button>
+                            
+                        </div>
 
                         {/* <div class="navbar-item">
 

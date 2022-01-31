@@ -23,25 +23,26 @@ class Profile extends React.Component {
     state = {
         title: '',
         body: '',
-        posts: []
+        room: []
     };
 
     componentDidMount = () => {
         this.getPost();
     }
 
-    displayPost = (posts) => {
+    displayPost = (room) => {
         // if (!posts.length) return null;
-        console.log("post: "+this.state.posts)
+        console.log("room: "+this.state.room)
 
-        return posts.map( (post,index) => (
+        return room.map( (post,index) => (
+            
             <div key={index} className="blog-post__display">
-                 <h3> ชื่อหอ: {post.Aname } </h3>
-                <p> ราคา/เดือน: {post.price} </p>
-                <p> ที่อยู่: {post.address} </p>
-                <p> รายละเอียด: {post.info} </p>
-                <p> ติดต่อ: {post.tel} </p>
-                <p> --------------------------------------------------------------------------------------------- </p>
+                <h3> ชื่อหอ: {post.dorm } </h3>
+                <p> เลขห้อง: {post.room} </p>
+                <p> --------------------------------------------- </p>
+                {post.haveRoom &&
+                    <button className="button is-link" onClick={this.dropRoom} > Drop </button>
+                }
             </div>
         ))
 
@@ -57,7 +58,7 @@ class Profile extends React.Component {
        .then(res => {
            console.log(res.data)
            const data = res.data
-           this.setState({ posts: data});
+           this.setState({ room: data});
            console.log('GG');
            console.log(data)
        })
@@ -66,8 +67,27 @@ class Profile extends React.Component {
        })
     }
 
+    dropRoom = () => {
+        const token = localStorage.getItem('token')
+        Axios.get(`/auth/dropRoom`,{ 
+            headers: {
+                "access-token": token
+            }
+        })
+       .then(res => {
+           console.log(res)
+           alert("ยกเลิกจองสำเร็จ")
+           window.location.reload(false); 
+
+       })
+       .catch(() => {
+           alert('help')
+       })
+
+    }
+
     render()  {
-        console.log(this.state.posts);
+        console.log(this.state.room);
         if (localStorage.getItem('token')){
             return(
                 <div class="bg">
@@ -77,7 +97,7 @@ class Profile extends React.Component {
                         <center> 
                             <div className="column is-half">
                                 <div className="blog-" >
-                                    {this.displayPost(this.state.posts)}
+                                    {this.displayPost(this.state.room)}
 
                                 </div>
                             </div>

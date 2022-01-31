@@ -46,17 +46,19 @@ class Home extends React.Component {
         console.log(rooms)
 
         return rooms.map( (post,index) => (
-            <div key={index} className="blog-post__display">
-                <h2> Dorm id: {post.id} </h2>
-                <h3> ชื่อหอ: {post.name } </h3>
-                <p> ราคา/เดือน: {post.lowPrice} - {post.highPrice} </p>
-                <Link to={{
-                    pathname: "/dorm/"+post.id,
-                }}>
-                    <button className="button is-link">ดูหอ</button>
-                </Link> 
-                <p> --------------------------------------------------------------------------------------------- </p>
-            </div>
+            <from >
+                <div key={index} className="blog-post__display">
+                    <h2> Room id: {post.id} </h2>
+                    <h2> Dorm id: {post.dorm_id} </h2>
+                    <h3> เลขห้อง: {post.roomNum } </h3>
+                    <p> ราคา/เดือน: {post.price}</p>
+
+                    <p> --------------------------------------------------------------------------------------------- </p>
+                </div>
+                <button className="button is-link" onClick={this.book} value={this.post = post}>จองห้อง</button>
+
+            </from>
+            
         ))
 
     }
@@ -83,20 +85,27 @@ class Home extends React.Component {
        })
     }
 
-    book = () =>{
+    book = (e) =>{
+        e.preventDefault();
+        console.log(this.post)
         const token = localStorage.getItem('token')
-        Axios.get(`/auth/room`,{ 
+        const data = {
+            dormId: this.post.dorm_id,
+            roomId: this.post.id
+        }
+        const header = {
             headers: {
                 "access-token": token
             },
-        })
-       .then(res => {
+        }
+        Axios.post(`/auth/room`,data,header)
+        .then(res => {
            console.log(res.data)
            const data = res.data
            //this.setState({ dorms: data});
            alert("จองห้องสำเร็จ")
-           console.log('GG');
-           console.log(data)
+
+           window.location.reload(false); 
 
        })
        .catch(e => {
@@ -112,6 +121,11 @@ class Home extends React.Component {
     
 render() {  
     // const {message,currentUser} = this.state
+    const IsRoom = true;
+    if(this.state.rooms == null){
+        IsRoom = false;
+    }
+
     if (localStorage.getItem('token')){
         return(
             <div>
@@ -122,7 +136,11 @@ render() {
                 <div class="bg2">
                     <center><div className="column is-half">
                         <div className="blog-" >
-                            {this.displayRooms(this.state.rooms)}
+                            {(this.state.rooms).length > 0 
+                                ? <div>{this.displayRooms(this.state.rooms)}</div>
+                                : <h1>ไม่มีห้องว่าง</h1>
+                            
+                            }
 
                         </div>
                     </div></center>
