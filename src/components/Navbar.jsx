@@ -80,24 +80,28 @@ class Navbar extends React.Component {
                         </div> */}
                         
                     </div>
-                </div>
 
-                <div className="navbar-end">
-                    <div className="navbar-item">
-                        <div className="buttons">
-                            <h3 className="navbar-item">
-                                <Link to="/profile">
-                                    <TiUser/>   {currentUser }
-                                </Link>
+                    <div className="navbar-end">
+                        <div className="navbar-item">
+                            <div className="buttons">
+                                <h3 className="navbar-item">
+                                    <Link to="/profile">
+                                        <TiUser/>   {currentUser }
+                                    </Link>
+                                    
+                                    <button className="button is-light" onClick={this.logout} >
+                                        <IoIosLogOut/>Logout
+                                    </button>
+                                </h3>
                                 
-                                <button className="button is-light" onClick={this.logout} >
-                                    <IoIosLogOut/>Logout
-                                </button>
-                            </h3>
-                            
+                            </div>
                         </div>
                     </div>
+
+
                 </div>
+
+                
 
             </nav>
 

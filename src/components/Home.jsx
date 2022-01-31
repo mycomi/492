@@ -31,37 +31,45 @@ class Home extends React.Component {
     state = {
         title: '',
         body: '',
-        posts: []
+        dorms: [],
+        rooms: [],
+        dormId: '',
+        roomId: '',
+
     };
 
     componentDidMount = () => {
-        this.getPost();
+        this.getDorms();
     }
 
-    displayPost = (posts) => {
+    displayDorms = (dorms) => {
         // if (!posts.length) return null;
+        console.log(dorms)
 
-        return posts.map( (post,index) => (
+        return dorms.map( (post,index) => (
             <div key={index} className="blog-post__display">
-                <h3> ชื่อหอ: {post.Aname } </h3>
-                <p> ราคา/เดือน: {post.price} </p>
-                <p> ที่อยู่: {post.address} </p>
-                <p> รายละเอียด: {post.info} </p>
-                <p> ติดต่อ: {post.tel} </p>
+                <h2> Dorm id: {post.id} </h2>
+                <h3> ชื่อหอ: {post.name } </h3>
+                <p> ราคา/เดือน: {post.lowPrice} - {post.highPrice} </p>
+                <Link to={{
+                    pathname: "/dorm/"+post.id,
+                }}>
+                    <button className="button is-link">ดูหอ</button>
+                </Link> 
                 <p> --------------------------------------------------------------------------------------------- </p>
             </div>
         ))
 
     }
 
-    getPost = () =>{
-        Axios.get(`/api/itemsAll`,{ 
+    getDorms = () =>{
+        Axios.get(`/auth/dormsAll`,{ 
             
         })
        .then(res => {
            console.log(res.data)
            const data = res.data
-           this.setState({ posts: data});
+           this.setState({ dorms: data});
            console.log('GG');
            console.log(data)
 
@@ -72,10 +80,9 @@ class Home extends React.Component {
        })
     }
 
-       
     
-        
-    
+
+
 render() {
     // const {message,currentUser} = this.state
     if (localStorage.getItem('token')){
@@ -85,41 +92,10 @@ render() {
                      <Navbar />
                 </div>
 
-                <div >
-                    <a href="https://bulma.io">
-                        {/* <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> */}
-                    </a>
-                    <div id="navbarBasicExample" className="navbar-menu">
-                        <div className="navbar-start">
-                            <div className="navbar-item">
-                                <div className="buttons">
-                                {/* <h3 className="navbar-item">
-                                    <Link to="/post">
-                                    <center>
-                                        <button className="button is-light"  >
-                                    Post
-                                </button>
-                                </center>
-                                    </Link>
-                                
-                                </h3> */}
-                            
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
-                </div>   
-                        
-            
                 <div class="bg2">
                     <center><div className="column is-half">
                         <div className="blog-" >
-                            {this.displayPost(this.state.posts)}
+                            {this.displayDorms(this.state.dorms)}
 
                         </div>
                     </div></center>
@@ -182,7 +158,7 @@ render() {
                 <div class="bg">
                     <center> <div className="column is-half">
                         <div className="blog-" >
-                            {this.displayPost(this.state.posts)}
+                            {this.displayDorms(this.state.dorms)}
                         </div>
                     </div></center>
                 </div>

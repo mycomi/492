@@ -7,6 +7,7 @@ import Register from './components/Register';
 import Profile from './components/Profile';
 import Post from './components/Post';
 import About from './components/About'
+import Dorm from './components/Dorm'
 
 
 const Routes = () => (
@@ -22,6 +23,7 @@ const Routes = () => (
     <Route path="/profile" exact component={Profile}/>
     <Route path="/post" exact component={Post}/>
     <Route path="/about" exact component={About}/>
+    <Route path="/dorm/:id" exact component={Dorm}/>
 
 
     
