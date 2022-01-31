@@ -9,6 +9,10 @@ import Post from './components/Post';
 import About from './components/About'
 import Dorm from './components/Dorm'
 
+import Home_admin from './components/Admin/Home_admin';
+import Register_admin from './components/Admin/Register_admin';
+import Login_admin from './components/Admin/Login_admin';
+
 
 const Routes = () => (
   // <Router {...props}>
@@ -24,6 +28,11 @@ const Routes = () => (
     <Route path="/post" exact component={Post}/>
     <Route path="/about" exact component={About}/>
     <Route path="/dorm/:id" exact component={Dorm}/>
+
+
+    <Route path="/admin" exact component={Home_admin} />
+    <Route path="/admin/register" exact component={Register_admin} />
+    <Route path="/admin/login" exact component={Login_admin} />
 
 
     

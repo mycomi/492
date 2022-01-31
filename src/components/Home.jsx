@@ -151,12 +151,12 @@ render() {
                                 </Link> 
                             </div>
                 
-                            {/* <div class="navbar-item">
+                            <div class="navbar-item">
                         
-                                <Link to="/about">
-                                    <button className="button is-warning"><TiUser/>  About</button>
+                                <Link to="/admin">
+                                    <button className="button is-warning"><TiUser/>  Admin</button>
                                 </Link> 
-                            </div> */}
+                            </div>
                         
                         </div>
                         <nav>
