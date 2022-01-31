@@ -42,6 +42,30 @@ class Home extends React.Component {
         this.getDorms();
     }
 
+    navbar (){
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Check if there are any navbar burgers
+        if ($navbarBurgers.length > 0) {
+
+            // Add a click event on each of them
+            $navbarBurgers.forEach( el => {
+            el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+                });
+            });
+        }
+
+    }
+
     displayDorms = (dorms) => {
         // if (!posts.length) return null;
         console.log(dorms)
@@ -83,6 +107,7 @@ class Home extends React.Component {
 
 render() {
     // const {message,currentUser} = this.state
+
     if (localStorage.getItem('token')){
         return(
             <div>
@@ -102,6 +127,7 @@ render() {
             </div>
         )
     } else {
+        this.navbar();
         return(
             <div>
                 <nav class="navbar navbar-dark bg-blue"  role="navigation" aria-label="main navigation">
