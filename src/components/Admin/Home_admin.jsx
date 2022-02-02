@@ -72,7 +72,7 @@ class Home_admin extends React.Component {
         return dorm.map( (post,index) => (
             <div key={index} className="blog-post__display">
                 <h3> ชื่อหอ: {post.dorm } </h3>
-                <h2>id: {post.id} </h2>
+                {/* <h2>id: {post.id} </h2> */}
                 {/* <button className="button is-link" onClick={this.manage} value={this.post = post}>จัดการผู้ใช้</button> */}
                 <p> ------------------------------------------------------ </p>
             </div>
@@ -103,24 +103,28 @@ class Home_admin extends React.Component {
 
     getDorm = () =>{
         const token = localStorage.getItem('token-admin')
-        Axios.get(`/auth/admin/admin_dorm`,{ 
-            headers: {
-                "access-token": token
-            }
-        })
-       .then(res => {
-           console.log(res.data)
-           const data = res.data
-           this.setState({ dorm: data});
-           this.getUsers()
-           console.log('GG');
-           console.log(data)
+        if(token){
+            Axios.get(`/auth/admin/admin_dorm`,{ 
+                headers: {
+                    "access-token": token
+                }
+            })
+           .then(res => {
+               console.log(res.data)
+               const data = res.data
+               this.setState({ dorm: data});
+               this.getUsers()
+               console.log('GG');
+               console.log(data)
+    
+           })
+           .catch(e => {
+            //    alert('help')
+            console.log(e)
+           })
 
-       })
-       .catch(e => {
-        //    alert('help')
-        console.log(e)
-       })
+        }
+        
     }
 
     getUsers = () =>{
@@ -157,6 +161,7 @@ class Home_admin extends React.Component {
            console.log(res.data)
            const data = res.data
            alert("user approve")
+           window.location.reload(false); 
 
        })
        .catch(e => {
@@ -169,6 +174,22 @@ class Home_admin extends React.Component {
     manage_fail = (e) =>{
         e.preventDefault();
         console.log(this.post)
+        const roomId = this.post.roomId
+        console.log(roomId)
+        Axios.post(`/auth/admin/user_fail`,{ 
+            roomId: roomId,
+        })
+       .then(res => {
+           console.log(res.data)
+           const data = res.data
+           alert("user drop")
+           window.location.reload(false); 
+
+       })
+       .catch(e => {
+        //    alert('help')
+        console.log(e)
+       })
 
     }
 

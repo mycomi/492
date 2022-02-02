@@ -162,7 +162,7 @@ class Home extends React.Component {
                console.log(this.state.isRoom)
            })
            .catch(() => {
-               alert('help')
+               alert('isRoom')
            })
 
         }

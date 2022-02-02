@@ -51,21 +51,25 @@ class Profile extends React.Component {
 
     getPost = () =>{
         const token = localStorage.getItem('token')
-        Axios.get(`/auth/user_room`,{ 
-            headers: {
-                "access-token": token
-            }
-        })
-       .then(res => {
-           console.log(res.data)
-           const data = res.data
-           this.setState({ room: data});
-           console.log('GG');
-           console.log(data)
-       })
-       .catch(() => {
-           alert('help')
-       })
+        if(token){
+            Axios.get(`/auth/user_room`,{ 
+                headers: {
+                    "access-token": token
+                }
+            })
+           .then(res => {
+               console.log(res.data)
+               const data = res.data
+               this.setState({ room: data});
+               console.log('GG');
+               console.log(data)
+           })
+           .catch(() => {
+               alert('getPost')
+           })
+
+        }
+        
     }
 
     dropRoom = () => {
@@ -82,7 +86,7 @@ class Profile extends React.Component {
 
        })
        .catch(() => {
-           alert('help')
+           alert('dropRoom')
        })
 
     }
@@ -91,7 +95,7 @@ class Profile extends React.Component {
         console.log(this.state.room);
         if (localStorage.getItem('token')){
             return(
-                <div class="bg">
+                <div className="bg">
                     <div className="Profile">
                         <Navbar />
 

@@ -169,28 +169,28 @@ class Navbar extends React.Component {
     }else{
         return(
             <div>
-                <nav class="navbar navbar-dark bg-blue"  role="navigation" aria-label="main navigation">
-                    <div class="navbar-brand">
-                        <a class="navbar-item" href="https://bulma.io">
+                <nav className="navbar navbar-dark bg-blue"  role="navigation" aria-label="main navigation">
+                    <div className="navbar-brand">
+                        <div className="navbar-item" href="https://bulma.io">
                             {/* <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> */}
-                        </a>
+                        </div>
                 
-                        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                        <div role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                             <span aria-hidden="true"></span>
                             <span aria-hidden="true"></span>
                             <span aria-hidden="true"></span>
-                        </a>
+                        </div>
                     </div>
                 
-                    <div id="navbarBasicExample" class="navbar-menu">
-                        <div class="navbar-start">
-                            <div class="navbar-item">
+                    <div id="navbarBasicExample" className="navbar-menu">
+                        <div className="navbar-start">
+                            <div className="navbar-item">
                                 <Link to="/">
                                         <button className="button is-link"><TiHome/>Home</button>
                                 </Link> 
                             </div>
                 
-                            <div class="navbar-item">
+                            <div className="navbar-item">
                         
                                 <Link to="/admin">
                                     <button className="button is-warning"><TiUser/>  Admin</button>
@@ -199,8 +199,8 @@ class Navbar extends React.Component {
                         
                         </div>
                         <nav>
-                            <div class="navbar-end" >
-                                <div class="navbar-item">
+                            <div className="navbar-end" >
+                                <div className="navbar-item">
                                     <Link to ="/register">
                                         <button className="button is-warning" > <MdAssignmentInd/>Register</button>
                                     </Link>
@@ -208,7 +208,7 @@ class Navbar extends React.Component {
 
                                 </div>
                                     
-                                <div  class="navbar-item" >
+                                <div  className="navbar-item" >
                                     <Link to ="/login">
                                         <button className="button is-success"><IoIosLogIn/>Login</button>
                                     </Link>  
