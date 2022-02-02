@@ -7,8 +7,6 @@ import Axios from 'axios';
 import { Card } from 'react-bootstrap';
 
 import './style.css';
-import './css/flex2html.css';
-// import { flex2html } from "./js/flex2html.js";
 
 
 import { FaAndroid } from "react-icons/fa";
