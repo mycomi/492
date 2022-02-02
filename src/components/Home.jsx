@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 import Navbar from './Navbar'
 import Axios from 'axios';
 
+import { Card } from 'react-bootstrap';
+
 import './style.css';
+import './css/flex2html.css';
+// import { flex2html } from "./js/flex2html.js";
 
 
 import { FaAndroid } from "react-icons/fa";
@@ -40,6 +44,8 @@ class Home extends React.Component {
 
     componentDidMount = () => {
         this.getDorms();
+        
+        
     }
 
 
@@ -48,15 +54,24 @@ class Home extends React.Component {
         console.log(dorms)
 
         return dorms.map( (post,index) => (
-            <div key={index} className="blog-post__display">
-                <h2> Dorm id: {post.id} </h2>
-                <h3> ชื่อหอ: {post.name } </h3>
-                <p> ราคา/เดือน: {post.lowPrice} - {post.highPrice} </p>
-                <Link to={{ pathname: "/dorm/"+post.id }}>
-                    <button className="button is-link">ดูหอ</button>
-                </Link> 
-                <p> ------------------------------------------------------ </p>
+            <div className="card">
+                <div key={index} className="card-content" >
+                    <h2 > Dorm id: {post.id} </h2>
+                        <div className="content" >
+                            <h3 className="card-header-title-center"> ชื่อหอ: {post.name } </h3>
+                            <p> ราคา/เดือน: {post.lowPrice} - {post.highPrice} </p>
+                            <Link to={{ pathname: "/dorm/"+post.id }}>
+                                <button className="button is-link" style={{backgroundColor: "green"}}>ดูหอ</button>
+                            </Link> 
+                        </div>
+                    <footer className="card-footer">
+                        {/* <p> ------------------------------------------------------ </p> */}
+                    </footer>
+                        
+                </div>
+
             </div>
+            
         ))
 
     }
@@ -87,21 +102,37 @@ render() {
 
 
         return(
+            
             <div>
                 <div id="navbar">
                      <Navbar />
                 </div>
 
+                <h1>
+                <Card style={{ width: '18rem' }}>
+                    <Card.Body>
+                        <Card.Title>Card Title</Card.Title>
+                        <Card.Text>
+                        Some quick example text to build on the card title and make up the bulk of
+                        the card's content.
+                        </Card.Text>
+                        {/* <Button variant="primary">Go somewhere</Button> */}
+                    </Card.Body>
+                    </Card>
+                </h1>
+
                 <div className="bg2">
-                    <center><div className="column is-half">
+
+                    <center><div className="column is-half" style={{ width: '18rem' }}>
                         <div className="blog-" >
                             {this.displayDorms(this.state.dorms)}
-
                         </div>
                     </div></center>
                 </div>
 
             </div>
+
+            
         )
     }
 
