@@ -1,7 +1,7 @@
 import React from 'react'
 import 'bulma/css/bulma.css'
 // import firebase from '../firebase/firebase'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Axios from 'axios';
 import imges2 from './f14.png';
 
@@ -109,16 +109,17 @@ render() {
     // const {message,currentUser} = this.state
             if (localStorage.getItem('token')){
                 return (
-                    <center>
-                    <img src={imges2}/>
+                    // <center>
+                    // <img src={imges2}/>
                 
-                        <div class="card" >
+                    //     <div class="card" >
                             
-                            <Link to="/">
-                                <button className="button is-link">เข้าสู่เว็บไซต์</button>
-                            </Link>
-                        </div>
-                    </center>
+                    //         <Link to="/">
+                    //             <button className="button is-link">เข้าสู่เว็บไซต์</button>
+                    //         </Link>
+                    //     </div>
+                    // </center>
+                    Redirect('/')
                 )
             }else{
                 return(

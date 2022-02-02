@@ -6,6 +6,7 @@ import '../style.css';
 
 import { IoIosLogIn } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
+import { MdAssignmentInd } from "react-icons/md";
 import { TiUser } from "react-icons/ti";
 import { TiHome } from "react-icons/ti";
 import { FaArrowUp } from "react-icons/fa";
@@ -93,73 +94,134 @@ class Navbar_admin extends React.Component {
 
     this.navbar();
 
-    return (
-        <div>
-            <nav className="navbar navbar-dark bg-blue"  role="navigation" aria-label="main navigation">
-                <div className="navbar-brand">
-                    <div className="navbar-item" href="https://bulma.io">
-                        {/* <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> */}
-                    </div>
-
-                    <div role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </div>
-                </div>
-
-                <div id="navbarBasicExample" className="navbar-menu">
-                    <div className="navbar-start">
-                        <div className="navbar-item">
-                            <Link to="/admin">
-                                <button className="button is-link"><TiHome/>Home</button>
-                            </Link> 
+    if (localStorage.getItem('token-admin')){
+        return (
+            <div>
+                <nav className="navbar navbar-dark bg-blue"  role="navigation" aria-label="main navigation">
+                    <div className="navbar-brand">
+                        <div className="navbar-item" href="https://bulma.io">
+                            {/* <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> */}
                         </div>
-
-                        {/* <div class="navbar-item">
-
-                            <button className="button is-warning" onClick={this.IsAuth}><TiUser/>  IsAuth</button>
-                            
-                        </div> */}
-
-                        {/* <div class="navbar-item">
-
-                            <Link to="/post">
-                                <button className="button is-danger is-light"><FaArrowUp/> Post</button>
-                            </Link> 
-                        </div> */}
-                        
+    
+                        <div role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                        </div>
                     </div>
-
-                    <div className="navbar-end">
-                        <div className="navbar-item">
-                            <div className="buttons">
-                                <div className="navbar-item">
-                                    <Link to="/profile">
-                                        <button className="button is-warning" >
-                                            <TiUser/>   {currentUser }
-                                        </button>
-                                    </Link>
+    
+                    <div id="navbarBasicExample" className="navbar-menu">
+                        <div className="navbar-start">
+                            <div className="navbar-item">
+                                <Link to="/admin">
+                                    <button className="button is-link"><TiHome/>Home</button>
+                                </Link> 
+                            </div>
+    
+                            {/* <div class="navbar-item">
+    
+                                <button className="button is-warning" onClick={this.IsAuth}><TiUser/>  IsAuth</button>
+                                
+                            </div> */}
+    
+                            {/* <div class="navbar-item">
+    
+                                <Link to="/post">
+                                    <button className="button is-danger is-light"><FaArrowUp/> Post</button>
+                                </Link> 
+                            </div> */}
+                            
+                        </div>
+    
+                        <div className="navbar-end">
+                            <div className="navbar-item">
+                                <div className="buttons">
+                                    <div className="navbar-item">
+                                        <Link to="/admin/profile">
+                                            <button className="button is-warning" >
+                                                <TiUser/>   {currentUser }
+                                            </button>
+                                        </Link>
+                                    </div>
+                                    
+                                    <button className="button is-light" onClick={this.logout} >
+                                        <IoIosLogOut/>Logout
+                                    </button>
+                                    
                                 </div>
-                                
-                                <button className="button is-light" onClick={this.logout} >
-                                    <IoIosLogOut/>Logout
-                                </button>
-                                
                             </div>
                         </div>
+    
+    
                     </div>
+    
+                    
+    
+                </nav>
+    
+            </div>
+    
+        )
 
-
-                </div>
-
+    }else{
+        return(
+            <div>
+                <nav className="navbar navbar-dark bg-blue"  role="navigation" aria-label="main navigation">
+                    <div className="navbar-brand">
+                        <div className="navbar-item" href="https://bulma.io">
+                            {/* <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> */}
+                        </div>
                 
+                        <div role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                        </div>
+                    </div>
+                
+                    <div id="navbarBasicExample" className="navbar-menu">
+                        <div className="navbar-start">
+                            <div className="navbar-item">
+                                <Link to="/admin">
+                                        <button className="button is-link"><TiHome/>Home</button>
+                                </Link> 
+                            </div>
+                
+                            {/* <div class="navbar-item">
+                        
+                                <Link to="/about">
+                                    <button className="button is-warning"><TiUser/>  About</button>
+                                </Link> 
+                            </div> */}
+                        
+                        </div>
+                        <nav>
+                            <div className="navbar-end" >
+                                <div className="navbar-item">
+                                    <Link to ="/admin/register">
+                                        <button className="button is-warning" > <MdAssignmentInd/>Register</button>
+                                    </Link>
+                                    
 
-            </nav>
+                                </div>
+                                    
+                                <div  className="navbar-item" >
+                                    <Link to ="/admin/login">
+                                        <button className="button is-success"><IoIosLogIn/>Login</button>
+                                    </Link>  
+                                </div>
+                            </div>  
+                        </nav>
+                    </div>
+                </nav>
+                
+            </div>
+  
+            )
 
-        </div>
+    }
 
-    )
+    
    }
 }
  

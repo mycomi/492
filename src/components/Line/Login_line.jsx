@@ -5,8 +5,11 @@ import { Link, Redirect } from 'react-router-dom';
 import Axios from 'axios';
 import imges2 from '../f14.png';
 
+import Profile_line from './Profile_line'
+import Register_line from './Register_line'
 
-class Login_admin extends React.Component {
+
+class Login extends React.Component {
 
     constructor(props) {
         super(props)
@@ -41,10 +44,15 @@ class Login_admin extends React.Component {
 
     onSubmit = e => {
         e.preventDefault();
+        const line_id = window.location.pathname.split('/');
+        console.log(line_id[2])
+
         const user = {
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
+            line_id: line_id[2],
         }
+
         // const {email,password} = this.state
         
         // firebase.auth()
@@ -59,16 +67,17 @@ class Login_admin extends React.Component {
         //             message: error.message
         //         })
         //     })
-        Axios.post(`/auth/admin/login`,{ 
+        Axios.post(`/auth/login_line`,{ 
             email: user.email,
-            password: user.password
+            password: user.password,
+            line_id: user.line_id,
          })
         .then(res => {
             // console.log(res)
             console.log(res)
             console.log(res.data)
             
-            window.localStorage.setItem('token-admin', res.data.acsessToken)
+            window.localStorage.setItem('token', res.data.acsessToken)
             window.localStorage.setItem('name', res.data.name)
             alert("login success")
 
@@ -90,32 +99,35 @@ class Login_admin extends React.Component {
             alert('Invalid E-mail or password')
         })
 
-        
 
-        
     }
 
-    // logout(){
-    //     firebase.auth().signOut().then(response => {
-    //         this.setState({
-    //             currentUser : null
-    //         })
-    //     })
-    // }
+    register =()=>{
+        this.setState({register: true});
+        this.setState({login: false});
+    }
 
 
 render() {
 
     // const {message,currentUser} = this.state
-            if (localStorage.getItem('token-admin')){
-                return <Redirect to='/admin' />
+
+
+    if(this.state.register){
+        return (
+            <Register_line/>
+        )
+    }
+    
+            if (localStorage.getItem('token')){
+                return (
+                    <Profile_line/>
+                )
             }else{
                 return(
                     <section className="section container">
                         <div className="columns is-centered">
-                            
                             <div className="column is-half">
-                                <h1>admin</h1>
                                 <form onSubmit={this.onSubmit}>
                                 {/* action="http://localhost:3000/api/users/login" method="post" */}
                                     <div className="field">
@@ -139,11 +151,12 @@ render() {
                                         </div>
                                     </div>
 
-                                    <Link to ="/admin/register">
-                                        <button className="button is-warning" > Register</button>
-                                    </Link>
+                                    
                                     
                                 </form>
+                                <div>  &nbsp;  </div>
+
+                                <button className="button is-warning" onClick={this.register}> Register</button>
                             </div>
                         </div>
                     </section>
@@ -154,4 +167,4 @@ render() {
 
     }
 }
-export default Login_admin
+export default Login

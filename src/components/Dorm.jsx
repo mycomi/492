@@ -179,8 +179,6 @@ render() {
     if(this.state.rooms == null){
         IsRoom = false;
     }
-
-    if (localStorage.getItem('token')){
         return(
             <div>
                 <div id="navbar">
@@ -202,76 +200,8 @@ render() {
 
             </div>
         )
-    } else {
-        this.navbar();
-        return(
-            <div>
-                <nav class="navbar navbar-dark bg-blue"  role="navigation" aria-label="main navigation">
-                    <div class="navbar-brand">
-                        <a class="navbar-item" href="https://bulma.io">
-                            {/* <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> */}
-                        </a>
-                
-                        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                            <span aria-hidden="true"></span>
-                            <span aria-hidden="true"></span>
-                            <span aria-hidden="true"></span>
-                        </a>
-                    </div>
-                
-                    <div id="navbarBasicExample" class="navbar-menu">
-                        <div class="navbar-start">
-                            <div class="navbar-item">
-                                <Link to="/">
-                                        <button className="button is-link"><TiHome/>Home</button>
-                                </Link> 
-                            </div>
-                
-                            {/* <div class="navbar-item">
-                        
-                                <Link to="/about">
-                                    <button className="button is-warning"><TiUser/>  About</button>
-                                </Link> 
-                            </div> */}
-                        
-                        </div>
-                        <nav>
-                            <div class="navbar-end" >
-                                <div class="navbar-item">
-                                    <Link to ="/register">
-                                        <button className="button is-warning" > <MdAssignmentInd/>Register</button>
-                                    </Link>
-                                    
-
-                                </div>
-                                    
-                                <div  class="navbar-item" >
-                                    <Link to ="/login">
-                                        <button className="button is-success"><IoIosLogIn/>Login</button>
-                                    </Link>  
-                                </div>
-                            </div>  
-                        </nav>
-                    </div>
-                </nav>
-
-                
-                <div class="bg">
-                    <center> <div className="column is-half">
-                        <div className="blog-" >
-                            {(this.state.rooms).length > 0 
-                                ? <div>{this.displayRooms(this.state.rooms)}</div>
-                                : <h1>ไม่มีห้องว่าง</h1>
-                            }
-                        </div>
-                    </div></center>
-                </div>
-         
-            </div>
-  
-            )
-        }
-    }
+    } 
+    
 
 }
 export default Home
