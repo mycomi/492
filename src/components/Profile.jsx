@@ -32,16 +32,20 @@ class Profile extends React.Component {
 
     displayPost = (room) => {
         // if (!posts.length) return null;
-        console.log("room: "+this.state.room)
+        const temp = this.state.room;
+        
 
         return room.map( (post,index) => (
             
             <div key={index} className="blog-post__display">
                 <h3> ชื่อหอ: {post.dorm } </h3>
                 <p> เลขห้อง: {post.room} </p>
-                {post.haveRoom &&
-                    <button className="button is-link" onClick={this.dropRoom} > Drop </button>
+                {post.Isconfirm
+                    ?   <button className="button is-link" disabled style={{backgroundColor: 'lightgreen'}}> ยืนยันแล้ว </button>
+                    :   post.haveRoom &&
+                        <button className="button is-link" onClick={this.dropRoom} > Drop </button>
                 }
+                
                 <p> --------------------------------------------- </p>
                 
             </div>

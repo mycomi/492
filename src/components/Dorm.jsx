@@ -73,7 +73,7 @@ class Home extends React.Component {
         console.log(rooms)
 
         return rooms.map( (post,index) => (
-            <from >
+
                 <div key={index} className="blog-post__display">
                     <h2> Room id: {post.id} </h2>
                     <h2> Dorm id: {post.dorm_id} </h2>
@@ -86,9 +86,7 @@ class Home extends React.Component {
 
                     <p> ------------------------------------------------ </p>
                 </div>
-                
 
-            </from>
             
         ))
 

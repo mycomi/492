@@ -13,9 +13,13 @@ import { FaArrowUp } from "react-icons/fa";
   
 class Navbar_admin extends React.Component {
 
+    componentDidMount = () =>{
+        this.navbar();
+    }
+
     navbar (){
         const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
+        console.log("navbar click")
         // Check if there are any navbar burgers
         if ($navbarBurgers.length > 0) {
 
@@ -91,9 +95,6 @@ class Navbar_admin extends React.Component {
     
    render(){
     const currentUser = localStorage.getItem('name')
-
-    this.navbar();
-
     if (localStorage.getItem('token-admin')){
         return (
             <div>

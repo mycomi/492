@@ -67,37 +67,52 @@ class Home_admin extends React.Component {
 
     displayDorm = (dorm) => {
         // if (!posts.length) return null;
-        console.log(dorm)
+        const token = localStorage.getItem('token-admin');
+        if(token){
+            return dorm.map( (post,index) => (
+                <div className="card">
+                    <div key={index} className="blog-post__display">
+                        <h3> ชื่อหอ: {post.dorm } </h3>
+                        {/* <h2>id: {post.id} </h2> */}
+                        {/* <button className="button is-link" onClick={this.manage} value={this.post = post}>จัดการผู้ใช้</button> */}
+                        <p> ------------------------------------------------------ </p>
+                    </div>
+    
+                </div>
+                
+            ))
 
-        return dorm.map( (post,index) => (
-            <div key={index} className="blog-post__display">
-                <h3> ชื่อหอ: {post.dorm } </h3>
-                {/* <h2>id: {post.id} </h2> */}
-                {/* <button className="button is-link" onClick={this.manage} value={this.post = post}>จัดการผู้ใช้</button> */}
-                <p> ------------------------------------------------------ </p>
-            </div>
-        ))
+        }
+
+        
 
     }
 
     displayUsers = (users) => {
         // if (!posts.length) return null;
         console.log(users)
+        const token = localStorage.getItem('token-admin');
+        if(token){
 
-        return users.map( (post,index) => (
-            <div key={index} className="blog-post__display">
-                <form value={this.post = post}>
-                <h3> เลขห้อง: {post.room} </h3>
-                <h2> ชื่อผู้เช่า: {post.user } </h2>
-                <button className="button is-link" onClick={this.manage_pass}  >ยืนยัน</button>
-                <button className="button is-danger" onClick={this.manage_fail} >ลบ</button>
-                <p> ------------------------------------------------------ </p>
+            return users.map( (post,index) => (
+                <div key={index} className="blog-post__display">
+                    <form value={this.post = post}>
+                    <h3> เลขห้อง: {post.room} </h3>
+                    <h2> ชื่อผู้เช่า: {post.user } </h2>
+                    {post.status === 2 
+                        ?   <button className="button is-success is-light" disabled  >ยืนยันแล้ว</button>
+                        :   <button className="button is-success" onClick={this.manage_pass}  >ยืนยัน</button>
+                    }
+                    
+                    <button className="button is-danger" onClick={this.manage_fail} >ลบ</button>
+                    <p> ------------------------------------------------------ </p>
+    
+                    </form>
+                    
+                </div>
+            ))
 
-                </form>
-                
-                
-            </div>
-        ))
+        }
 
     }
 
@@ -197,8 +212,7 @@ class Home_admin extends React.Component {
 
 render() {
     // const {message,currentUser} = this.state
-
-
+    
         return(
             <div>
                 <div id="navbar">
@@ -210,14 +224,12 @@ render() {
                         <div className="blog-" >
                             <h1>admin</h1>
                             {this.displayDorm(this.state.dorm)}
+                            
                             {this.state.haveUsers && 
                                 
                                 this.displayUsers(this.state.users)
 
                             }
-                            
-                            
-                            
 
                         </div>
                     </div></center>
