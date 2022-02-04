@@ -38,6 +38,12 @@ class Home extends React.Component {
         dormId: '',
         roomId: '',
 
+        lowPrice: '',
+        highPrice: '',
+
+        pet: false,
+        air: false,
+
     };
 
     componentDidMount = () => {
@@ -50,8 +56,26 @@ class Home extends React.Component {
     displayDorms = (dorms) => {
         // if (!posts.length) return null;
         console.log(dorms)
+        const low = this.state.lowPrice;
+        const high = this.state.highPrice;
+        const pet = this.state.pet;
+        const air = this.state.air;
 
-        return dorms.map( (post,index) => (
+        // isPet
+        let dorm = dorms;
+
+        if(low && high){
+            dorm = dorm.filter(dorm => (dorm.lowPrice >= low && dorm.lowPrice <= high) || (dorm.highPrice >= low && dorm.highPrice <= high));
+        }
+        if(pet){
+            dorm = dorm.filter(dorm => (dorm.isPet == pet));
+        }
+        if(air){
+            dorm = dorm.filter(dorm => (dorm.isAir == air));
+        }
+        
+
+        return dorm.map( (post,index) => (
             <div className="card">
                 <div key={index} className="card-content" >
                     <h2 > Dorm id: {post.id} </h2>
@@ -92,27 +116,95 @@ class Home extends React.Component {
        })
     }
 
+    onChange = e =>{
+        const {name,value} = e.target
+        this.setState({
+            [name]: value
+            
+        });
+        console.log(this.state)
+
+    }
+
+    // onTick = () =>{
+    //     const air = this.state.air;
+    //     this.setState({
+    //         air: !air
+    //     });
+
+    // }
+
+    onToggle = e =>{
+        const {name} = e.target
+        const prevCheck = this.state[name];
+        this.setState({
+            [name]: !prevCheck
+        });
+
+    }
+
     
 
 
 render() {
     // const {message,currentUser} = this.state
-
-
+    console.log("state: "+this.state.air)
         return(
-            
+
             <div>
                 <div id="navbar">
                      <Navbar />
                 </div>
 
-                <div id="filter">
-                    
-                </div>
+                
 
                 <div className="bg2">
+                    <br/>
+                    <div className="headline">
+                        <center>
+                            <h1 id="filter" style={{backgroundColor: 'white'}}>เว็บค้นหาและจองหอพัก </h1>
+                        </center>
+                    </div>
+                    <div id="filter" className="filter">
+                        <form className="filterText ">
+                            <h1 id="filter" >ค้นหา </h1>
+                            <label for="price" >ราคา : ตั้งแต่ </label>
+                            <input type="text" id="lowPrice" name="lowPrice" onChange={this.onChange}></input> ถึง&nbsp;
+                            <input type="text" id="highPrice" name="highPrice" onChange={this.onChange}></input> บาท
+
+                            <br/> <label for="pet" > ประเภทหอพัก : </label>
+                            <input type="checkbox" id="pet" name="pet" onChange={this.onToggle} ></input>
+                            <label for="pet">อนุญาตให้เลี้ยงสัตว์ได้ </label>
+
+                            {/* <input type="radio" id="petF" name="pet" value={0} onChange={this.onChange}></input>
+                            <label for="pet">เลี้ยงสัตว์ไม่ได้ </label>
+
+                            <input type="radio" id="both" name="pet" value={2} onChange={this.onChange}></input>
+                            <label for="pet">ทั้งหมด </label> */}
+
+                            <br/>
+                            {/* <form >
+                                <input type="radio" id="petF" name="pet" value={0} onChange={this.onChange}></input>
+                                <label for="pet">เฉพาะห้องแอร์ </label>
+
+                                <input type="radio" id="both" name="pet" value={2} onChange={this.onChange}></input>
+                                <label for="pet">ทั้งหมด </label>
+
+                            </form> */}
+
+                            <input type="checkbox" id="air" name="air" onChange={this.onToggle}></input>
+                            <label for="pet">มีเครื่องปรับอากาศ </label>
+
+                            
+                            
+                        </form>
+
+                        
+                    </div>
 
                     <center><div className="column is-half" style={{ width: '18rem' }}>
+                        
+
                         <div className="blog-" >
                             {this.displayDorms(this.state.dorms)}
                         </div>

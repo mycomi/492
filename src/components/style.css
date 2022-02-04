@@ -15,14 +15,26 @@
     height: auto!important;
     padding: 125px;
     background-image: url(./f14.png);
-  }
+}
 
-  .container2{
+.container2{
     
     background-size: 1600px 900px;
     padding: 250px;
     background-image: url(./f16.png);
-  }
+}
+
+.filter{
+
+    padding: 125px;
+}
+
+.filterText{
+    font-size: 18px;
+    width:500px;
+    max-width: 500px;
+    background-color: rgb(255, 255, 255);
+}
 
 
 .bg{
@@ -43,8 +55,6 @@
     background-size: 1600px 900px;
     background-image: url(./f16.png);
     
-
-
 }  
 
 .is-half{
@@ -84,5 +94,5 @@
 } 
 
 h1{
-    font-size: 25px;
+    font-size: 30px;
 }
