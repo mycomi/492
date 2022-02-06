@@ -94,6 +94,7 @@ class Profile_line extends React.Component {
 
     render()  {
         console.log(this.state.room);
+        const name = localStorage.getItem('name')
 
         return(
             <div className="bg">
@@ -102,9 +103,10 @@ class Profile_line extends React.Component {
 
                     <center> 
                         <div className="column is-half">
+                            {name}
                             <div className="blog-" >
                                 {this.displayPost(this.state.room)}
-
+                                
                             </div>
                             <button onClick={this.logout}>logout</button>
                         </div>

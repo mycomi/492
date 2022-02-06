@@ -7,20 +7,22 @@ import Axios from 'axios';
 import '../style.css';
 
 
-import { FaAndroid, FaBuilding } from "react-icons/fa";
+import { FaAndroid } from "react-icons/fa";
 
 import { IoIosHome } from "react-icons/io";
-import { IoIosLogOut, IoIosLogIn } from "react-icons/io";
-import { TiHome, TiUser } from "react-icons/ti";
+import { IoIosLogOut } from "react-icons/io";
+import { IoIosLogIn } from "react-icons/io";
+import { TiHome } from "react-icons/ti";
 // import firebase from '../firebase/firebase'
 // import Background from './f14.png';
 import { app } from 'firebase';
 // import imges2 from './f14.png';
 // import desktopImage from './f14.png';
 // import mobileImage from './f14.png';
+import { TiUser } from "react-icons/ti";
 
 
-class Home_admin extends React.Component {
+class Create_dorm extends React.Component {
 
     state = {
         title: '',
@@ -66,8 +68,7 @@ class Home_admin extends React.Component {
     displayDorm = (dorm) => {
         // if (!posts.length) return null;
         const token = localStorage.getItem('token-admin');
-        console.log(dorm);
-        if(token && dorm){
+        if(token){
             return dorm.map( (post,index) => (
                 <div className="card">
                     <div key={index} className="blog-post__display">
@@ -81,24 +82,10 @@ class Home_admin extends React.Component {
                 
             ))
 
-        }else{
-            console.log("null");
-            return (
-                <div className="card">
-                    <div className="blog-post__display">
-                        <h3> ชื่อหอ: ไม่มีข้อมูลหอพัก </h3>
-                        {/* <h2>id: {post.id} </h2> */}
-                        {/* <button className="button is-link" onClick={this.manage} value={this.post = post}>จัดการผู้ใช้</button> */}
-                        <Link to="/admin/create_dorm">
-                            <button className="button is-link"><FaBuilding/>เพิ่มหอพัก</button>
-                        </Link> 
-                        <p> ------------------------------------------------------ </p>
-                    </div>
-
-                </div>
-            )
-            
         }
+
+        
+
     }
 
     displayUsers = (users) => {
@@ -225,8 +212,6 @@ class Home_admin extends React.Component {
 
 render() {
     // const {message,currentUser} = this.state
-    const dorm = this.state.dorm;
-    console.log(dorm);
     
         return(
             <div>
@@ -237,14 +222,14 @@ render() {
                 <div className="bg2">
                     <center><div className="column is-half">
                         <div className="blog-" >
-                            <h1>admin</h1>
-                            {this.displayDorm(this.state.dorm)}
+                            <h1>Create_dorm</h1>
+                            {/* {this.displayDorm(this.state.dorm)}
                             
                             {this.state.haveUsers && 
                                 
                                 this.displayUsers(this.state.users)
 
-                            }
+                            } */}
 
                         </div>
                     </div></center>
@@ -256,4 +241,4 @@ render() {
     }
 
 }
-export default Home_admin
+export default Create_dorm

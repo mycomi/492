@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import './style.css';
 
-import './style.css'
 import { IoIosLogIn } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { MdAssignmentInd } from "react-icons/md";

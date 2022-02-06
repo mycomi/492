@@ -82,8 +82,43 @@ class Home_line extends React.Component {
     }
 
     login =()=>{
-        this.setState({login: true});
-        this.setState({register: false});
+        const line_id = window.location.pathname.split('/');
+        console.log(line_id[2])
+        const user = {
+            line_id: line_id[2],
+        }
+
+        Axios.post(`/auth/isLine`,{ 
+            line_id: user.line_id,
+         })
+        .then(res => {
+            // console.log(res)
+            console.log(res)
+            console.log(res.data)
+            
+            window.localStorage.setItem('token', res.data.acsessToken)
+            window.localStorage.setItem('name', res.data.name)
+            alert("login success")
+
+            // localStorage.setItem('token',res.data)
+            window.location.reload(false); 
+            // const token = localStorage.getItem('token')
+            // Axios.get(`http://localhost:3000/api/users/me`,{
+            //     token: token 
+            // }).then(res => {
+            //     console.log(res)
+            //     console.log(res.data)
+            // })
+            
+        })
+        .catch(e => {
+            console.log(e)
+            // alert("error")
+            this.setState({login: true});
+            this.setState({register: false});
+        })
+
+        
     }
 
     

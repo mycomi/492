@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Navbar from './Navbar'
 import Axios from 'axios';
 
-import { Card } from 'react-bootstrap';
+// import { Card } from 'react-bootstrap';
 
 import './style.css';
 
