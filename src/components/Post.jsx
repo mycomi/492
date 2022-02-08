@@ -92,76 +92,75 @@ render() {
 
         return(
             <div>
- <Navbar />
+                <Navbar />
             
-            <section className="section container">
-               
-                <div className="columns is-centered">
-                    <div className="column is-half">
-                        <form onSubmit={this.onSubmit} > {/*action="http://localhost:3000/api/users"*/}
-                            {/* <div className="field">
-                                <label className="label" htmlFor="">First Name</label>
-                                <div className="control">
-                                    <input className="input" type="first" name="first" onChange={this.onChange} ></input>
+                <section className="section container">
+                
+                    <div className="columns is-centered">
+                        <div className="column is-half">
+                            <form onSubmit={this.onSubmit} > {/*action="http://localhost:3000/api/users"*/}
+                                {/* <div className="field">
+                                    <label className="label" htmlFor="">First Name</label>
+                                    <div className="control">
+                                        <input className="input" type="first" name="first" onChange={this.onChange} ></input>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="field">
-                                <label className="label" htmlFor="">Last Name</label>
-                                <div className="control">
-                                    <input className="input" type="last" name="last" onChange={this.onChange} ></input>
+                                <div className="field">
+                                    <label className="label" htmlFor="">Last Name</label>
+                                    <div className="control">
+                                        <input className="input" type="last" name="last" onChange={this.onChange} ></input>
+                                    </div>
+                                </div> */}
+                                <div className="field">
+                                    <label className="label" htmlFor="">ชื่อหอ</label>
+                                    <div className="control">
+                                        <input className="input" type="text" name="Aname" onChange={this.onChange} required></input>
+                                    </div>
                                 </div>
-                            </div> */}
-                            <div className="field">
-                                <label className="label" htmlFor="">ชื่อหอ</label>
-                                <div className="control">
-                                    <input className="input" type="text" name="Aname" onChange={this.onChange} required></input>
+                                <div className="field">
+                                    <label className="label" htmlFor="">ราคา/เดือน</label>
+                                    <div className="control">
+                                        <input className="input" type="number" name="price" onChange={this.onChange} required></input>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="field">
-                                <label className="label" htmlFor="">ราคา/เดือน</label>
-                                <div className="control">
-                                    <input className="input" type="number" name="price" onChange={this.onChange} required></input>
-                                </div>
-                            </div>
 
-                            <div className="field">
-                                <label className="label" htmlFor="">ตำแหน่งที่ตั้ง</label>
-                                <div className="control">
-                                    <textarea className="textarea" name="address"  cols="30" rows="10" onChange={this.onChange} required></textarea>
-                                    
+                                <div className="field">
+                                    <label className="label" htmlFor="">ตำแหน่งที่ตั้ง</label>
+                                    <div className="control">
+                                        <textarea className="textarea" name="address"  cols="30" rows="10" onChange={this.onChange} required></textarea>
+                                        
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="field">
-                                <label className="label" htmlFor="">รายละเอียด</label>
-                                <div className="control">
-                                    <textarea className="textarea" name="info"  cols="30" rows="10" onChange={this.onChange}></textarea>
+                                <div className="field">
+                                    <label className="label" htmlFor="">รายละเอียด</label>
+                                    <div className="control">
+                                        <textarea className="textarea" name="info"  cols="30" rows="10" onChange={this.onChange}></textarea>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="field">
-                                <label className="label" htmlFor="">เบอร์โทรติดต่อ</label>
-                                <div className="control">
-                                    <input className="input" type="text" name="tel" onChange={this.onChange} pattern="^0([8|9|6])([0-9]{8}$)" autocomplete="off"
- required></input>
+                                <div className="field">
+                                    <label className="label" htmlFor="">เบอร์โทรติดต่อ</label>
+                                    <div className="control">
+                                        <input className="input" type="text" name="tel" onChange={this.onChange} pattern="^0([8|9|6])([0-9]{8}$)" autocomplete="off" required></input>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="field is-grouped">
-                                <div className="control">
+                                <div className="field is-grouped">
+                                    <div className="control">
 
-                                    <button  className="button is-link">Submit</button>
-                                    
-  
+                                        <button  className="button is-link">Submit</button>
+                                        
+    
 
-                                    
+                                        
+                                    </div>
                                 </div>
-                            </div>
-                            
-                        </form>
+                                
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
             </div>
         )
     }else{

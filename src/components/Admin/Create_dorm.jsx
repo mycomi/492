@@ -26,187 +26,76 @@ class Create_dorm extends React.Component {
 
     state = {
         title: '',
-        body: '',
-        dorm: [],
-        users: [],
-        haveUsers: false,
-        dormId: '',
-        roomId: '',
-        manageUser: false,
+        name: '',
+        floor: '',
+        room: '',
+
 
     };
 
     componentDidMount = () => {
-        this.getDorm();
-        
-    }
-
-    navbar (){
-        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-        // Check if there are any navbar burgers
-        if ($navbarBurgers.length > 0) {
-
-            // Add a click event on each of them
-            $navbarBurgers.forEach( el => {
-            el.addEventListener('click', () => {
-
-                // Get the target from the "data-target" attribute
-                const target = el.dataset.target;
-                const $target = document.getElementById(target);
-
-                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-                el.classList.toggle('is-active');
-                $target.classList.toggle('is-active');
-
-                });
-            });
-        }
-
-    }
-
-    displayDorm = (dorm) => {
-        // if (!posts.length) return null;
-        const token = localStorage.getItem('token-admin');
-        if(token){
-            return dorm.map( (post,index) => (
-                <div className="card">
-                    <div key={index} className="blog-post__display">
-                        <h3> ชื่อหอ: {post.dorm } </h3>
-                        {/* <h2>id: {post.id} </h2> */}
-                        {/* <button className="button is-link" onClick={this.manage} value={this.post = post}>จัดการผู้ใช้</button> */}
-                        <p> ------------------------------------------------------ </p>
-                    </div>
-    
-                </div>
-                
-            ))
-
-        }
 
         
-
     }
 
-    displayUsers = (users) => {
-        // if (!posts.length) return null;
-        console.log(users)
-        const token = localStorage.getItem('token-admin');
-        if(token){
+    onChange = e => {
+        const {name,value} = e.target
+        this.setState({
+            [name]: value
+            
+        });
+        console.log(this.state)
+    }
 
-            return users.map( (post,index) => (
-                <div key={index} className="blog-post__display">
-                    <form value={this.post = post}>
-                    <h3> เลขห้อง: {post.room} </h3>
-                    <h2> ชื่อผู้เช่า: {post.user } </h2>
-                    {post.status === 2 
-                        ?   <button className="button is-success is-light" disabled  >ยืนยันแล้ว</button>
-                        :   <button className="button is-success" onClick={this.manage_pass}  >ยืนยัน</button>
-                    }
-                    
-                    <button className="button is-danger" onClick={this.manage_fail} >ลบ</button>
-                    <p> ------------------------------------------------------ </p>
-    
-                    </form>
-                    
-                </div>
-            ))
 
+    onSubmit = e => {
+        e.preventDefault();
+        const user = {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password
         }
+        Axios.post(`/auth/admin/register/`,{ 
+            name: user.name,
+            email: user.email,
+            password: user.password
+         })
+        .then(res => {
+            // console.log(res)
+            console.log(res)
+            console.log(res.data)
+            
+            
+            alert("register success")
 
-    }
-
-    getDorm = () =>{
-        const token = localStorage.getItem('token-admin')
-        if(token){
-            Axios.get(`/auth/admin/admin_dorm`,{ 
-                headers: {
-                    "access-token": token
-                }
-            })
-           .then(res => {
-               console.log(res.data)
-               const data = res.data
-               this.setState({ dorm: data});
-               this.getUsers()
-               console.log('GG');
-               console.log(data)
-    
-           })
-           .catch(e => {
-            //    alert('help')
+            // localStorage.setItem('token',res.data)
+            
+            
+            // const token = localStorage.getItem('token')
+            // Axios.get(`http://localhost:3000/api/users/me`,{
+            //     token: token 
+            // }).then(res => {
+            //     console.log(res)
+            //     console.log(res.data)
+            // })
+            
+        })
+        .then(() => this.setState(() => ({
+            toDashboard: true
+          })))
+        .catch(e => {
             console.log(e)
-           })
+            console.log(user.email)
+            console.log(user.password)
+            // alert('มีผู้ใช้นี้แล้ว')
+        })
 
-        }
+        
+
         
     }
 
-    getUsers = () =>{
-        console.log(this.state.dorm)
-        const dormId = this.state.dorm[0].id;
-        console.log(dormId)
-        Axios.post(`/auth/admin/getUsers`,{ 
-            dormId: dormId,
-        })
-       .then(res => {
-           console.log(res.data)
-           const data = res.data
-           this.setState({ users: data});
-           this.setState({ haveUsers: data[0].haveUsers});
-           console.log('GG');
-           console.log(data)
 
-       })
-       .catch(e => {
-        //    alert('help')
-        console.log(e)
-       })
-    }
-
-    manage_pass = (e) =>{
-        e.preventDefault();
-        console.log(this.post)
-        const roomId = this.post.roomId
-        console.log(roomId)
-        Axios.post(`/auth/admin/user_pass`,{ 
-            roomId: roomId,
-        })
-       .then(res => {
-           console.log(res.data)
-           const data = res.data
-           alert("user approve")
-           window.location.reload(false); 
-
-       })
-       .catch(e => {
-        //    alert('help')
-        console.log(e)
-       })
-
-    }
-
-    manage_fail = (e) =>{
-        e.preventDefault();
-        console.log(this.post)
-        const roomId = this.post.roomId
-        console.log(roomId)
-        Axios.post(`/auth/admin/user_fail`,{ 
-            roomId: roomId,
-        })
-       .then(res => {
-           console.log(res.data)
-           const data = res.data
-           alert("user drop")
-           window.location.reload(false); 
-
-       })
-       .catch(e => {
-        //    alert('help')
-        console.log(e)
-       })
-
-    }
 
 
 
@@ -223,13 +112,74 @@ render() {
                     <center><div className="column is-half">
                         <div className="blog-" >
                             <h1>Create_dorm</h1>
-                            {/* {this.displayDorm(this.state.dorm)}
-                            
-                            {this.state.haveUsers && 
-                                
-                                this.displayUsers(this.state.users)
 
-                            } */}
+                            <form onSubmit={this.onSubmit} > {/*action="http://localhost:3000/api/users"*/}
+
+                            <div className="field">
+                                
+                                <div className="control">
+                                    <label className="label" htmlFor="">ชื่อหอพัก</label>
+                                    <input className="input" type="text" name="name" onChange={this.onChange} required></input>
+                                </div>
+
+                                <div className="control">
+                                    <label className="label" htmlFor="">จำนวนชั้น</label>
+                                    <input className="input" type="number" name="floors" onChange={this.onChange} required></input>
+                                </div>
+
+                                
+                                <div className="control">
+                                    <label className="label" htmlFor="">จำนวนห้อง</label> 
+                                    <input className="input" type="number" name="rooms" onChange={this.onChange} required></input>
+                                </div>
+
+                                
+                                <div className="control">
+                                    <label className="label" htmlFor="">ราคา</label>
+                                    <input className="input" type="number" name="price" onChange={this.onChange} required></input>
+                                </div>
+
+                                
+                                <div className="control">
+                                    <label className="label" htmlFor="">พิกัด</label>
+                                    <input className="input" type="text" name="map" onChange={this.onChange} required></input>
+                                </div>
+
+                                <div className="control">
+                                    <label className="label" htmlFor=""></label>
+                                    <input type="checkbox" name="isPet" onChange={this.onChange} ></input>
+                                    <label  htmlFor=""> สามารถเลี้ยงสัตว์ได้</label>
+                                </div>
+
+                                <div className="control">
+                                    <label className="label" htmlFor=""></label>
+                                    <input type="checkbox" name="isAir" onChange={this.onChange} ></input>
+                                    <label htmlFor=""> มีเครื่องปรับอากาศ</label>
+                                </div>
+
+
+                            </div>
+
+                            <div className="field is-grouped">
+                                <div className="control">
+
+                                    <button className="button is-link">Submit</button>
+
+                                </div>
+
+                                <div className="control">
+
+                                    <button className="button is-light" type="reset">Reset</button>
+
+                                </div>
+                            </div>
+
+
+                            {/* <Link to ="/admin/login">
+                                <button className="button is-success">Login</button>
+                            </Link>  */}
+                        </form>
+
 
                         </div>
                     </div></center>

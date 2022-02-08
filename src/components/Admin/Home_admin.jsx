@@ -65,9 +65,9 @@ class Home_admin extends React.Component {
 
     displayDorm = (dorm) => {
         // if (!posts.length) return null;
-        const token = localStorage.getItem('token-admin');
+        
         console.log(dorm);
-        if(token && dorm){
+        if(dorm){
             return dorm.map( (post,index) => (
                 <div className="card">
                     <div key={index} className="blog-post__display">
@@ -225,8 +225,7 @@ class Home_admin extends React.Component {
 
 render() {
     // const {message,currentUser} = this.state
-    const dorm = this.state.dorm;
-    console.log(dorm);
+    const token = localStorage.getItem('token-admin');
     
         return(
             <div>
@@ -238,7 +237,11 @@ render() {
                     <center><div className="column is-half">
                         <div className="blog-" >
                             <h1>admin</h1>
-                            {this.displayDorm(this.state.dorm)}
+                            {token &&
+                                this.displayDorm(this.state.dorm)
+
+                            }
+                            
                             
                             {this.state.haveUsers && 
                                 
