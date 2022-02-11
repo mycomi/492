@@ -22,23 +22,72 @@ import { app } from 'firebase';
 import { TiUser } from "react-icons/ti";
 
 
+
 class Create_dorm extends React.Component {
 
     state = {
         title: '',
         name: '',
-        floor: '',
-        room: '',
+        floors: 1,
+        rooms: 1,
+        show: false,
+
+        card: [],
+
 
 
     };
+
+    
 
     componentDidMount = () => {
 
         
     }
 
+    displayForms = (cards) => {
+        // if (!posts.length) return null;
+
+        console.log("cards: "+cards)
+        
+        if(cards){
+            return cards.map( (card,index) => (
+                <div>
+                    <br></br>
+                    <div className="card" style={{ width: '18rem' }}>
+                        <div key={index} className="card-content" >
+                            <h2 > ชั้นที่: {card[0]}</h2>
+                                <div className="content" >
+                                    <p > เลขห้อง: </p>
+                                    <input className="input" type="number" name="room" value={(card[0]*100)+card[1]} required></input>
+                                    {console.log(card[index])}
+                                    <p> ราคา/เดือน:  </p>
+                                    <input className="input" type="number" name="price" value={1000} required></input>
+
+                                </div>
+                            <footer className="card-footer">
+                                {/* <p> ------------------------------------------------------ </p> */}
+                            </footer>
+                                
+                        </div>
+                    
+                    </div>
+
+                    {/* <br></br> */}
+                </div>
+                
+
+            ))
+
+        }
+        
+
+    }
+
     onChange = e => {
+        this.setState({
+            show: false,
+        })
         const {name,value} = e.target
         this.setState({
             [name]: value
@@ -90,10 +139,44 @@ class Create_dorm extends React.Component {
             // alert('มีผู้ใช้นี้แล้ว')
         })
 
-        
-
-        
     }
+
+    onHandle = e =>{
+        e.preventDefault();
+
+        const rooms = parseInt(this.state.rooms);
+        const floors = parseInt(this.state.floors);
+
+        // var card = new Array(rooms*floors)
+
+        // card[0][0] = '1';
+
+        // console.log(card[0])
+
+        // const card = {
+        //     name: this.state.name,
+        //     floor: this.state.email,
+        //     password: this.state.password
+        // }
+        var myArray = [];
+        
+        for(let j=1;j<=floors;j++){
+            var temp = [];
+            for(let i=1;i<=rooms;i++){
+                temp.push([j,i]);
+            }
+            myArray.push([temp]);
+        }
+        console.log(myArray)
+
+        this.setState({
+            show: true,
+            card: myArray,
+        })
+
+    }
+
+
 
 
 
@@ -101,7 +184,9 @@ class Create_dorm extends React.Component {
 
 render() {
     // const {message,currentUser} = this.state
-    
+    const rooms = parseInt(this.state.rooms);
+    const floors = parseInt(this.state.floors);
+
         return(
             <div>
                 <div id="navbar">
@@ -113,7 +198,7 @@ render() {
                         <div className="blog-" >
                             <h1>Create_dorm</h1>
 
-                            <form onSubmit={this.onSubmit} > {/*action="http://localhost:3000/api/users"*/}
+                            <form onSubmit={this.onHandle} > {/*action="http://localhost:3000/api/users"*/}
 
                             <div className="field">
                                 
@@ -124,19 +209,19 @@ render() {
 
                                 <div className="control">
                                     <label className="label" htmlFor="">จำนวนชั้น</label>
-                                    <input className="input" type="number" name="floors" onChange={this.onChange} required></input>
+                                    <input className="input" type="number" name="floors" min="1" max="10" onChange={this.onChange} required></input>
                                 </div>
 
                                 
                                 <div className="control">
                                     <label className="label" htmlFor="">จำนวนห้อง</label> 
-                                    <input className="input" type="number" name="rooms" onChange={this.onChange} required></input>
+                                    <input className="input" type="number" name="rooms" min="1" max="30" onChange={this.onChange}  required></input>
                                 </div>
 
                                 
                                 <div className="control">
                                     <label className="label" htmlFor="">ราคา</label>
-                                    <input className="input" type="number" name="price" onChange={this.onChange} required></input>
+                                    <input className="input" type="number" name="prices" onChange={this.onChange} required></input>
                                 </div>
 
                                 
@@ -163,7 +248,7 @@ render() {
                             <div className="field is-grouped">
                                 <div className="control">
 
-                                    <button className="button is-link">Submit</button>
+                                    <button className="button is-link">Next</button>
 
                                 </div>
 
@@ -180,10 +265,30 @@ render() {
                             </Link>  */}
                         </form>
 
-
                         </div>
                     </div></center>
+                    
+
                 </div>
+                    
+                {this.state.show &&
+                    this.state.card.map((object, i) => {
+                        console.log(object[0]);
+                        
+                        return (
+                            <div>
+                                <div className="wrapper">
+                                    
+                                    {this.displayForms(object[0])}
+                                </div>
+                                <br></br>
+                                <div className="bar"></div>
+                            </div>
+                        )
+                        
+                    })
+
+                }
 
             </div>
         )

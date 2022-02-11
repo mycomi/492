@@ -74,27 +74,34 @@ class Home extends React.Component {
             dorm = dorm.filter(dorm => (dorm.isAir == air));
         }
         
-
-        return dorm.map( (post,index) => (
-            <div className="card">
-                <div key={index} className="card-content" >
-                    <h2 > Dorm id: {post.id} </h2>
-                        <div className="content" >
-                            <h3 className="card-header-title-center"> ชื่อหอ: {post.name } </h3>
-                            <p> ราคา/เดือน: {post.lowPrice} - {post.highPrice} </p>
-                            <Link to={{ pathname: "/dorm/"+post.id }}>
-                                <button className="button is-link" style={{backgroundColor: "green"}}>ดูหอ</button>
-                            </Link> 
+        if(dorm){
+            return dorm.map( (post,index) => (
+                <div>
+                    <br></br>
+                    <div className="card" style={{ width: '18rem',height: '18rem'}}>
+                        <div key={index} className="card-content" >
+                            <h2 > Dorm id: {post.id} </h2>
+                                <div className="content" >
+                                    <h3 className="card-header-title-center"> ชื่อหอ: {post.name } </h3>
+                                    <p> ราคา/เดือน: {post.lowPrice} - {post.highPrice} </p>
+                                    <Link to={{ pathname: "/dorm/"+post.id }}>
+                                        <button className="button is-link" style={{backgroundColor: "green"}}>ดูหอ</button>
+                                    </Link> 
+                                </div>
+                            <footer className="card-footer">
+                                {/* <p> ------------------------------------------------------ </p> */}
+                            </footer>
+                                
                         </div>
-                    <footer className="card-footer">
-                        {/* <p> ------------------------------------------------------ </p> */}
-                    </footer>
-                        
-                </div>
 
-            </div>
-            
-        ))
+                    </div>
+                </div>
+                
+            ))
+
+        }
+
+        
 
     }
 
@@ -172,43 +179,33 @@ render() {
                             <input type="text" id="lowPrice" name="lowPrice" onChange={this.onChange}></input> ถึง&nbsp;
                             <input type="text" id="highPrice" name="highPrice" onChange={this.onChange}></input> บาท
 
-                            <br/> <label for="pet" > ประเภทหอพัก : </label>
-                            <input type="checkbox" id="pet" name="pet" onChange={this.onToggle} ></input>
-                            <label for="pet">อนุญาตให้เลี้ยงสัตว์ได้ </label>
+                            <br/> <p for="pet" > ประเภทหอพัก : </p>
 
-                            {/* <input type="radio" id="petF" name="pet" value={0} onChange={this.onChange}></input>
-                            <label for="pet">เลี้ยงสัตว์ไม่ได้ </label>
+                            <input type="checkbox" id="pet" name="pet" onChange={this.onToggle} ></input> อนุญาตให้เลี้ยงสัตว์ได้
+                            <br></br>
+                            <input type="checkbox" id="air" name="air" onChange={this.onToggle}></input> มีเครื่องปรับอากาศ
 
-                            <input type="radio" id="both" name="pet" value={2} onChange={this.onChange}></input>
-                            <label for="pet">ทั้งหมด </label> */}
-
-                            <br/>
-                            {/* <form >
-                                <input type="radio" id="petF" name="pet" value={0} onChange={this.onChange}></input>
-                                <label for="pet">เฉพาะห้องแอร์ </label>
-
-                                <input type="radio" id="both" name="pet" value={2} onChange={this.onChange}></input>
-                                <label for="pet">ทั้งหมด </label>
-
-                            </form> */}
-
-                            <input type="checkbox" id="air" name="air" onChange={this.onToggle}></input>
-                            <label for="pet">มีเครื่องปรับอากาศ </label>
-
-                            
-                            
                         </form>
 
                         
                     </div>
 
-                    <center><div className="column is-half" style={{ width: '18rem' }}>
+                    {/* <center><div className="column is-half" style={{ width: '18rem' }}>
                         
 
                         <div className="blog-" >
                             {this.displayDorms(this.state.dorms)}
                         </div>
-                    </div></center>
+                    </div></center> */}
+                </div>
+
+                <div>
+                    <div className="wrapper">
+                        
+                        {this.displayDorms(this.state.dorms)}
+                    </div>
+                    <br></br>
+                    {/* <div className="bar"></div> */}
                 </div>
 
             </div>
