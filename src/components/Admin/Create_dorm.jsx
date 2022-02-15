@@ -21,48 +21,60 @@ import { app } from 'firebase';
 // import mobileImage from './f14.png';
 import { TiUser } from "react-icons/ti";
 
-
-
 class Create_dorm extends React.Component {
-
+    
     state = {
         title: '',
         name: '',
         floors: 1,
         rooms: 1,
+        prices: 0,
+        map: '',
+        isPet: false,
+        isAir: false,
+
         show: false,
+
+        submit: false,
 
         card: [],
 
-
-
     };
-
-    
 
     componentDidMount = () => {
 
-        
     }
 
     displayForms = (cards) => {
         // if (!posts.length) return null;
+        const price = this.state.prices;
+        // const isAir = this.state.isAir;
+        // this.setState({
+        //     submit: true
+        // })
 
-        console.log("cards: "+cards)
-        
         if(cards){
             return cards.map( (card,index) => (
-                <div>
+                <form className="rooms" onSubmit={this.handleSubmit}>
                     <br></br>
                     <div className="card" style={{ width: '18rem' }}>
                         <div key={index} className="card-content" >
                             <h2 > ชั้นที่: {card[0]}</h2>
                                 <div className="content" >
                                     <p > เลขห้อง: </p>
-                                    <input className="input" type="number" name="room" value={(card[0]*100)+card[1]} required></input>
-                                    {console.log(card[index])}
+                                    <input className="input" type="number" id="room" name="room" defaultValue={(card[0]*100)+card[1]} required></input>
+                                    
                                     <p> ราคา/เดือน:  </p>
-                                    <input className="input" type="number" name="price" value={1000} required></input>
+                                    <input className="input" type="number" id="price" name="price" defaultValue={price} required></input>
+                                    {/* <div className="control">
+                                        {isAir 
+                                            ? <input type="checkbox" name="isAir" checked></input>
+                                            : <input type="checkbox" name="isAir" ></input>
+                                        }
+                                        <input type="checkbox" name="isAir" ></input>
+                                        <label > มีเครื่องปรับอากาศ</label>
+                                        
+                                    </div> */}
 
                                 </div>
                             <footer className="card-footer">
@@ -72,12 +84,15 @@ class Create_dorm extends React.Component {
                         </div>
                     
                     </div>
-
+                    {/* <button className="button is-link" name="card_submit" type="submit">submit</button> */}
+                    
                     {/* <br></br> */}
-                </div>
+                </form>
                 
 
             ))
+            
+            
 
         }
         
@@ -96,46 +111,63 @@ class Create_dorm extends React.Component {
         console.log(this.state)
     }
 
-
     onSubmit = e => {
         e.preventDefault();
-        const user = {
+        // alert("onSubmit");
+        // const room = document.getElementsByName("room");
+        // const price = document.getElementsByName("price");
+        const token = localStorage.getItem('token-admin')
+
+        var rooms = document.querySelectorAll('input[name="room"]');
+        var prices = document.querySelectorAll('input[name="price"]');
+
+        var room_array = [];
+        var price_array = [];
+
+        rooms.forEach(room => {
+            room_array.push([room.value])
+        });
+
+        prices.forEach(price => {
+            price_array.push([price.value])
+        });
+        
+        console.log("room"+room_array)
+
+        // const user = {
+        //     name: this.state.name,
+        //     email: this.state.email,
+        //     password: this.state.password
+        // }
+        const data = {
             name: this.state.name,
-            email: this.state.email,
-            password: this.state.password
+            floors: this.state.floors,
+            rooms: this.state.rooms,
+            room: room_array,
+            price: price_array,
+            isPet: this.state.isPet,
+            isAir: this.state.isAir,
         }
-        Axios.post(`/auth/admin/register/`,{ 
-            name: user.name,
-            email: user.email,
-            password: user.password
-         })
+        const header = {
+            headers: {
+                "access-token": token
+            },
+        }
+        Axios.post(`/auth/admin/add_dorm/`,data,header)
         .then(res => {
             // console.log(res)
             console.log(res)
             console.log(res.data)
-            
-            
-            alert("register success")
-
-            // localStorage.setItem('token',res.data)
-            
-            
-            // const token = localStorage.getItem('token')
-            // Axios.get(`http://localhost:3000/api/users/me`,{
-            //     token: token 
-            // }).then(res => {
-            //     console.log(res)
-            //     console.log(res.data)
-            // })
+            alert("success")
+            window.location.reload(false);
             
         })
-        .then(() => this.setState(() => ({
-            toDashboard: true
-          })))
+        // .then(() => this.setState(() => ({
+        //     toDashboard: true
+        //   })))
         .catch(e => {
             console.log(e)
-            console.log(user.email)
-            console.log(user.password)
+
             // alert('มีผู้ใช้นี้แล้ว')
         })
 
@@ -147,17 +179,6 @@ class Create_dorm extends React.Component {
         const rooms = parseInt(this.state.rooms);
         const floors = parseInt(this.state.floors);
 
-        // var card = new Array(rooms*floors)
-
-        // card[0][0] = '1';
-
-        // console.log(card[0])
-
-        // const card = {
-        //     name: this.state.name,
-        //     floor: this.state.email,
-        //     password: this.state.password
-        // }
         var myArray = [];
         
         for(let j=1;j<=floors;j++){
@@ -176,6 +197,19 @@ class Create_dorm extends React.Component {
 
     }
 
+    onToggle = e =>{
+        // e.preventDefault();
+        this.setState({
+            show: false,
+        })
+        const {name} = e.target
+        const prevCheck = this.state[name];
+        this.setState({
+            [name]: !prevCheck
+        });
+        console.log(this.state)
+
+    }
 
 
 
@@ -184,9 +218,8 @@ class Create_dorm extends React.Component {
 
 render() {
     // const {message,currentUser} = this.state
-    const rooms = parseInt(this.state.rooms);
-    const floors = parseInt(this.state.floors);
-
+    // const rooms = parseInt(this.state.rooms);
+    
         return(
             <div>
                 <div id="navbar">
@@ -231,14 +264,12 @@ render() {
                                 </div>
 
                                 <div className="control">
-                                    <label className="label" htmlFor=""></label>
-                                    <input type="checkbox" name="isPet" onChange={this.onChange} ></input>
+                                    <input type="checkbox" id="isPet" name="isPet" onChange={this.onToggle} ></input>
                                     <label  htmlFor=""> สามารถเลี้ยงสัตว์ได้</label>
                                 </div>
 
                                 <div className="control">
-                                    <label className="label" htmlFor=""></label>
-                                    <input type="checkbox" name="isAir" onChange={this.onChange} ></input>
+                                    <input type="checkbox" id="isAir" name="isAir" onChange={this.onToggle} ></input>
                                     <label htmlFor=""> มีเครื่องปรับอากาศ</label>
                                 </div>
 
@@ -248,7 +279,7 @@ render() {
                             <div className="field is-grouped">
                                 <div className="control">
 
-                                    <button className="button is-link">Next</button>
+                                    <button className="button is-link" type="submit">Next</button>
 
                                 </div>
 
@@ -257,6 +288,7 @@ render() {
                                     <button className="button is-light" type="reset">Reset</button>
 
                                 </div>
+
                             </div>
 
 
@@ -264,6 +296,7 @@ render() {
                                 <button className="button is-success">Login</button>
                             </Link>  */}
                         </form>
+                        <button className="button is-light" type="button" onClick={this.onSubmit}>Submit</button>
 
                         </div>
                     </div></center>

@@ -69,12 +69,13 @@ class Home_admin extends React.Component {
         console.log(dorm);
         if(dorm){
             return dorm.map( (post,index) => (
-                <div className="card">
+                <div className="card" style={{ width: '18rem',height: '18rem'}}>
                     <div key={index} className="blog-post__display">
+                        <br></br>
                         <h3> ชื่อหอ: {post.dorm } </h3>
                         {/* <h2>id: {post.id} </h2> */}
                         {/* <button className="button is-link" onClick={this.manage} value={this.post = post}>จัดการผู้ใช้</button> */}
-                        <p> ------------------------------------------------------ </p>
+                        {/* <p> ------------------------------------------------------ </p> */}
                     </div>
     
                 </div>
@@ -84,15 +85,18 @@ class Home_admin extends React.Component {
         }else{
             console.log("null");
             return (
-                <div className="card">
-                    <div className="blog-post__display">
-                        <h3> ชื่อหอ: ไม่มีข้อมูลหอพัก </h3>
+                <div className="card" style={{ width: '18rem',height: '18rem'}}>
+                    <div className="card-content">
+                        <br></br>
+                        <h2> ชื่อหอ: ไม่มีข้อมูลหอพัก </h2>
                         {/* <h2>id: {post.id} </h2> */}
                         {/* <button className="button is-link" onClick={this.manage} value={this.post = post}>จัดการผู้ใช้</button> */}
+                        <br></br>
                         <Link to="/admin/create_dorm">
                             <button className="button is-link"><FaBuilding/>เพิ่มหอพัก</button>
                         </Link> 
-                        <p> ------------------------------------------------------ </p>
+                        
+                        {/* <p> ------------------------------------------------------ </p> */}
                     </div>
 
                 </div>
