@@ -1,6 +1,6 @@
 import React from 'react'
 import 'bulma/css/bulma.css'
-import { Link } from 'react-router-dom';
+import { Link,Redirect } from 'react-router-dom';
 import Navbar_admin from './Navbar_admin'
 import Axios from 'axios';
 
@@ -38,6 +38,8 @@ class Create_dorm extends React.Component {
         submit: false,
 
         card: [],
+
+        toDashboard: false,
 
     };
 
@@ -88,14 +90,10 @@ class Create_dorm extends React.Component {
                     
                     {/* <br></br> */}
                 </form>
-                
 
             ))
-            
-            
 
         }
-        
 
     }
 
@@ -159,6 +157,9 @@ class Create_dorm extends React.Component {
             console.log(res)
             console.log(res.data)
             alert("success")
+            this.setState({
+                toDashboard: true,
+            })
             window.location.reload(false);
             
         })
@@ -212,13 +213,12 @@ class Create_dorm extends React.Component {
     }
 
 
-
-
-
-
 render() {
     // const {message,currentUser} = this.state
     // const rooms = parseInt(this.state.rooms);
+    if (this.state.toDashboard === true) {
+        return <Redirect to='/admin' />
+      }
     
         return(
             <div>

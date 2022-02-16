@@ -19,6 +19,7 @@
     "mongoose": "^5.9.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-google-drive-picker": "^1.1.4",
     "react-icons": "^3.9.0",
     "react-router": "^3.2.6",
     "react-router-dom": "^5.1.2",
