@@ -73,9 +73,9 @@ class Home_admin extends React.Component {
                     <div key={index} className="blog-post__display">
                         <br></br>
                         <h3> ชื่อหอ: {post.dorm } </h3>
-                        {/* <h2>id: {post.id} </h2> */}
-                        {/* <button className="button is-link" onClick={this.manage} value={this.post = post}>จัดการผู้ใช้</button> */}
-                        {/* <p> ------------------------------------------------------ </p> */}
+                        
+                        <img src={post.imageUrl} alt="firebase-image" style={{ width: '80%' }}></img>
+
                     </div>
     
                 </div>

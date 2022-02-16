@@ -9,8 +9,8 @@ import Axios from 'axios';
 import './style.css';
 
 
-import { FaAndroid } from "react-icons/fa";
-import { MdAssignmentInd } from "react-icons/md";
+import { FaAndroid,FaRegSnowflake } from "react-icons/fa";
+import { MdAssignmentInd,MdPets} from "react-icons/md";
 import { IoIosHome } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { IoIosLogIn } from "react-icons/io";
@@ -78,12 +78,24 @@ class Home extends React.Component {
             return dorm.map( (post,index) => (
                 <div>
                     <br></br>
-                    <div className="card" style={{ width: '18rem',height: '18rem'}}>
+                    <div className="card" style={{ width: '18rem',height: 'auto'}}>
                         <div key={index} className="card-content" >
-                            <h2 > Dorm id: {post.id} </h2>
+                            {/* <h2 > Dorm id: {post.id} </h2> */}
                                 <div className="content" >
                                     <h3 className="card-header-title-center"> ชื่อหอ: {post.name } </h3>
                                     <p> ราคา/เดือน: {post.lowPrice} - {post.highPrice} </p>
+                                    {post.isPet 
+                                       ?  <p style={{color :'hsl(171, 100%, 29%)'}}> <MdPets/> สามารถเลี้ยงสัตว์ได้</p>
+                                       
+                                       : <p style={{color :'hsl(348, 100%, 61%)'}}> <MdPets/> ไม่สามารถเลี้ยงสัตว์ได้</p>
+                                    }
+                                    {post.isAir 
+                                        ?  <p style={{color :'hsl(171, 100%, 29%)'}}><FaRegSnowflake />  มีเครื่องปรับอากาศ</p>
+                                        : <p style={{color :'hsl(348, 100%, 61%)'}}> <FaRegSnowflake />  ไม่มีเครื่องปรับอากาศ</p>
+                                    }
+                                    <br></br>
+                                    <img src={post.imageUrl} alt="firebase-image" style={{ width: '80%' }}></img>
+                                    
                                     <Link to={{ pathname: "/dorm/"+post.id }}>
                                         <button className="button is-link" style={{backgroundColor: "green"}}>ดูหอ</button>
                                     </Link> 
@@ -169,7 +181,7 @@ render() {
                     <br/>
                     <div className="headline">
                         <center>
-                            <h1 id="filter" style={{backgroundColor: 'white'}}>เว็บค้นหาและจองหอพัก </h1>
+                            <h1 className="filterHeader" id="filter" style={{backgroundColor: 'white'}}>เว็บค้นหาและจองหอพัก </h1>
                         </center>
                     </div>
                     <div id="filter" className="filter">
@@ -199,14 +211,18 @@ render() {
                     </div></center> */}
                 </div>
 
-                <div>
-                    <div className="wrapper">
+                <div className="bg_crad" >
+
+                    <div className="wrapper ">
                         
                         {this.displayDorms(this.state.dorms)}
                     </div>
                     <br></br>
                     {/* <div className="bar"></div> */}
+
+
                 </div>
+                
 
             </div>
 

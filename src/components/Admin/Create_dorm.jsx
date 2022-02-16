@@ -6,6 +6,8 @@ import Axios from 'axios';
 
 import '../style.css';
 
+import firebase from '../firebase/firebase';
+import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
 
 import { FaAndroid } from "react-icons/fa";
 
@@ -32,6 +34,8 @@ class Create_dorm extends React.Component {
         map: '',
         isPet: false,
         isAir: false,
+        image: null,
+        imageUrl: null,
 
         show: false,
 
@@ -40,6 +44,11 @@ class Create_dorm extends React.Component {
         card: [],
 
         toDashboard: false,
+
+        showUploadButton: false,
+
+        progress: "0",
+
 
     };
 
@@ -109,7 +118,37 @@ class Create_dorm extends React.Component {
         console.log(this.state)
     }
 
-    onSubmit = e => {
+    upload = (e) =>{
+        let file = this.state.image;
+        let token = localStorage.getItem('token-admin')
+        let date = Date.now();
+        var storage = firebase.storage();
+        var storageRef = storage.ref();
+        var uploadTask = storageRef.child('images/'+token+ "/"+date+"_"+file.name).put(file);
+
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+            (snapshot) =>{
+            var progress = Math.round((snapshot.bytesTransferred/snapshot.totalBytes))*100
+            this.setState({progress})
+            },(error) =>{
+            throw error
+            },() =>{
+            // uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) =>{
+
+            uploadTask.snapshot.ref.getDownloadURL().then((url) =>{
+                this.setState({
+                    imageUrl: url
+                })
+                console.log(url)
+                alert("upload success")
+            })
+            // document.getElementById("file").value = null
+
+        }) 
+        
+    }
+
+    onSubmit = async e => {
         e.preventDefault();
         // alert("onSubmit");
         // const room = document.getElementsByName("room");
@@ -137,6 +176,12 @@ class Create_dorm extends React.Component {
         //     email: this.state.email,
         //     password: this.state.password
         // }
+
+        if(!this.state.imageUrl){
+            alert("Please upload photo!!!")
+            return
+        }
+        
         const data = {
             name: this.state.name,
             floors: this.state.floors,
@@ -145,17 +190,21 @@ class Create_dorm extends React.Component {
             price: price_array,
             isPet: this.state.isPet,
             isAir: this.state.isAir,
+            imageUrl: this.state.imageUrl,
         }
         const header = {
             headers: {
                 "access-token": token
             },
         }
+        console.log(this.state.imageUrl);
         Axios.post(`/auth/admin/add_dorm/`,data,header)
         .then(res => {
+            
             // console.log(res)
             console.log(res)
             console.log(res.data)
+            
             alert("success")
             this.setState({
                 toDashboard: true,
@@ -210,6 +259,17 @@ class Create_dorm extends React.Component {
         });
         console.log(this.state)
 
+    }
+
+    onHandleChange = e =>{
+        if(e.target.files[0]){
+            this.setState({ 
+                image: e.target.files[0],
+                showUploadButton : true,
+            })
+        }
+
+        console.log("image: "+ this.state.image);
     }
 
 
@@ -273,7 +333,25 @@ render() {
                                     <label htmlFor=""> มีเครื่องปรับอากาศ</label>
                                 </div>
 
+                                <div className="control">
+                                    <br></br>
+                                    <p > อัพโหลดรูปภาพ </p>
+                                    <input type="file" onChange={this.onHandleChange} ></input>
 
+                                    
+                                </div>
+                                <div className="control">
+                                    <br></br>
+                                    {this.state.showUploadButton &&
+                                        <progress value={this.state.progress} max="100"></progress>
+                                    }
+                                    <br></br>
+                                    {this.state.showUploadButton &&
+                                        <button type="button" onClick={this.upload} >upload </button>
+                                    }
+                                    
+                                    
+                                </div>
                             </div>
 
                             <div className="field is-grouped">

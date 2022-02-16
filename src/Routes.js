@@ -14,8 +14,6 @@ import Register_admin from './components/Admin/Register_admin';
 import Login_admin from './components/Admin/Login_admin';
 import Create_dorm from './components/Admin/Create_dorm'
 
-import FileUpload from './components/Admin/FileUpload'
-
 
 import Home_line from './components/Line/Home_line';
 import Register_line from './components/Line/Register_line';
@@ -42,8 +40,6 @@ const Routes = () => (
     <Route path="/admin/register" exact component={Register_admin} />
     <Route path="/admin/login" exact component={Login_admin} />
     <Route path="/admin/create_dorm" exact component={Create_dorm} />
-
-    <Route path="/admin/upload" exact component={FileUpload} />
   
 
     <Route path="/line/:id" exact component={Home_line} />
