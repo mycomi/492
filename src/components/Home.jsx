@@ -9,8 +9,10 @@ import Axios from 'axios';
 import './style.css';
 
 
+
 import { FaAndroid,FaRegSnowflake } from "react-icons/fa";
 import { MdAssignmentInd,MdPets} from "react-icons/md";
+import {GrMap} from "react-icons/gr"
 import { IoIosHome } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { IoIosLogIn } from "react-icons/io";
@@ -28,7 +30,12 @@ import { TiUser } from "react-icons/ti";
 // import Navbar from './Navbar'
 // import MessageList from './MessageList'
 
+
+
+
 class Home extends React.Component {
+    
+    
 
     state = {
         title: '',
@@ -43,23 +50,26 @@ class Home extends React.Component {
 
         pet: false,
         air: false,
+        distance: false,
 
     };
 
     componentDidMount = () => {
         this.getDorms();
-        
-        
+
     }
 
 
     displayDorms = (dorms) => {
         // if (!posts.length) return null;
         console.log(dorms)
+        // console.log(this.state.markers[0].position)
         const low = this.state.lowPrice;
         const high = this.state.highPrice;
         const pet = this.state.pet;
         const air = this.state.air;
+
+        var map = ""
 
         // isPet
         let dorm = dorms;
@@ -75,8 +85,14 @@ class Home extends React.Component {
         }
         
         if(dorm){
+            dorm.sort((a,b) => a.lowPrice - b.lowPrice);
+            if(this.state.distance){
+                dorm.sort((a,b) => a.distance - b.distance);
+            }
             return dorm.map( (post,index) => (
+                
                 <div>
+                    
                     <br></br>
                     <div className="card" style={{ width: '18rem',height: 'auto'}}>
                         <div key={index} className="card-content" >
@@ -84,13 +100,16 @@ class Home extends React.Component {
                                 <div className="content" >
                                     <h3 className="card-header-title-center"> ชื่อหอ: {post.name } </h3>
                                     <p> ราคา/เดือน: {post.lowPrice} - {post.highPrice} </p>
+                                    <p> โทร: {post.phone} </p>
+                                    <p> ระยะทาง: {post.distance/1000} km.</p>
+                                    <p> แผนที่: <a href={map = "https://www.google.com/maps/search/?api=1&query="+post.lat+"%2C"+post.lng} target="_blank">คลิ๊ก <GrMap/></a></p>
                                     {post.isPet 
-                                       ?  <p style={{color :'hsl(171, 100%, 29%)'}}> <MdPets/> สามารถเลี้ยงสัตว์ได้</p>
+                                       ? <p style={{color :'hsl(171, 100%, 29%)'}}> <MdPets/> สามารถเลี้ยงสัตว์ได้</p>
                                        
                                        : <p style={{color :'hsl(348, 100%, 61%)'}}> <MdPets/> ไม่สามารถเลี้ยงสัตว์ได้</p>
                                     }
                                     {post.isAir 
-                                        ?  <p style={{color :'hsl(171, 100%, 29%)'}}><FaRegSnowflake />  มีเครื่องปรับอากาศ</p>
+                                        ? <p style={{color :'hsl(171, 100%, 29%)'}}><FaRegSnowflake />  มีเครื่องปรับอากาศ</p>
                                         : <p style={{color :'hsl(348, 100%, 61%)'}}> <FaRegSnowflake />  ไม่มีเครื่องปรับอากาศ</p>
                                     }
                                     <br></br>
@@ -164,18 +183,16 @@ class Home extends React.Component {
 
     
 
-
 render() {
     // const {message,currentUser} = this.state
-    console.log("state: "+this.state.air)
+    // console.log("state: "+this.state.air)
+
         return(
 
             <div>
                 <div id="navbar">
                      <Navbar />
                 </div>
-
-                
 
                 <div className="bg2">
                     <br/>
@@ -196,6 +213,8 @@ render() {
                             <input type="checkbox" id="pet" name="pet" onChange={this.onToggle} ></input> อนุญาตให้เลี้ยงสัตว์ได้
                             <br></br>
                             <input type="checkbox" id="air" name="air" onChange={this.onToggle}></input> มีเครื่องปรับอากาศ
+                            <br></br>
+                            <input type="checkbox" id="distance" name="distance" onChange={this.onToggle}></input> เรียงตามระยะทาง
 
                         </form>
 
@@ -210,6 +229,8 @@ render() {
                         </div>
                     </div></center> */}
                 </div>
+
+                
 
                 <div className="bg_crad" >
 
@@ -232,3 +253,4 @@ render() {
 
 }
 export default Home
+

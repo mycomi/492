@@ -6,8 +6,12 @@
     color: rgb(162, 223, 247);
 }
 .navbar{
-    background-color: rgb(62, 238, 194);
+    background-color: #00486e;
     color: rgba(79, 111, 218, 0.767);
+}
+
+.navbar-burger{
+    color: #00c300;
 }
 
 .container{
@@ -21,7 +25,7 @@
     
     background-size: 1600px 900px;
     padding: 250px;
-    background-image: url(./f16.jpg);
+    background-image: url(./f16.png);
 }
 
 .filter{
@@ -34,10 +38,10 @@
     font-size: 30px;
     width:400px;
     max-width: 400px;
-    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(255, 255, 255); */
     border: 5px solid;
     /* border-radius:50px; */
-    border-color:hsl(207, 77%, 86%);
+    border-color:#00c300;
 }
 
 .filterText{
@@ -46,9 +50,9 @@
     width:600px;
     max-width: 600px;
     background-color: rgb(255, 255, 255);
-    border: 15px solid;
+    border: 10px solid;
     border-radius:50px;
-    border-color:hsl(48, 100%, 81%);
+    border-color: #00486e;
     /* border-color:hsl(207, 77%, 86%); */
 }
 
@@ -69,8 +73,9 @@
     height: auto!important;
     /* padding: 500px;  */
     background-size: 1600px 900px;
-    background-image: url(./f16.jpg);
-    
+    background-image: url(./f16.png);
+    background-color: linear-gradient(to right top, #30ca8c, #28cd89, #20cf85, #17d281, #0bd47d); 
+    background-color: rgba(114,146,193,255);   
 }  
 
 .bg_crad{

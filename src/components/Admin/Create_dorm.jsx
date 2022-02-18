@@ -9,8 +9,10 @@ import '../style.css';
 import firebase from '../firebase/firebase';
 import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
 
-import { FaAndroid } from "react-icons/fa";
+import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
+import { getDistance } from 'geolib';
 
+import { FaAndroid } from "react-icons/fa";
 import { IoIosHome } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { IoIosLogIn } from "react-icons/io";
@@ -49,6 +51,19 @@ class Create_dorm extends React.Component {
 
         progress: "0",
 
+        markers: [
+            {
+              name: "Dorm position",
+              position: {
+                lat: 18.801106, 
+                lng: 98.952616
+              }
+            }
+        ],
+
+        distance: 0,
+        position: '',
+
 
     };
 
@@ -65,6 +80,7 @@ class Create_dorm extends React.Component {
         // })
 
         if(cards){
+            
             return cards.map( (card,index) => (
                 <form className="rooms" onSubmit={this.handleSubmit}>
                     <br></br>
@@ -191,6 +207,8 @@ class Create_dorm extends React.Component {
             isPet: this.state.isPet,
             isAir: this.state.isAir,
             imageUrl: this.state.imageUrl,
+            distance: this.state.distance,
+            position: this.state.position,
         }
         const header = {
             headers: {
@@ -272,6 +290,30 @@ class Create_dorm extends React.Component {
         console.log("image: "+ this.state.image);
     }
 
+    onMarkerDragEnd = (coord, index) => {
+        const { latLng } = coord;
+        const lat = latLng.lat();
+        const lng = latLng.lng();
+    
+        this.setState(prevState => {
+          const markers = [...this.state.markers];
+          markers[index] = { ...markers[index], position: { lat, lng } };
+          return { markers };
+        });
+        console.log(this.state.markers[0].position)
+
+        const distance = getDistance({
+            latitude: 18.801106,longitude: 98.952616},
+            this.state.markers[0].position, 1)
+        console.log(distance/1000 + " กม.")
+
+        this.setState({
+            distance : distance,
+            position: this.state.markers[0].position,
+
+        })
+    }
+
 
 render() {
     // const {message,currentUser} = this.state
@@ -317,10 +359,50 @@ render() {
                                     <input className="input" type="number" name="prices" onChange={this.onChange} required></input>
                                 </div>
 
-                                
                                 <div className="control">
                                     <label className="label" htmlFor="">พิกัด</label>
-                                    <input className="input" type="text" name="map" onChange={this.onChange} required></input>
+                                    <div>
+                                        <Map
+                                            google={this.props.google}
+                                            
+                                            style={{
+                                            width: "100%",
+                                            height: "300px"
+                                            }}
+                                            mapTypeControl={false}
+                                            streetViewControl={false}
+                                            initialCenter={{ lat: 18.801106, lng: 98.952616 }}
+                                            zoom={14}
+                                        >
+                                            {this.state.markers.map((marker, index) => (
+                                            <Marker
+                                                position={marker.position}
+                                                draggable={true}
+                                                onDragend={(t, map, coord) => this.onMarkerDragEnd(coord, index)}
+                                                // onClick={this.onMarkerClick}
+                                                name={marker.name}
+                                            />
+                                            ))}
+                                        </Map>
+
+                                        <br></br>
+                                        <br></br>
+                                        <br></br>
+                                        <br></br>
+                                        <br></br>
+                                        <br></br>
+                                        <br></br>
+                                        <br></br>
+                                        <br></br>
+                                        <br></br>
+                                        <br></br>
+                                        <br></br>
+                                        <br></br>
+                                        <p> หอพัก ห่างจาก มหาวิทยาลัยเชียงใหม่ {this.state.distance} ม.</p>
+
+                                    </div>
+                                    
+                                
                                 </div>
 
                                 <div className="control">
@@ -407,4 +489,8 @@ render() {
     }
 
 }
-export default Create_dorm
+// export default Create_dorm
+
+export default GoogleApiWrapper({
+    apiKey: 'AIzaSyBqAvFRHpVzQYD6kI97T2XgLjcuU1jxWFs'
+  })(Create_dorm);
