@@ -25,7 +25,7 @@ import { TiUser } from "react-icons/ti";
 
 // import Navbar from './Navbar'
 // import MessageList from './MessageList'
-class Home extends React.Component {
+class Dorm extends React.Component {
     
     state = {
         title: '',
@@ -72,23 +72,46 @@ class Home extends React.Component {
         // if (!posts.length) return null;
         console.log(rooms)
 
-        return rooms.map( (post,index) => (
-
-                <div key={index} className="blog-post__display">
-                    <h2> Room id: {post.id} </h2>
-                    <h2> Dorm id: {post.dorm_id} </h2>
-                    <h3> เลขห้อง: {post.roomNum } </h3>
-                    <p> ราคา/เดือน: {post.price}</p>
-
-                    {!this.state.isRoom && localStorage.getItem('token') &&
-                        <button className="button is-link" onClick={this.book} value={this.post = post}>จองห้อง</button>
-                    }   
-
-                    <p> ------------------------------------------------ </p>
+        if(rooms){
+            return rooms.map( (post,index) => (
+                <div>
+                    <br></br>
+                    <div className="card" style={{ width: '18rem',height: 'auto'}}>
+                        <div key={index} className="card-content">
+                            <div className="content" >
+                                {/* <h2 className="card-header-title-center"> Room id: {post.id} </h2>
+                                <h2> Dorm id: {post.dorm_id} </h2> */}
+                                <h3> เลขห้อง: {post.roomNum } </h3>
+                                <p> ราคา/เดือน: {post.price}</p>
+    
+                                {!this.state.isRoom && localStorage.getItem('token') &&
+                                    <button className="button is-link" onClick={this.book} value={this.post = post}>จองห้อง</button>
+                                }   
+                                <br></br>
+                                {/* <p> ------------------------------------------------ </p> */}
+                                
+                            </div>
+                            <footer className="card-footer">
+                                {/* <p> ------------------------------------------------------ </p> */}
+                            </footer>
+                        </div>
+                    </div>
+                    
                 </div>
+    
+                
+            ))
 
-            
-        ))
+        }else{
+            console.log("noroom")
+            return (
+                
+                <div>
+                    no room
+                </div>
+            )
+        }
+        
 
     }
 
@@ -167,9 +190,6 @@ class Home extends React.Component {
         
     }
 
-       
-    
-        
     
 render() {  
     // const {message,currentUser} = this.state
@@ -183,7 +203,7 @@ render() {
                      <Navbar />
                 </div>
 
-                <div class="bg2">
+                {/* <div class="bg2">
                     <center><div className="column is-half">
                         <div className="blog-" >
                             {(this.state.rooms).length > 0 
@@ -194,6 +214,21 @@ render() {
 
                         </div>
                     </div></center>
+                </div> */}
+                <div className="bg_crad" >
+                    <br></br>
+                    <center>
+                        <h1> รายชื่อห้อง </h1>
+                        <div className="wrapper " >
+                            
+                            {this.displayRooms(this.state.rooms)}
+                        </div>
+                    </center>
+                    
+                    <br></br>
+                    {/* <div className="bar"></div> */}
+
+
                 </div>
 
             </div>
@@ -202,4 +237,4 @@ render() {
     
 
 }
-export default Home
+export default Dorm

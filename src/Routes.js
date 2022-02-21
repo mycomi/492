@@ -13,7 +13,8 @@ import Home_admin from './components/Admin/Home_admin';
 import Register_admin from './components/Admin/Register_admin';
 import Login_admin from './components/Admin/Login_admin';
 import Create_dorm from './components/Admin/Create_dorm'
-
+import AddUser_admin from './components/Admin/AddUser_admin'
+import AddPhoto_admin from './components/Admin/AddPhoto_admin'
 
 import Home_line from './components/Line/Home_line';
 import Register_line from './components/Line/Register_line';
@@ -40,7 +41,8 @@ const Routes = () => (
     <Route path="/admin/register" exact component={Register_admin} />
     <Route path="/admin/login" exact component={Login_admin} />
     <Route path="/admin/create_dorm" exact component={Create_dorm} />
-  
+    <Route path="/admin/add_users/" exact component={AddUser_admin} />
+    <Route path="/admin/add_photo/" exact component={AddPhoto_admin} />
 
     <Route path="/line/:id" exact component={Home_line} />
     <Route path="/line/register/:id" exact component={Register_line} />

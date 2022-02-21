@@ -123,9 +123,11 @@ render() {
                 )
             }else{
                 return(
-                    <section className="section container">
-                        <div className="columns is-centered">
+                    
+                    <section className="section container" style={{height:'700px'}}>
+                        <div className="columns is-centered" >
                             <div className="column is-half">
+                            <center><label className="label"> <h1> Login </h1></label></center>
                                 <form onSubmit={this.onSubmit}>
                                 {/* action="http://localhost:3000/api/users/login" method="post" */}
                                     <div className="field">

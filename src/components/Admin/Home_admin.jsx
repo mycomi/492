@@ -8,7 +8,7 @@ import '../style.css';
 
 
 import { FaAndroid, FaBuilding } from "react-icons/fa";
-
+import {MdPersonAdd, MdAddToPhotos} from "react-icons/md"
 import { IoIosHome } from "react-icons/io";
 import { IoIosLogOut, IoIosLogIn } from "react-icons/io";
 import { TiHome, TiUser } from "react-icons/ti";
@@ -25,7 +25,7 @@ class Home_admin extends React.Component {
     state = {
         title: '',
         body: '',
-        dorm: [],
+        dorm: '',
         users: [],
         haveUsers: false,
         dormId: '',
@@ -63,23 +63,69 @@ class Home_admin extends React.Component {
 
     }
 
+    getDorm = () =>{
+        const token = localStorage.getItem('token-admin')
+        if(token){
+            Axios.get(`/auth/admin/admin_dorm`,{ 
+                headers: {
+                    "access-token": token
+                }
+            })
+           .then(res => {
+               console.log(res.data)
+               const data = res.data
+               this.setState({ dorm: data});
+               this.getUsers()
+               console.log('GG');
+               console.log(data)
+    
+           })
+           .catch(e => {
+            //    alert('help')
+            console.log(e)
+           })
+
+        }
+        
+    }
+
     displayDorm = (dorm) => {
         // if (!posts.length) return null;
         
+        var dormId = this.state.dorm[0].id
+        console.log(dormId)
         console.log(dorm);
         if(dorm){
             return dorm.map( (post,index) => (
-                <div className="card" style={{ width: '18rem',height: '18rem'}}>
-                    <div key={index} className="blog-post__display">
-                        <br></br>
-                        <h3> ชื่อหอ: {post.dorm } </h3>
-                        
-                        <img src={post.imageUrl} alt="firebase-image" style={{ width: '80%' }}></img>
+                <div>
+                    <div className="card" style={{ width: '600px',height: 'auto'}}>
+                    <div key={index} className="card-content" >
+                        <div className="content" >
+                            <br></br>
+                            <h3> ชื่อหอ: {post.dorm } </h3>
+                            <br></br>
+                            <img src={post.imageUrl} alt="firebase-image" style={{ width: '80%' }}></img>
 
+                        </div>
+                        <br></br>
+                        <div>
+                            <Link to={`/admin/add_users/`}>
+                                <button className="button is-link"><MdPersonAdd/> &nbsp; เพิ่มผู้ใช้ </button>
+                            </Link>
+                            &nbsp;
+                            &nbsp;
+                            <Link to="/admin/add_photo">
+                                <button className="button is-link"><MdAddToPhotos/> &nbsp; รูปเพิ่มเติม</button>
+                            </Link>
+                        </div>
+                        
+                        <br></br>
                     </div>
     
                 </div>
-                
+
+                </div>
+
             ))
 
         }else{
@@ -112,20 +158,30 @@ class Home_admin extends React.Component {
         if(token){
 
             return users.map( (post,index) => (
-                <div key={index} className="blog-post__display">
-                    <form value={this.post = post}>
-                    <h3> เลขห้อง: {post.room} </h3>
-                    <h2> ชื่อผู้เช่า: {post.user } </h2>
-                    {post.status === 2 
-                        ?   <button className="button is-success is-light" disabled  >ยืนยันแล้ว</button>
-                        :   <button className="button is-success" onClick={this.manage_pass}  >ยืนยัน</button>
-                    }
-                    
-                    <button className="button is-danger" onClick={this.manage_fail} >ลบ</button>
-                    <p> ------------------------------------------------------ </p>
-    
-                    </form>
-                    
+                <div>
+                    <br></br>
+                    <div className="card" style={{ width: '18rem',height: 'auto'}}>
+                        <div key={index} className="card-content">
+                            <div className="content" >
+                                <form value={this.post = post}>
+                                <h3> เลขห้อง: {post.roomNum} </h3>
+                                <p> ชื่อผู้เช่า: {post.name } </p>
+                                {post.status === 2 
+                                    ?   <button className="button is-success is-light" disabled  >ยืนยันแล้ว</button>
+                                    :   <button className="button is-success" onClick={this.manage_pass}  >ยืนยัน</button>
+                                }
+                                
+                                <button className="button is-danger" onClick={this.manage_fail} >ลบ</button>
+                                {/* <p> ------------------------------------------------------ </p> */}
+                
+                                </form>
+                            </div>
+                            <footer className="card-footer">
+                                {/* <p> ------------------------------------------------------ </p> */}
+                            </footer>
+                        </div>
+                        
+                    </div>
                 </div>
             ))
 
@@ -133,31 +189,7 @@ class Home_admin extends React.Component {
 
     }
 
-    getDorm = () =>{
-        const token = localStorage.getItem('token-admin')
-        if(token){
-            Axios.get(`/auth/admin/admin_dorm`,{ 
-                headers: {
-                    "access-token": token
-                }
-            })
-           .then(res => {
-               console.log(res.data)
-               const data = res.data
-               this.setState({ dorm: data});
-               this.getUsers()
-               console.log('GG');
-               console.log(data)
     
-           })
-           .catch(e => {
-            //    alert('help')
-            console.log(e)
-           })
-
-        }
-        
-    }
 
     getUsers = () =>{
         console.log(this.state.dorm)
@@ -170,7 +202,7 @@ class Home_admin extends React.Component {
            console.log(res.data)
            const data = res.data
            this.setState({ users: data});
-           this.setState({ haveUsers: data[0].haveUsers});
+           this.setState({ haveUsers: true});
            console.log('GG');
            console.log(data)
 
@@ -184,7 +216,7 @@ class Home_admin extends React.Component {
     manage_pass = (e) =>{
         e.preventDefault();
         console.log(this.post)
-        const roomId = this.post.roomId
+        const roomId = this.post.id
         console.log(roomId)
         Axios.post(`/auth/admin/user_pass`,{ 
             roomId: roomId,
@@ -206,7 +238,7 @@ class Home_admin extends React.Component {
     manage_fail = (e) =>{
         e.preventDefault();
         console.log(this.post)
-        const roomId = this.post.roomId
+        const roomId = this.post.id
         console.log(roomId)
         Axios.post(`/auth/admin/user_fail`,{ 
             roomId: roomId,
@@ -231,27 +263,84 @@ render() {
     // const {message,currentUser} = this.state
     const token = localStorage.getItem('token-admin');
     
+    
+    if(token){
         return(
             <div>
                 <div id="navbar">
                      <Navbar_admin />
                 </div>
 
-                <div className="bg2">
-                    <center><div className="column is-half">
+                {/* <div className="bg2" >
+                    <center><div className="column is-half" style={{height:'700px'}}>
                         <div className="blog-" >
+                            <br></br>
                             <h1>admin</h1>
-                            {token &&
-                                this.displayDorm(this.state.dorm)
+                            <br></br>
+                            {this.state.dorm &&
+                            this.displayDorm(this.state.dorm)}
+                            <br></br>
+                            <br></br>
+                            <label className="label"> รายชื่อผู้จองหอพัก </label>
+                            
 
-                            }
-                            
-                            
                             {this.state.haveUsers && 
                                 
                                 this.displayUsers(this.state.users)
-
+                                
                             }
+
+                        </div>
+                    </div></center>
+                </div> */}
+
+                <div className="bg_crad" >
+                    <br></br>
+                    <center>
+                    <h1>admin</h1>
+                    <br></br>
+                        <div className=" " >
+
+                            {this.state.dorm &&
+                            this.displayDorm(this.state.dorm)}
+
+                             
+                        </div>
+                        <br></br>
+                        <h1 > รายชื่อผู้จองหอพัก </h1>
+                        
+                        <div className="wrapper " >
+                            {this.state.haveUsers && 
+                                
+                                this.displayUsers(this.state.users)
+                                
+                            }
+                        </div>
+                        <br></br>
+                    </center>
+
+                    {/* <div className="bar"></div> */}
+
+
+                </div>
+
+            </div>
+        )
+        
+    }else{
+        return(
+            <div>
+                <div id="navbar">
+                     <Navbar_admin />
+                </div>
+
+                <div className="bg2" >
+                    <center><div className="column is-half" style={{height:'700px'}}>
+                        <div className="blog-" >
+                            <br></br>
+                            <h1>admin</h1>
+                            <br></br>
+                            กรุณาสมัครสมาชิก หรือ เข้าสู่ระบบก่อนใช้งาน
 
                         </div>
                     </div></center>
@@ -259,6 +348,9 @@ render() {
 
             </div>
         )
+
+    }
+        
     
     }
 

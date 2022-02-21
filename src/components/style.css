@@ -16,9 +16,11 @@
 
 .container{
     max-width: 100%;
-    height: auto!important;
+    
+    max-height:100%;
     padding: 125px;
-    background-image: url(./f14.png);
+    /* background-image: url(./f14.png); */
+    background-color: rgba(114,146,193,255);  
 }
 
 .container2{
@@ -74,7 +76,7 @@
     /* padding: 500px;  */
     background-size: 1600px 900px;
     background-image: url(./f16.png);
-    background-color: linear-gradient(to right top, #30ca8c, #28cd89, #20cf85, #17d281, #0bd47d); 
+    /* background-color: linear-gradient(to right top, #30ca8c, #28cd89, #20cf85, #17d281, #0bd47d);  */
     background-color: rgba(114,146,193,255);   
 }  
 
@@ -87,13 +89,14 @@
 
 .is-half{
     background-color: white;
+    
 }
 
 .d{
     
     /* padding: 500px;  */
     /* background-size: 1600px 900px; */
-    image: url(./t.png);
+    /* image: url(./t.png); */
     
 
 

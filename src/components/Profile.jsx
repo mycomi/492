@@ -33,25 +33,28 @@ class Profile extends React.Component {
     displayPost = (room) => {
         // if (!posts.length) return null;
         const temp = this.state.room;
-        
-
+        console.log(room)
         return room.map( (post,index) => (
-            
-            <div key={index} className="blog-post__display">
-                <h3> ชื่อหอ: {post.dorm } </h3>
-                <p> เลขห้อง: {post.room} </p>
-                {post.Isconfirm
-                    ?   <button className="button is-link" disabled style={{backgroundColor: 'lightgreen'}}> ยืนยันแล้ว </button>
-                    :   post.haveRoom &&
-                        <button className="button is-link" onClick={this.dropRoom} > Drop </button>
-                }
-                
-                <p> --------------------------------------------- </p>
-                
+            <div>
+                <br></br>
+                <div className="card" style={{ width: '18rem',height: 'auto'}}>
+                    <div key={index} className="card-content">
+                        <div className="content" >
+                            <h3 className="card-header-title-center"> <a href={`/dorm/`+post.dormId}>ชื่อหอ: {post.dorm } </a> </h3>
+                            <p> เลขห้อง: {post.room} </p>
+                            {post.Isconfirm
+                                ?   <button className="button is-link" disabled style={{backgroundColor: 'lightgreen'}}> ยืนยันแล้ว </button>
+                                :   post.haveRoom &&
+                                    <button className="button is-link" onClick={this.dropRoom} > Drop </button>
+                            }
+                            <p> --------------------------------------------- </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         ))
-
     }
+
 
     getPost = () =>{
         const token = localStorage.getItem('token')
@@ -106,6 +109,8 @@ class Profile extends React.Component {
                         <center> 
                             <div className="column is-half">
                                 <div className="blog-" >
+                                    <h1> หอพักของฉัน </h1>
+                                    <br></br>
                                     {this.displayPost(this.state.room)}
 
                                 </div>
@@ -115,8 +120,6 @@ class Profile extends React.Component {
 
                 </div>
 
-
-    
             );
         } else {
             return(
