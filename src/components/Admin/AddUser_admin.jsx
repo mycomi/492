@@ -42,29 +42,7 @@ class AddUser_admin extends React.Component {
         // console.log(this.state.isRoom);
     }
 
-    navbar (){
-        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-        // Check if there are any navbar burgers
-        if ($navbarBurgers.length > 0) {
-
-            // Add a click event on each of them
-            $navbarBurgers.forEach( el => {
-                el.addEventListener('click', () => {
-
-                    // Get the target from the "data-target" attribute
-                    const target = el.dataset.target;
-                    const $target = document.getElementById(target);
-
-                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-                    el.classList.toggle('is-active');
-                    $target.classList.toggle('is-active');
-
-                });
-            });
-        }
-
-    }
+    
 
     getDorm = () =>{
         const token = localStorage.getItem('token-admin')
@@ -155,17 +133,17 @@ class AddUser_admin extends React.Component {
     book = (e) =>{
         e.preventDefault();
         console.log(this.post)
-        // const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token-admin')
         const data = {
             dormId: this.post.dorm_id,
             roomId: this.post.id
         }
-        // const header = {
-        //     headers: {
-        //         "access-token": token
-        //     },
-        // }
-        Axios.post(`/auth/admin/add_user`,data)
+        const header = {
+            headers: {
+                "access-token": token
+            },
+        }
+        Axios.post(`/auth/admin/add_user`,data,header)
         .then(res => {
            console.log(res.data)
            const data = res.data
@@ -230,7 +208,7 @@ render() {
                         </div>
                     </div></center>
                 </div> */}
-                <div className="bg_crad" >
+                <div className="bg_card" >
                     <br></br>
                     <center>
                         <h1> รายชื่อห้อง </h1>

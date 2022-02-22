@@ -232,7 +232,7 @@ render() {
 
                 
 
-                <div className="bg_crad" >
+                <div className="bg_card" >
 
                     <div className="wrapper ">
                         

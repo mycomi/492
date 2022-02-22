@@ -64,7 +64,7 @@
     height: auto!important;
     /* padding: 500px;  */
     background-size: 1600px 900px;
-    background-image: url(./f15.png);
+    background-image: url(./f16.png);
     
 
 
@@ -80,7 +80,7 @@
     background-color: rgba(114,146,193,255);   
 }  
 
-.bg_crad{
+.bg_card{
     max-width: 100%;
     height: auto!important;
     /* padding: 500px;  */
@@ -142,6 +142,13 @@ h1{
 .wrapper{
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(12rem, 16rem));
+    gap: 2rem;
+    justify-content:center;
+}
+
+.wrapper2{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(12rem, 40rem));
     gap: 2rem;
     justify-content:center;
 }

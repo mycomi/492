@@ -36,11 +36,14 @@ class Dorm extends React.Component {
         roomId: '',
         isRoom: false,
 
+        photos:[],
+
     };
 
     componentDidMount = () => {
         this.getRooms();
         this.isRoom();
+        this.getPhotos();
         console.log(this.state.isRoom);
     }
 
@@ -72,7 +75,7 @@ class Dorm extends React.Component {
         // if (!posts.length) return null;
         console.log(rooms)
 
-        if(rooms){
+        if(rooms.length > 0){
             return rooms.map( (post,index) => (
                 <div>
                     <br></br>
@@ -106,8 +109,10 @@ class Dorm extends React.Component {
             console.log("noroom")
             return (
                 
-                <div>
-                    no room
+                <div style={{height:'200px'}}>
+                    
+                    <h1>ไม่มีห้องว่าง</h1>
+                    
                 </div>
             )
         }
@@ -135,6 +140,56 @@ class Dorm extends React.Component {
         //    alert('help')
         console.log(e)
        })
+    }
+
+    getPhotos = () => {
+
+        const partname = window.location.pathname.split('/');
+        console.log(partname[2])
+        Axios.get(`/auth/get_photo/`+partname[2],{ 
+            
+        })
+        .then(res => {
+            console.log(res.data)
+            const data = res.data
+            this.setState({ photos: data});
+
+        })
+        .catch(e => {
+        //    alert('help')
+        console.log(e)
+        })
+
+        
+    }
+
+    displayPhotos = (photos) => {
+        console.log(photos)
+        if(photos){
+            return photos.map( (photo,index) => (
+                <div>
+                    <br></br>
+
+                    <div className="card" style={{ width: '40rem',height: '40rem',justifyContent: 'center', alignItems: 'center'}}>
+                        <div key={index} className="card-content">
+                            <div className="content" >
+                                <img src={photo.imageUrl} style={{ width: '80%' }}></img>
+                                
+                            </div>
+                            <footer className="card-footer" style={{justifyContent: 'center'}}>
+                                
+  
+                            </footer>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+            ))
+
+        }
+        
     }
 
     book = (e) =>{
@@ -215,7 +270,7 @@ render() {
                         </div>
                     </div></center>
                 </div> */}
-                <div className="bg_crad" >
+                <div className="bg_card" >
                     <br></br>
                     <center>
                         <h1> รายชื่อห้อง </h1>
@@ -223,6 +278,15 @@ render() {
                             
                             {this.displayRooms(this.state.rooms)}
                         </div>
+                        
+                        <br></br>
+                        <h1> รูปเพิ่มเติม </h1>
+                        <div className="wrapper2 " >
+                            
+                            {this.displayPhotos(this.state.photos)}
+                        </div>
+                        
+                        
                     </center>
                     
                     <br></br>

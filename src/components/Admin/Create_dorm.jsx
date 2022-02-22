@@ -425,9 +425,9 @@ render() {
                                 <div className="control">
                                     <br></br>
                                     {this.state.showUploadButton &&
-                                        <progress value={this.state.progress} max="100"></progress>
+                                        <progress className="progress is-small is-success" style={{width: '18rem'}} value={this.state.progress} max="100"></progress>
                                     }
-                                    <br></br>
+                                    
                                     {this.state.showUploadButton &&
                                         <button type="button" onClick={this.upload} >upload </button>
                                     }

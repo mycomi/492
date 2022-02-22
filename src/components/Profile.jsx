@@ -102,12 +102,12 @@ class Profile extends React.Component {
         console.log(this.state.room);
         if (localStorage.getItem('token')){
             return(
-                <div className="bg">
-                    <div className="Profile">
+                <div className="bg" >
+                    <div className="Profile" >
                         <Navbar />
 
                         <center> 
-                            <div className="column is-half">
+                            <div className="column is-half" >
                                 <div className="blog-" >
                                     <h1> หอพักของฉัน </h1>
                                     <br></br>
