@@ -37,18 +37,24 @@ class Profile extends React.Component {
         return room.map( (post,index) => (
             <div>
                 <br></br>
-                <div className="card" style={{ width: '18rem',height: 'auto'}}>
+                <div className="card" style={{ width: '40rem',height: 'auto'}}>
                     <div key={index} className="card-content">
                         <div className="content" >
                             <h3 className="card-header-title-center"> <a href={`/dorm/`+post.dormId}>ชื่อหอ: {post.dorm } </a> </h3>
-                            <p> เลขห้อง: {post.room} </p>
+                            <h4> เลขห้อง: {post.room} </h4>
+                            <img src={post.image} alt="firebase-image" style={{ width: '80%' }}></img>
+                            <br></br>
+                            <br></br>
                             {post.Isconfirm
                                 ?   <button className="button is-link" disabled style={{backgroundColor: 'lightgreen'}}> ยืนยันแล้ว </button>
                                 :   post.haveRoom &&
                                     <button className="button is-link" onClick={this.dropRoom} > Drop </button>
                             }
-                            <p> --------------------------------------------- </p>
+                            
                         </div>
+                        <footer className="card-footer">
+                            {/* <p> ------------------------------------------------------ </p> */}
+                        </footer>
                     </div>
                 </div>
             </div>

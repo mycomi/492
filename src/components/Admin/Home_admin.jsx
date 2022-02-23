@@ -80,7 +80,6 @@ class Home_admin extends React.Component {
                     <div className="card" style={{ width: '600px',height: 'auto'}}>
                     <div key={index} className="card-content" >
                         <div className="content" >
-                            <br></br>
                             <h3> ชื่อหอ: {post.dorm } </h3>
                             <br></br>
                             <img src={post.imageUrl} alt="firebase-image" style={{ width: '80%' }}></img>
@@ -145,6 +144,7 @@ class Home_admin extends React.Component {
                                 <form value={this.post = post}>
                                 <h3> เลขห้อง: {post.roomNum} </h3>
                                 <p> ชื่อผู้เช่า: {post.name } </p>
+                                <p> เบอร์โทรศัพท์: {post.phone } </p>
                                 {post.status === 2 
                                     ?   <button className="button is-success is-light" disabled  >ยืนยันแล้ว</button>
                                     :   <button className="button is-success" onClick={this.manage_pass}  >ยืนยัน</button>

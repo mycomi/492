@@ -7,7 +7,7 @@ import Axios from 'axios';
 import './style.css';
 
 
-import { FaAndroid } from "react-icons/fa";
+import { FaAndroid,FaRegSnowflake } from "react-icons/fa";
 import { MdAssignmentInd } from "react-icons/md";
 import { IoIosHome } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
@@ -30,7 +30,7 @@ class Dorm extends React.Component {
     state = {
         title: '',
         body: '',
-        dorms: [],
+        dorm: [''],
         rooms: [],
         dormId: '',
         roomId: '',
@@ -41,6 +41,7 @@ class Dorm extends React.Component {
     };
 
     componentDidMount = () => {
+        this.getDorm();
         this.getRooms();
         this.isRoom();
         this.getPhotos();
@@ -85,7 +86,11 @@ class Dorm extends React.Component {
                                 {/* <h2 className="card-header-title-center"> Room id: {post.id} </h2>
                                 <h2> Dorm id: {post.dorm_id} </h2> */}
                                 <h3> เลขห้อง: {post.roomNum } </h3>
-                                <p> ราคา/เดือน: {post.price}</p>
+                                <p> ราคา: {post.price} บาท/เดือน</p>
+                                {post.isAir 
+                                    ? <p style={{color :'hsl(171, 100%, 29%)'}}><FaRegSnowflake />  มีเครื่องปรับอากาศ</p>
+                                    : <p style={{color :'hsl(348, 100%, 61%)'}}> <FaRegSnowflake />  ไม่มีเครื่องปรับอากาศ</p>
+                                }
     
                                 {!this.state.isRoom && localStorage.getItem('token') &&
                                     <button className="button is-link" onClick={this.book} value={this.post = post}>จองห้อง</button>
@@ -109,9 +114,9 @@ class Dorm extends React.Component {
             console.log("noroom")
             return (
                 
-                <div style={{height:'200px'}}>
+                <div >
                     
-                    <h1>ไม่มีห้องว่าง</h1>
+                    {/* <h1>ไม่มีห้องว่าง</h1> */}
                     
                 </div>
             )
@@ -120,9 +125,30 @@ class Dorm extends React.Component {
 
     }
 
+    getDorm = () =>{
+        const partname = window.location.pathname.split('/');
+        console.log(partname[2])
+        Axios.get(`/auth/dorm/`,{ 
+            params: {
+                dormId: partname[2]
+            }
+        })
+       .then(res => {
+           console.log(res.data)
+           const data = res.data
+           this.setState({ dorm: data});
+
+
+       })
+       .catch(e => {
+        //    alert('help')
+        console.log(e)
+       })
+
+    }
+
     getRooms = () =>{
-        
-        
+
         const partname = window.location.pathname.split('/');
         console.log(partname[2])
         Axios.get(`/auth/dorm/`+partname[2],{ 
@@ -248,10 +274,14 @@ class Dorm extends React.Component {
     
 render() {  
     // const {message,currentUser} = this.state
+    const dorm = this.state.dorm
+
     const IsRoom = true;
     if(this.state.rooms == null){
         IsRoom = false;
     }
+    var floor = 2;
+    var temps = []
         return(
             <div>
                 <div id="navbar">
@@ -273,11 +303,65 @@ render() {
                 <div className="bg_card" >
                     <br></br>
                     <center>
-                        <h1> รายชื่อห้อง </h1>
-                        <div className="wrapper " >
+                        <h1>หอพัก {dorm[0].name}</h1>
+                        <br></br>
+                        <h2> รายชื่อห้อง </h2>
+                        {/* <div className="wrapper " >
                             
                             {this.displayRooms(this.state.rooms)}
-                        </div>
+                        </div> */}
+
+                        {this.state.rooms.map((object, i) => {
+                            console.log(object.roomFloor);
+                            temps.push( [] );
+                            if(object.roomFloor < floor ){
+                                temps[object.roomFloor-1].push(object);
+                            }else{
+                                floor++
+                                temps.push( [] );
+                                temps[object.roomFloor-1].push(object);
+                            }
+                        })}
+
+
+                        {/* <div >
+                            <div className="wrapper">
+                            {object.roomFloor < floor 
+                                ? this.displayRooms([object])
+                                : <div >ชั้นที่ {floor++}{this.displayRooms([object])}<div className="bar"></div></div>
+                            }
+                            </div>
+                            
+                            <br></br>
+                            
+                        </div> */}
+
+                        {temps.length > 0 
+                            ? temps.map((temp, i) => {
+                                return (
+                                    
+                                    <div className="wrapper">
+                                        
+                                        {this.displayRooms(temp)}
+                                    </div>
+                                    
+                                )
+                            })
+
+                            : <div><h2 style={{color: 'red'}}>ไม่มีห้องว่าง</h2></div>
+                        }
+                        
+                        {/* {temps.map((temp, i) => {
+                            return (
+                                
+                                <div className="wrapper">
+                                    
+                                    {this.displayRooms(temp)}
+                                </div>
+                                
+                            )
+                        })} */}
+
                         
                         <br></br>
                         <h1> รูปเพิ่มเติม </h1>
