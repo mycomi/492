@@ -30,9 +30,19 @@
     background-image: url(./f16.png);
 }
 
+.container3{
+    max-width: 100%;
+    width: 80%;
+    height: auto;
+    max-height:100%;
+    /* padding: 125px; */
+    /* background-image: url(./f14.png); */
+    background-color: hsl(0, 0%, 96%);  
+}
+
 .filter{
 
-    padding: 125px;
+    padding: 25px;
 }
 
 .filterHeader{
@@ -49,12 +59,39 @@
 .filterText{
     padding: 2%;
     font-size: 18px;
-    width:600px;
-    max-width: 600px;
-    background-color: rgb(255, 255, 255);
+    width:700px;
+    max-width:700px;
+    background-color: hsl(0, 0%, 96%);
     border: 10px solid;
     border-radius:50px;
     border-color: #00486e;
+    
+    /* border-color:hsl(207, 77%, 86%); */
+}
+
+.header{
+    padding: 1%;
+    font-size: 18px;
+    width:400px;
+    max-width:700px;
+    background-color: hsl(0, 0%, 96%);
+    border: 10px solid;
+    border-radius:50px;
+    border-color: #00486e;
+    
+    /* border-color:hsl(207, 77%, 86%); */
+}
+
+.header2{
+    padding: 1%;
+    font-size: 18px;
+    width:250px;
+    max-width:700px;
+    background-color: hsl(0, 0%, 96%);
+    border: 5px solid;
+    border-radius:50px;
+    border-color: #00486e;
+    
     /* border-color:hsl(207, 77%, 86%); */
 }
 
@@ -72,7 +109,7 @@
 
 .bg2{
     max-width: 100%;
-    height: auto!important;
+    height: auto;
     /* padding: 500px;  */
     background-size: 1600px 900px;
     background-image: url(./f16.png);
@@ -80,11 +117,26 @@
     background-color: rgba(114,146,193,255);   
 }  
 
-.bg_card{
-    max-width: 100%;
-    height: auto!important;
+.bg3{
+    background-size: 1600px 400px;
+
+    /* height: auto!important; */
+    height: 400px;
+    max-height: 400px;
     /* padding: 500px;  */
-    background-color: hsl(206, 70%, 96%)
+    /* background-color: hsl(206, 70%, 96%) */
+    background-image: url(./f16.png)
+}
+
+.bg_card{
+    background-size: 1600px 400px;
+
+    /* height: auto!important; */
+    height: 400px;
+    max-height: 400px;
+    /* padding: 500px;  */
+    /* background-color: hsl(206, 70%, 96%) */
+    background-image: url(./503zmwob.png)
 }
 
 .is-half{
@@ -140,12 +192,13 @@ h2{
     justify-content: space-between;
     /* cursor: pointer; */
     transition: transform 200ms ease-in;
+    
 
 }
 
 .wrapper{
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(12rem, 16rem));
+    grid-template-columns: repeat(auto-fit,minmax(12rem, 20rem));
     gap: 2rem;
     justify-content:center;
 }

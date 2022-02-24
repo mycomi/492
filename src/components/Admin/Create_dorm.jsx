@@ -33,6 +33,7 @@ class Create_dorm extends React.Component {
         floors: 1,
         rooms: 1,
         prices: 0,
+        phone: '',
         map: '',
         isPet: false,
         isAir: false,
@@ -68,7 +69,7 @@ class Create_dorm extends React.Component {
     };
 
     componentDidMount = () => {
-
+        
     }
 
     displayForms = (cards) => {
@@ -82,7 +83,7 @@ class Create_dorm extends React.Component {
         if(cards){
             
             return cards.map( (card,index) => (
-                <form className="rooms" onSubmit={this.handleSubmit}>
+                <form className="rooms" >
                     <br></br>
                     <div className="card" style={{ width: '18rem' }}>
                         <div key={index} className="card-content" >
@@ -93,6 +94,25 @@ class Create_dorm extends React.Component {
                                     
                                     <p> ราคา/เดือน:  </p>
                                     <input className="input" type="number" id="price" name="price" defaultValue={price} required></input>
+
+                                    {/* <label > มีเครื่องปรับอากาศ</label> */}
+                                    {this.state.isAir
+                                        ? <div>
+                                            <input type="radio" id="air1" name="air" value="1" defaultChecked></input>
+                                            <label >มีเครื่องปรับอากาศ</label><br></br>
+                                            <input type="radio" id="air2" name="air" value="0"></input>
+                                            <label >ไม่มีเครื่องปรับอากาศ</label><br></br>
+                                        </div>
+                                        : <div>
+                                            <input type="radio" id="air1" name="air" value="1" ></input>
+                                            <label >มีเครื่องปรับอากาศ</label><br></br>
+                                            <input type="radio" id="air2" name="air" value="0" defaultChecked></input>
+                                            <label >ไม่มีเครื่องปรับอากาศ</label><br></br>
+                                        </div>
+                                    }
+                                    
+                                    
+                                    
                                     {/* <div className="control">
                                         {isAir 
                                             ? <input type="checkbox" name="isAir" checked></input>
@@ -173,9 +193,12 @@ class Create_dorm extends React.Component {
 
         var rooms = document.querySelectorAll('input[name="room"]');
         var prices = document.querySelectorAll('input[name="price"]');
+        var airs = document.querySelectorAll('input[name="air"]:checked');
+        // console.log("air "+airs[0].value)
 
         var room_array = [];
         var price_array = [];
+        var air_array = [];
 
         rooms.forEach(room => {
             room_array.push([room.value])
@@ -185,8 +208,11 @@ class Create_dorm extends React.Component {
             price_array.push([price.value])
         });
         
-        console.log("room"+room_array)
-
+        airs.forEach(air => {
+            air_array.push([air.value]);
+        })
+        console.log("room "+room_array)
+        console.log("air "+air_array)
         // const user = {
         //     name: this.state.name,
         //     email: this.state.email,
@@ -204,8 +230,10 @@ class Create_dorm extends React.Component {
             rooms: this.state.rooms,
             room: room_array,
             price: price_array,
+            phone: this.state.phone,
             isPet: this.state.isPet,
             isAir: this.state.isAir,
+            isAirs: air_array,
             imageUrl: this.state.imageUrl,
             distance: this.state.distance,
             position: this.state.position,
@@ -263,6 +291,8 @@ class Create_dorm extends React.Component {
             card: myArray,
         })
 
+        
+
     }
 
     onToggle = e =>{
@@ -318,173 +348,181 @@ class Create_dorm extends React.Component {
 render() {
     // const {message,currentUser} = this.state
     // const rooms = parseInt(this.state.rooms);
-    if (this.state.toDashboard === true) {
+    const token = localStorage.getItem('token-admin')
+    if (this.state.toDashboard === true || !token) {
         return <Redirect to='/admin' />
       }
     
-        return(
-            <div>
-                <div id="navbar">
-                     <Navbar_admin />
-                </div>
+      return(
+        <div>
+            <div id="navbar">
+                 <Navbar_admin />
+            </div>
 
-                <div className="bg2">
-                    <center><div className="column is-half">
-                        <div className="blog-" >
-                            <h1>Create_dorm</h1>
+            <div className="bg2">
+                <center><div className="column is-half">
+                    <div className="blog-" >
+                        <h1>Create_dorm</h1>
 
-                            <form onSubmit={this.onHandle} > {/*action="http://localhost:3000/api/users"*/}
+                        <form onSubmit={this.onHandle} > {/*action="http://localhost:3000/api/users"*/}
 
-                            <div className="field">
-                                
-                                <div className="control">
-                                    <label className="label" htmlFor="">ชื่อหอพัก</label>
-                                    <input className="input" type="text" name="name" onChange={this.onChange} required></input>
-                                </div>
-
-                                <div className="control">
-                                    <label className="label" htmlFor="">จำนวนชั้น</label>
-                                    <input className="input" type="number" name="floors" min="1" max="10" onChange={this.onChange} required></input>
-                                </div>
-
-                                
-                                <div className="control">
-                                    <label className="label" htmlFor="">จำนวนห้อง</label> 
-                                    <input className="input" type="number" name="rooms" min="1" max="30" onChange={this.onChange}  required></input>
-                                </div>
-
-                                
-                                <div className="control">
-                                    <label className="label" htmlFor="">ราคา</label>
-                                    <input className="input" type="number" name="prices" onChange={this.onChange} required></input>
-                                </div>
-
-                                <div className="control">
-                                    <label className="label" htmlFor="">พิกัด</label>
-                                    <div>
-                                        <Map
-                                            google={this.props.google}
-                                            
-                                            style={{
-                                            width: "100%",
-                                            height: "300px"
-                                            }}
-                                            mapTypeControl={false}
-                                            streetViewControl={false}
-                                            initialCenter={{ lat: 18.801106, lng: 98.952616 }}
-                                            zoom={14}
-                                        >
-                                            {this.state.markers.map((marker, index) => (
-                                            <Marker
-                                                position={marker.position}
-                                                draggable={true}
-                                                onDragend={(t, map, coord) => this.onMarkerDragEnd(coord, index)}
-                                                // onClick={this.onMarkerClick}
-                                                name={marker.name}
-                                            />
-                                            ))}
-                                        </Map>
-
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                        <p> หอพัก ห่างจาก มหาวิทยาลัยเชียงใหม่ {this.state.distance} ม.</p>
-
-                                    </div>
-                                    
-                                
-                                </div>
-
-                                <div className="control">
-                                    <input type="checkbox" id="isPet" name="isPet" onChange={this.onToggle} ></input>
-                                    <label  htmlFor=""> สามารถเลี้ยงสัตว์ได้</label>
-                                </div>
-
-                                <div className="control">
-                                    <input type="checkbox" id="isAir" name="isAir" onChange={this.onToggle} ></input>
-                                    <label htmlFor=""> มีเครื่องปรับอากาศ</label>
-                                </div>
-
-                                <div className="control">
-                                    <br></br>
-                                    <p > อัพโหลดรูปภาพ </p>
-                                    <input type="file" onChange={this.onHandleChange} ></input>
-
-                                    
-                                </div>
-                                <div className="control">
-                                    <br></br>
-                                    {this.state.showUploadButton &&
-                                        <progress className="progress is-small is-success" style={{width: '18rem'}} value={this.state.progress} max="100"></progress>
-                                    }
-                                    
-                                    {this.state.showUploadButton &&
-                                        <button type="button" onClick={this.upload} >upload </button>
-                                    }
-                                    
-                                    
-                                </div>
+                        <div className="field">
+                            
+                            <div className="control">
+                                <label className="label" htmlFor="">ชื่อหอพัก</label>
+                                <input className="input" type="text" name="name" onChange={this.onChange} required></input>
                             </div>
 
-                            <div className="field is-grouped">
-                                <div className="control">
+                            <div className="control">
+                                <label className="label" htmlFor="">จำนวนชั้น</label>
+                                <input className="input" type="number" name="floors" min="1" max="10" onChange={this.onChange} required></input>
+                            </div>
 
-                                    <button className="button is-link" type="submit">Next</button>
+                            
+                            <div className="control">
+                                <label className="label" htmlFor="">จำนวนห้อง</label> 
+                                <input className="input" type="number" name="rooms" min="1" max="30" onChange={this.onChange}  required></input>
+                            </div>
+
+                            
+                            <div className="control">
+                                <label className="label" htmlFor="">ราคา</label>
+                                <input className="input" type="number" name="prices" onChange={this.onChange} required></input>
+                            </div>
+
+                            <div className="control">
+                                <label className="label" htmlFor="">Phone</label>
+                                <input className="input" type="tel" name="phone" onChange={this.onChange} pattern="[0]{1}[0-9]{9}" required></input>
+                            </div>
+                            
+
+                            <div className="control">
+                                <label className="label" htmlFor="">พิกัด</label>
+                                <div>
+                                    <Map
+                                        google={this.props.google}
+                                        
+                                        style={{
+                                        width: "100%",
+                                        height: "300px"
+                                        }}
+                                        mapTypeControl={false}
+                                        streetViewControl={false}
+                                        initialCenter={{ lat: 18.801106, lng: 98.952616 }}
+                                        zoom={14}
+                                    >
+                                        {this.state.markers.map((marker, index) => (
+                                        <Marker
+                                            position={marker.position}
+                                            draggable={true}
+                                            onDragend={(t, map, coord) => this.onMarkerDragEnd(coord, index)}
+                                            // onClick={this.onMarkerClick}
+                                            name={marker.name}
+                                        />
+                                        ))}
+                                    </Map>
+
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <p> หอพัก ห่างจาก มหาวิทยาลัยเชียงใหม่ {this.state.distance} ม.</p>
 
                                 </div>
+                                
+                            
+                            </div>
 
-                                <div className="control">
+                            <div className="control">
+                                <input type="checkbox" id="isPet" name="isPet" onChange={this.onToggle} ></input>
+                                <label  htmlFor=""> สามารถเลี้ยงสัตว์ได้</label>
+                            </div>
 
-                                    <button className="button is-light" type="reset">Reset</button>
+                            <div className="control">
+                                <input type="checkbox" id="isAir" name="isAir" onChange={this.onToggle} ></input>
+                                <label htmlFor=""> มีเครื่องปรับอากาศ</label>
+                            </div>
 
-                                </div>
+                            <div className="control">
+                                <br></br>
+                                <p > อัพโหลดรูปภาพ </p>
+                                <input type="file" onChange={this.onHandleChange} ></input>
+
+                                
+                            </div>
+                            <div className="control">
+                                <br></br>
+                                {this.state.showUploadButton &&
+                                    <progress className="progress is-small is-success" style={{width: '18rem'}} value={this.state.progress} max="100"></progress>
+                                }
+                                
+                                {this.state.showUploadButton &&
+                                    <button type="button" onClick={this.upload} >upload </button>
+                                }
+                                
+                                
+                            </div>
+                        </div>
+
+                        <div className="field is-grouped">
+                            <div className="control">
+
+                                <button className="button is-link" type="submit">Next</button>
 
                             </div>
 
+                            <div className="control">
 
-                            {/* <Link to ="/admin/login">
-                                <button className="button is-success">Login</button>
-                            </Link>  */}
-                        </form>
-                        <button className="button is-light" type="button" onClick={this.onSubmit}>Submit</button>
+                                <button className="button is-light" type="reset">Reset</button>
+
+                            </div>
 
                         </div>
-                    </div></center>
-                    
 
-                </div>
-                    
-                {this.state.show &&
-                    this.state.card.map((object, i) => {
-                        console.log(object[0]);
-                        
-                        return (
-                            <div>
-                                <div className="wrapper">
-                                    
-                                    {this.displayForms(object[0])}
-                                </div>
-                                <br></br>
-                                <div className="bar"></div>
-                            </div>
-                        )
-                        
-                    })
 
-                }
+                        {/* <Link to ="/admin/login">
+                            <button className="button is-success">Login</button>
+                        </Link>  */}
+                    </form>
+                    <button className="button is-light" type="button" onClick={this.onSubmit}>Submit</button>
+
+                    </div>
+                </div></center>
+                
 
             </div>
-        )
+                
+            {this.state.show &&
+                this.state.card.map((object, i) => {
+                    console.log(object[0]);
+                    
+                    return (
+                        <div>
+                            <div className="wrapper">
+                                
+                                {this.displayForms(object[0])}
+                            </div>
+                            <br></br>
+                            <div className="bar"></div>
+                        </div>
+                    )
+                    
+                })
+
+            }
+
+        </div>
+    )
+        
     
     }
 

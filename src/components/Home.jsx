@@ -92,10 +92,9 @@ class Home extends React.Component {
             return dorm.map( (post,index) => (
                 
                 <div>
-                    
                     <br></br>
-                    <div className="card" style={{ width: '18rem',height: 'auto'}}>
-                        <div key={index} className="card-content" >
+                    <div className="card" style={{ width: '100%',height: 'auto'}}>
+                        <div key={index} className="card-content" style={{backgroundColor: 'hsl(0, 0%, 96%)'}}>
                             {/* <h2 > Dorm id: {post.id} </h2> */}
                                 <div className="content" >
                                     <h3 className="card-header-title-center"> ชื่อหอ: {post.name } </h3>
@@ -113,7 +112,7 @@ class Home extends React.Component {
                                         : <p style={{color :'hsl(348, 100%, 61%)'}}> <FaRegSnowflake />  ไม่มีเครื่องปรับอากาศ</p>
                                     }
                                     <br></br>
-                                    <img src={post.imageUrl} alt="firebase-image" style={{ width: '80%' }}></img>
+                                    <img src={post.imageUrl} alt="firebase-image" style={{ width: '80%' ,maxHeight: '200px'}}></img>
                                     
                                     <Link to={{ pathname: "/dorm/"+post.id }}>
                                         <button className="button is-link" style={{backgroundColor: "green"}}>ดูหอ</button>
@@ -194,32 +193,14 @@ render() {
                      <Navbar />
                 </div>
 
-                <div className="bg2">
+                <div className="bg_card">
                     <br/>
                     <div className="headline">
                         <center>
-                            <h1 className="filterHeader" id="filter" style={{backgroundColor: 'white'}}>เว็บค้นหาและจองหอพัก </h1>
+                            {/* <h1 className="filterHeader" id="filter" style={{backgroundColor: 'white'}}>เว็บค้นหาและจองหอพัก </h1> */}
                         </center>
                     </div>
-                    <div id="filter" className="filter">
-                        <form className="filterText ">
-                            <h1 id="filter" >ค้นหา </h1>
-                            <label for="price" >ราคา : ตั้งแต่ </label>
-                            <input type="text" id="lowPrice" name="lowPrice" onChange={this.onChange}></input> ถึง&nbsp;
-                            <input type="text" id="highPrice" name="highPrice" onChange={this.onChange}></input> บาท
-
-                            <br/> <p for="pet" > ประเภทหอพัก : </p>
-
-                            <input type="checkbox" id="pet" name="pet" onChange={this.onToggle} ></input> อนุญาตให้เลี้ยงสัตว์ได้
-                            <br></br>
-                            <input type="checkbox" id="air" name="air" onChange={this.onToggle}></input> มีเครื่องปรับอากาศ
-                            <br></br>
-                            <input type="checkbox" id="distance" name="distance" onChange={this.onToggle}></input> เรียงตามระยะทาง
-
-                        </form>
-
-                        
-                    </div>
+                    
 
                     {/* <center><div className="column is-half" style={{ width: '18rem' }}>
                         
@@ -228,11 +209,35 @@ render() {
                             {this.displayDorms(this.state.dorms)}
                         </div>
                     </div></center> */}
+                    <br></br>
+                    
                 </div>
 
-                
+                <div className="bg2" >
+                    <center>
+                <div id="filter" className="filter">
+                        <form className="filterText ">
+                            <h1 id="filter" >ค้นหา </h1>
+                            <br></br>
+                            <label for="price" >ราคา : ตั้งแต่ </label>
+                            <input type="text" id="lowPrice" name="lowPrice" onChange={this.onChange}></input> ถึง&nbsp;
+                            <input type="text" id="highPrice" name="highPrice" onChange={this.onChange}></input> บาท
 
-                <div className="bg_card" >
+                            <p></p>
+
+                            <label for="pet" > ประเภทหอพัก : </label>
+                            <input type="checkbox" id="pet" name="pet" onChange={this.onToggle} ></input> <label> อนุญาตให้เลี้ยงสัตว์ได้ </label> 
+                            {/* <br></br> */}
+                            <input type="checkbox" id="air" name="air" onChange={this.onToggle}></input> <label> มีเครื่องปรับอากาศ </label> 
+                            {/* <br></br> */}
+                            <input type="checkbox" id="distance" name="distance" onChange={this.onToggle}></input> <label> เรียงตามระยะทาง</label>   
+                             
+
+                        </form>
+
+                            
+                    </div>
+                    </center>
 
                     <div className="wrapper ">
                         

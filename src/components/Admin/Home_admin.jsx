@@ -70,11 +70,10 @@ class Home_admin extends React.Component {
 
     displayDorm = (dorm) => {
         // if (!posts.length) return null;
-        
-        var dormId = this.state.dorm[0].id
-        console.log(dormId)
-        console.log(dorm);
         if(dorm){
+            var dormId = this.state.dorm[0].id
+            console.log(dormId)
+            console.log(dorm);
             return dorm.map( (post,index) => (
                 <div>
                     <div className="card" style={{ width: '600px',height: 'auto'}}>
@@ -141,16 +140,16 @@ class Home_admin extends React.Component {
                     <div className="card" style={{ width: '18rem',height: 'auto'}}>
                         <div key={index} className="card-content">
                             <div className="content" >
-                                <form value={this.post = post}>
+                                <form >
                                 <h3> เลขห้อง: {post.roomNum} </h3>
                                 <p> ชื่อผู้เช่า: {post.name } </p>
                                 <p> เบอร์โทรศัพท์: {post.phone } </p>
                                 {post.status === 2 
                                     ?   <button className="button is-success is-light" disabled  >ยืนยันแล้ว</button>
-                                    :   <button className="button is-success" onClick={this.manage_pass}  >ยืนยัน</button>
+                                    :   <button className="button is-success" onClick={() => this.manage_pass(post.id)}  >ยืนยัน</button>
                                 }
-                                
-                                <button className="button is-danger" onClick={this.manage_fail} >ลบ</button>
+                                &nbsp;&nbsp;&nbsp;
+                                <button className="button is-danger" onClick={() => this.manage_fail(post.id)} >ลบ</button>
                                 {/* <p> ------------------------------------------------------ </p> */}
                 
                                 </form>
@@ -174,28 +173,31 @@ class Home_admin extends React.Component {
         console.log(this.state.dorm)
         const dormId = this.state.dorm[0].id;
         console.log(dormId)
-        Axios.post(`/auth/admin/getUsers`,{ 
-            dormId: dormId,
-        })
-       .then(res => {
-           console.log(res.data)
-           const data = res.data
-           this.setState({ users: data});
-           this.setState({ haveUsers: true});
-           console.log('GG');
-           console.log(data)
-
-       })
-       .catch(e => {
-        //    alert('help')
-        console.log(e)
-       })
+        if(this.state.dorm){
+            Axios.post(`/auth/admin/getUsers`,{ 
+                dormId: dormId,
+            })
+           .then(res => {
+               console.log(res.data)
+               const data = res.data
+               this.setState({ users: data});
+               this.setState({ haveUsers: true});
+               console.log('GG');
+               console.log(data)
+    
+           })
+           .catch(e => {
+            //    alert('help')
+            console.log(e)
+           })
+        }
+        
     }
 
-    manage_pass = (e) =>{
-        e.preventDefault();
-        console.log(this.post)
-        const roomId = this.post.id
+    manage_pass(id){
+        // e.preventDefault();
+        // console.log(this.post)
+        const roomId = id
         console.log(roomId)
         Axios.post(`/auth/admin/user_pass`,{ 
             roomId: roomId,
@@ -214,10 +216,10 @@ class Home_admin extends React.Component {
 
     }
 
-    manage_fail = (e) =>{
-        e.preventDefault();
-        console.log(this.post)
-        const roomId = this.post.id
+    manage_fail(id){
+        // e.preventDefault();
+        // console.log(this.post)
+        const roomId = id
         console.log(roomId)
         Axios.post(`/auth/admin/user_fail`,{ 
             roomId: roomId,
@@ -272,38 +274,38 @@ render() {
                         </div>
                     </div></center>
                 </div> */}
-
-                <div className="bg_card" >
+                <center>
+                <div className="bg2" >
                     <br></br>
-                    <center>
-                    <h1>admin</h1>
+
+                    <h1 className="filterHeader" style={{backgroundColor:'white'}}>admin</h1>
+                    
                     <br></br>
-                        <div className=" " >
+                        <div className="" >
 
-                            {this.state.dorm &&
-                            this.displayDorm(this.state.dorm)}
-
-                             
+                            {/* {this.state.dorm &&
+                            this.displayDorm(this.state.dorm)} */}
+                            {this.displayDorm(this.state.dorm)}
                         </div>
-                        <br></br>
-                        <h1 > รายชื่อผู้จองหอพัก </h1>
-                        
-                        <div className="wrapper " >
-                            {this.state.haveUsers && 
-                                
-                                this.displayUsers(this.state.users)
-                                
-                            }
-                        </div>
-                        <br></br>
-                    </center>
 
                     {/* <div className="bar"></div> */}
-
+                    <br></br>
+                        <h1 className="filterHeader" style={{backgroundColor:'white'}}> รายชื่อผู้จองหอพัก </h1>
+                                
+                            <div className="wrapper " >
+                                {this.state.haveUsers && 
+                                    
+                                    this.displayUsers(this.state.users)
+                                    
+                                }
+                            </div>
+                    <br></br>
 
                 </div>
-
+                
+                </center>
             </div>
+            
         )
         
     }else{

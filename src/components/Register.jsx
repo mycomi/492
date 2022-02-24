@@ -68,7 +68,8 @@ class Register extends React.Component {
             toDashboard: true
           })))
         .catch(e => {
-            console.log(e)
+            console.log(e.response)
+            alert(e.response.data)
             console.log(user.email)
             console.log(user.password)
             // alert('มีผู้ใช้นี้แล้ว')
@@ -120,7 +121,7 @@ render() {
                             <div className="field">
                                 <label className="label" htmlFor="">Password</label>
                                 <div className="control">
-                                    <input className="input" type="password" name="password" onChange={this.onChange} required></input>
+                                    <input className="input" type="password" name="password" pattern=".{6,}" title="รหัสผ่านอย่างน้อย 6 ตัว" onChange={this.onChange} required></input>
                                 </div>
                             </div>
 

@@ -75,7 +75,7 @@ class Dorm extends React.Component {
     displayRooms = (rooms) => {
         // if (!posts.length) return null;
         console.log(rooms)
-
+        console.log(this.state.isRoom);
         if(rooms.length > 0){
             return rooms.map( (post,index) => (
                 <div>
@@ -92,8 +92,8 @@ class Dorm extends React.Component {
                                     : <p style={{color :'hsl(348, 100%, 61%)'}}> <FaRegSnowflake />  ไม่มีเครื่องปรับอากาศ</p>
                                 }
     
-                                {!this.state.isRoom && localStorage.getItem('token') &&
-                                    <button className="button is-link" onClick={this.book} value={this.post = post}>จองห้อง</button>
+                                {this.state.isRoom && localStorage.getItem('token') &&
+                                    <button className="button is-link" onClick={() => this.book(post)}>จองห้อง</button>
                                 }   
                                 <br></br>
                                 {/* <p> ------------------------------------------------ </p> */}
@@ -218,13 +218,13 @@ class Dorm extends React.Component {
         
     }
 
-    book = (e) =>{
-        e.preventDefault();
-        console.log(this.post)
+    book(post){
+        // e.preventDefault();
+        // console.log(this.post)
         const token = localStorage.getItem('token')
         const data = {
-            dormId: this.post.dorm_id,
-            roomId: this.post.id
+            dormId: post.dorm_id,
+            roomId: post.id
         }
         const header = {
             headers: {
@@ -300,16 +300,16 @@ render() {
                         </div>
                     </div></center>
                 </div> */}
-                <div className="bg_card" >
+                <div className="bg2" >
                     <br></br>
                     <center>
-                        <h1>หอพัก {dorm[0].name}</h1>
+                        <div className="header">
+                            <h1>หอพัก {dorm[0].name}</h1>
+                        </div>
+                        <br></br>
+                        <div style={{width:'80%', backgroundColor:"hsl(0, 0%, 96%)"}}>
                         <br></br>
                         <h2> รายชื่อห้อง </h2>
-                        {/* <div className="wrapper " >
-                            
-                            {this.displayRooms(this.state.rooms)}
-                        </div> */}
 
                         {this.state.rooms.map((object, i) => {
                             console.log(object.roomFloor);
@@ -322,19 +322,6 @@ render() {
                                 temps[object.roomFloor-1].push(object);
                             }
                         })}
-
-
-                        {/* <div >
-                            <div className="wrapper">
-                            {object.roomFloor < floor 
-                                ? this.displayRooms([object])
-                                : <div >ชั้นที่ {floor++}{this.displayRooms([object])}<div className="bar"></div></div>
-                            }
-                            </div>
-                            
-                            <br></br>
-                            
-                        </div> */}
 
                         {temps.length > 0 
                             ? temps.map((temp, i) => {
@@ -350,21 +337,14 @@ render() {
 
                             : <div><h2 style={{color: 'red'}}>ไม่มีห้องว่าง</h2></div>
                         }
-                        
-                        {/* {temps.map((temp, i) => {
-                            return (
-                                
-                                <div className="wrapper">
-                                    
-                                    {this.displayRooms(temp)}
-                                </div>
-                                
-                            )
-                        })} */}
 
-                        
                         <br></br>
-                        <h1> รูปเพิ่มเติม </h1>
+                        
+                        
+                        </div>
+                        <br></br>
+                        <div className="header2"> รูปเพิ่มเติม </div>
+
                         <div className="wrapper2 " >
                             
                             {this.displayPhotos(this.state.photos)}
@@ -376,8 +356,8 @@ render() {
                     <br></br>
                     {/* <div className="bar"></div> */}
 
-
-                </div>
+            </div>               
+                
 
             </div>
         )

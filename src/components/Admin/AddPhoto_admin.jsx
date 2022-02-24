@@ -70,14 +70,14 @@ class AddPhoto_admin extends React.Component {
                 <div>
                     <br></br>
                     <div className="card" style={{ width: '40rem',height: '40rem',justifyContent: 'center', alignItems: 'center'}}>
-                        <div key={index} className="card-content">
+                        <div key={photo.id} className="card-content">
                             <div className="content" >
                                 <img src={photo.imageUrl} style={{ width: '80%' }}></img>
                                 
                             </div>
                             <footer className="card-footer" style={{justifyContent: 'center'}}>
                                 
-                                <button className="button is-danger" onClick={this.delete} value={this.photo = photo}> Delete </button>
+                                <button className="button is-danger" onClick={() => this.delete(photo.id)} > Delete </button>
   
                             </footer>
                         </div>
@@ -92,12 +92,12 @@ class AddPhoto_admin extends React.Component {
         
     }
 
-    delete = (e) =>{
-        e.preventDefault();
-        console.log(this.photo)
-        const token = localStorage.getItem('token')
+    delete(id){
+        // preventDefault();
+        console.log(id)
+        const token = localStorage.getItem('token-admin')
         const data = {
-            id: this.photo.id,
+            id: id,
         }
         const header = {
             headers: {
@@ -206,45 +206,48 @@ render() {
                         </div>
                     </div></center>
                 </div> */}
-                <div className="bg_card" >
+                <div className="bg2" style={{height:'700px'}}>
                     <br></br>
-                    <center>
-                        <h1> รูปภาพเพิ่มเติม </h1>
-                        <br></br>
-                        <p> คลิ๊กที่ปุ่ม เพิ่มรูปภาพ เพื่อเพิ่มรูปภาพของหอพัก สูงสุด 5 รูป</p>
-
-                        <div>
-                        <br></br>
-                        <p > อัพโหลดรูปภาพ </p>
-
-                        {(photos.length < 5) && 
-                            <input type="file" onChange={this.onHandleChange} ></input>
-                        }
-
-                        <br></br>
-                        <br></br>
-                        {this.state.showUploadButton &&
-                            <progress className="progress is-small is-success" style={{width: '18rem'}} value={this.state.progress} max="100"></progress>
-                        }
-                        <br></br>
-                        {this.state.showUploadButton &&
-                            <button type="button" onClick={this.uploadPhoto} >upload </button>
-                        }
-                        </div>
-
                         
-                        <div className="wrapper2 " >
+                        <center>
+                            <div className="container3">
+                                <br></br>
+                                <h1> รูปภาพเพิ่มเติม </h1>
+                                <br></br>
+                                <p> คลิ๊กที่ปุ่ม เพิ่มรูปภาพ เพื่อเพิ่มรูปภาพของหอพัก สูงสุด 5 รูป</p>
+
+                                <div>
+                                <br></br>
+                                <p > อัพโหลดรูปภาพ </p>
+
+                                {(photos.length < 5) && 
+                                    <input type="file" onChange={this.onHandleChange} ></input>
+                                }
+
+                                <br></br>
+                                <br></br>
+                                {this.state.showUploadButton &&
+                                    <progress className="progress is-small is-success" style={{width: '18rem'}} value={this.state.progress} max="100"></progress>
+                                }
+                                <br></br>
+                                {this.state.showUploadButton &&
+                                    <button type="button" onClick={this.uploadPhoto} >upload </button>
+                                }
+                                </div>
+                            </div>
                             
-                            {this.displayPhotos(this.state.photos)}
-                        </div>
-                    </center>
-                    
-                    <br></br>
-                    {/* <div className="bar"></div> */}
+                            <div className="wrapper2 " >
+                                
+                                {this.displayPhotos(this.state.photos)}
+                            </div>
+                        </center>
+                        
+                        <br></br>
+                        {/* <div className="bar"></div> */}
 
 
-                </div>
-
+                    </div>
+                
             </div>
         )
     } 

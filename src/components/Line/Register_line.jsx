@@ -16,6 +16,7 @@ class Register extends React.Component {
             name : '',
             email : '',
             password : '',
+            phone: '',
             toDashboard: false
         }
     }
@@ -35,12 +36,14 @@ class Register extends React.Component {
         const user = {
             name: this.state.name,
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
+            phone: this.state.phone,
         }
         Axios.post(`/auth/register/`,{ 
             name: user.name,
             email: user.email,
-            password: user.password
+            password: user.password,
+            phone: user.phone,
          })
         .then(res => {
             // console.log(res)
@@ -66,7 +69,9 @@ class Register extends React.Component {
             toDashboard: true
           })))
         .catch(e => {
+            
             console.log(e)
+            alert(e.response.data)
             console.log(user.email)
             console.log(user.password)
             // alert('มีผู้ใช้นี้แล้ว')
@@ -126,7 +131,14 @@ render() {
                             <div className="field">
                                 <label className="label" htmlFor="">Password</label>
                                 <div className="control">
-                                    <input className="input" type="password" name="password" onChange={this.onChange} required></input>
+                                    <input className="input" type="password" name="password" pattern=".{6,}" title="รหัสผ่านอย่างน้อย 6 ตัว" onChange={this.onChange} required></input>
+                                </div>
+                            </div>
+
+                            <div className="field">
+                                <label className="label" htmlFor="">Phone</label>
+                                <div className="control">
+                                    <input className="input" type="tel" name="phone" onChange={this.onChange} pattern="[0]{1}[0-9]{9}" required></input>
                                 </div>
                             </div>
 

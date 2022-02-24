@@ -110,7 +110,7 @@ class AddUser_admin extends React.Component {
                             <p> ราคา/เดือน: {post.price}</p>
 
                             {localStorage.getItem('token-admin') &&
-                                <button className="button is-success" onClick={this.book} value={this.post = post}>เพิ่มผู้เช่า</button>
+                                <button className="button is-success" onClick={() => this.book(post)}>เพิ่มผู้เช่า</button>
                             }   
 
                             {/* <p> ------------------------------------------------ </p> */}
@@ -130,13 +130,13 @@ class AddUser_admin extends React.Component {
 
     
 
-    book = (e) =>{
-        e.preventDefault();
-        console.log(this.post)
+    book(post){
+        // e.preventDefault();
+        // console.log(this.post)
         const token = localStorage.getItem('token-admin')
         const data = {
-            dormId: this.post.dorm_id,
-            roomId: this.post.id
+            dormId: post.dorm_id,
+            roomId: post.id
         }
         const header = {
             headers: {
@@ -208,16 +208,26 @@ render() {
                         </div>
                     </div></center>
                 </div> */}
-                <div className="bg_card" >
-                    <br></br>
+                
+                
+                <div className="bg2" style={{height:'700px'}}>
+                    
+                <br></br>
                     <center>
-                        <h1> รายชื่อห้อง </h1>
-                        <br></br>
-                        <p> คลิ๊กที่ปุ่ม เพิ่มผู้เช่า เพื่อเพิ่มผู้เช่าที่ไม่ได้เช่าผ่านเว็บไซต์</p>
-                        <div className="wrapper " >
+                        
+                        <div className="container3">
+                            <br></br>
+                            <h1> รายชื่อห้อง </h1>
+                            <br></br>
+                            <p> คลิ๊กที่ปุ่ม เพิ่มผู้เช่า เพื่อเพิ่มผู้เช่าที่ไม่ได้เช่าผ่านเว็บไซต์</p>
+                            <div className="wrapper " >
                             
-                            {this.displayRooms(this.state.rooms)}
+                                {this.displayRooms(this.state.rooms)}
+                            </div>
+                            <br></br>
                         </div>
+                        
+                        
                     </center>
                     
                     <br></br>

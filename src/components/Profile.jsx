@@ -40,15 +40,28 @@ class Profile extends React.Component {
                 <div className="card" style={{ width: '40rem',height: 'auto'}}>
                     <div key={index} className="card-content">
                         <div className="content" >
-                            <h3 className="card-header-title-center"> <a href={`/dorm/`+post.dormId}>ชื่อหอ: {post.dorm } </a> </h3>
+                            <h3 className="card-header-title-center"> 
+                            {post.dormId 
+                                ? <a href={`/dorm/`+post.dormId}>ชื่อหอ: {post.dorm } </a> 
+                                : <p>ชื่อหอ: {post.dorm }</p>
+                            }
+                            
+                            </h3>
                             <h4> เลขห้อง: {post.room} </h4>
-                            <img src={post.image} alt="firebase-image" style={{ width: '80%' }}></img>
+                            {post.image &&
+                                <img src={post.image} alt="firebase-image" style={{ width: '80%' }}></img>
+                            }
+                            
                             <br></br>
                             <br></br>
                             {post.Isconfirm
                                 ?   <button className="button is-link" disabled style={{backgroundColor: 'lightgreen'}}> ยืนยันแล้ว </button>
                                 :   post.haveRoom &&
-                                    <button className="button is-link" onClick={this.dropRoom} > Drop </button>
+                                    <div>
+                                        <p>รอการติดต่อจากเจ้าของหอ</p>
+                                        <button className="button is-link" onClick={this.dropRoom} > Drop </button>
+                                    </div>
+                                    
                             }
                             
                         </div>
