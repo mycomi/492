@@ -1,6 +1,7 @@
 import React from 'react'
 import 'bulma/css/bulma.css'
-import { Link,useParams } from 'react-router-dom';
+import { Link,useParams, Redirect } from 'react-router-dom';
+
 import Navbar from './Navbar_admin'
 import Axios from 'axios';
 
@@ -75,11 +76,17 @@ class AddUser_admin extends React.Component {
         
         // const partname = window.location.pathname.split('/');
         // console.log(partname[3])
+        const token = localStorage.getItem('token-admin')
         console.log(this.state.dorm)
         const dormId = this.state.dorm[0].id
+        const header = {
+            headers: {
+                "access-token": token
+            },
+        }
         Axios.post(`/auth/admin/admin_rooms/`,{
             dormId: dormId,
-        })
+        },header)
        .then(res => {
            console.log(res.data)
            const data = res.data
@@ -184,32 +191,24 @@ class AddUser_admin extends React.Component {
     // }
 
     
-render() {  
+render() {
     // const {message,currentUser} = this.state
     // const IsRoom = true;
     // if(this.state.rooms == null){
     //     IsRoom = false;
     // }
+    const token = localStorage.getItem('token-admin');
+    var floor = 2;
+    var temps = []
+
+    if(token){
         return(
             <div>
                 <div id="navbar">
                      <Navbar />
                 </div>
 
-                {/* <div class="bg2">
-                    <center><div className="column is-half">
-                        <div className="blog-" >
-                            {(this.state.rooms).length > 0 
-                                ? <div>{this.displayRooms(this.state.rooms)}</div>
-                                : <h1>ไม่มีห้องว่าง</h1>
-                            
-                            }
 
-                        </div>
-                    </div></center>
-                </div> */}
-                
-                
                 <div className="bg2" style={{height:'700px'}}>
                     
                 <br></br>
@@ -220,10 +219,38 @@ render() {
                             <h1> รายชื่อห้อง </h1>
                             <br></br>
                             <p> คลิ๊กที่ปุ่ม เพิ่มผู้เช่า เพื่อเพิ่มผู้เช่าที่ไม่ได้เช่าผ่านเว็บไซต์</p>
-                            <div className="wrapper " >
+                            {/* <div className="wrapper " >
                             
                                 {this.displayRooms(this.state.rooms)}
-                            </div>
+                            </div> */}
+                            {this.state.rooms.map((object, i) => {
+                                console.log(object.roomFloor);
+                                temps.push( [] );
+                                if(object.roomFloor < floor ){
+                                    temps[object.roomFloor-1].push(object);
+                                }else{
+                                    while(object.roomFloor >= floor){
+                                        floor++
+                                        temps.push( [] );
+                                    }
+                                    temps[object.roomFloor-1].push(object);
+                                }
+                            })}
+
+                            {temps.length > 0 
+                                ? temps.map((temp, i) => {
+                                    return (
+                                        
+                                        <div className="wrapper">
+                                            
+                                            {this.displayRooms(temp)}
+                                        </div>
+                                        
+                                    )
+                                })
+
+                                : <div><h2 style={{color: 'red'}}>ไม่มีห้องว่าง</h2></div>
+                            }
                             <br></br>
                         </div>
                         
@@ -238,8 +265,15 @@ render() {
 
             </div>
         )
-    } 
-    
 
+    }else{
+        return (
+            <Redirect to='/admin/' />
+
+        )
+        
+    }
+        
+}
 }
 export default AddUser_admin

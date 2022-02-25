@@ -59,7 +59,7 @@ class Profile extends React.Component {
                                 :   post.haveRoom &&
                                     <div>
                                         <p>รอการติดต่อจากเจ้าของหอ</p>
-                                        <button className="button is-link" onClick={this.dropRoom} > Drop </button>
+                                        <button className="button is-danger" onClick={this.dropRoom} > ยกเลิกการจองห้อง </button>
                                     </div>
                                     
                             }

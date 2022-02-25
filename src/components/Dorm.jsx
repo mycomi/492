@@ -92,7 +92,7 @@ class Dorm extends React.Component {
                                     : <p style={{color :'hsl(348, 100%, 61%)'}}> <FaRegSnowflake />  ไม่มีเครื่องปรับอากาศ</p>
                                 }
     
-                                {this.state.isRoom && localStorage.getItem('token') &&
+                                {!this.state.isRoom && localStorage.getItem('token') &&
                                     <button className="button is-link" onClick={() => this.book(post)}>จองห้อง</button>
                                 }   
                                 <br></br>
@@ -111,7 +111,7 @@ class Dorm extends React.Component {
             ))
 
         }else{
-            console.log("noroom")
+            // console.log("noroom")
             return (
                 
                 <div >
@@ -264,7 +264,8 @@ class Dorm extends React.Component {
                console.log(this.state.isRoom)
            })
            .catch(() => {
-               alert('isRoom')
+            //    alert('isRoom')
+            console.log('noRoom');
            })
 
         }
@@ -275,11 +276,6 @@ class Dorm extends React.Component {
 render() {  
     // const {message,currentUser} = this.state
     const dorm = this.state.dorm
-
-    const IsRoom = true;
-    if(this.state.rooms == null){
-        IsRoom = false;
-    }
     var floor = 2;
     var temps = []
         return(
@@ -317,8 +313,10 @@ render() {
                             if(object.roomFloor < floor ){
                                 temps[object.roomFloor-1].push(object);
                             }else{
-                                floor++
-                                temps.push( [] );
+                                while(object.roomFloor >= floor){
+                                    floor++
+                                    temps.push( [] );
+                                }
                                 temps[object.roomFloor-1].push(object);
                             }
                         })}

@@ -6,12 +6,12 @@ import Axios from 'axios';
 
 import '../style.css';
 
-
 import { FaAndroid, FaBuilding } from "react-icons/fa";
 import {MdPersonAdd, MdAddToPhotos} from "react-icons/md"
+import {BiBuildingHouse} from "react-icons/bi"
 import { IoIosHome } from "react-icons/io";
 import { IoIosLogOut, IoIosLogIn } from "react-icons/io";
-import { TiHome, TiUser } from "react-icons/ti";
+import { TiHeartOutline, TiHome, TiUser } from "react-icons/ti";
 // import firebase from '../firebase/firebase'
 // import Background from './f14.png';
 import { app } from 'firebase';
@@ -91,9 +91,15 @@ class Home_admin extends React.Component {
                             </Link>
                             &nbsp;
                             &nbsp;
-                            <Link to="/admin/add_photo">
-                                <button className="button is-link"><MdAddToPhotos/> &nbsp; รูปเพิ่มเติม</button>
+                            <Link to="/admin/edit_room">
+                                <button className="button is-link"><FaBuilding/> &nbsp; แก้ไขห้องพัก </button>
                             </Link>
+                            &nbsp;
+                            &nbsp;
+                            <Link to="/admin/add_photo">
+                                <button className="button is-link"><MdAddToPhotos/> &nbsp; รูปเพิ่มเติม </button>
+                            </Link>
+                            
                         </div>
                         
                         <br></br>
@@ -170,13 +176,20 @@ class Home_admin extends React.Component {
     
 
     getUsers = () =>{
+        const token = localStorage.getItem('token-admin')
         console.log(this.state.dorm)
         const dormId = this.state.dorm[0].id;
         console.log(dormId)
+        const header = {
+            headers: {
+                "access-token": token
+            },
+        }
         if(this.state.dorm){
-            Axios.post(`/auth/admin/getUsers`,{ 
+            
+            Axios.post(`/auth/admin/getUsers`,{
                 dormId: dormId,
-            })
+            },header)
            .then(res => {
                console.log(res.data)
                const data = res.data
@@ -197,11 +210,17 @@ class Home_admin extends React.Component {
     manage_pass(id){
         // e.preventDefault();
         // console.log(this.post)
+        const token = localStorage.getItem('token-admin')
         const roomId = id
         console.log(roomId)
+        const header = {
+            headers: {
+                "access-token": token
+            },
+        }
         Axios.post(`/auth/admin/user_pass`,{ 
             roomId: roomId,
-        })
+        },header)
        .then(res => {
            console.log(res.data)
            const data = res.data
@@ -219,11 +238,17 @@ class Home_admin extends React.Component {
     manage_fail(id){
         // e.preventDefault();
         // console.log(this.post)
+        const token = localStorage.getItem('token-admin')
         const roomId = id
         console.log(roomId)
+        const header = {
+            headers: {
+                "access-token": token
+            },
+        }
         Axios.post(`/auth/admin/user_fail`,{ 
             roomId: roomId,
-        })
+        },header)
        .then(res => {
            console.log(res.data)
            const data = res.data
@@ -243,7 +268,8 @@ class Home_admin extends React.Component {
 render() {
     // const {message,currentUser} = this.state
     const token = localStorage.getItem('token-admin');
-    
+    var floor = 2;
+    var temps = []
     
     if(token){
         return(
@@ -292,13 +318,41 @@ render() {
                     <br></br>
                         <h1 className="filterHeader" style={{backgroundColor:'white'}}> รายชื่อผู้จองหอพัก </h1>
                                 
-                            <div className="wrapper " >
+                            {/* <div className="wrapper " >
                                 {this.state.haveUsers && 
                                     
                                     this.displayUsers(this.state.users)
                                     
                                 }
-                            </div>
+                            </div> */}
+                            {this.state.users.map((object, i) => {
+                                console.log(object.roomFloor);
+                                temps.push( [] );
+                                if(object.roomFloor < floor ){
+                                    temps[object.roomFloor-1].push(object);
+                                }else{
+                                    while(object.roomFloor >= floor){
+                                        floor++
+                                        temps.push( [] );
+                                    }
+                                    temps[object.roomFloor-1].push(object);
+                                }
+                            })}
+
+                            {temps.length > 0 
+                                ? temps.map((temp, i) => {
+                                    return (
+                                        
+                                        <div className="wrapper">
+                                            
+                                            {this.displayUsers(temp)}
+                                        </div>
+                                        
+                                    )
+                                })
+
+                                : <div><h2 style={{color: 'red'}}>ไม่มีห้องว่าง</h2></div>
+                            }
                     <br></br>
 
                 </div>

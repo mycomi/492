@@ -115,7 +115,7 @@ class Navbar extends React.Component {
                         <div className="navbar-start">
                             <div className="navbar-item">
                                 <Link to="/">
-                                    <button className="button is-link"><TiHome/>Home</button>
+                                    <button className="button is-link"><TiHome/>หน้าหลัก</button>
                                 </Link> 
                             </div>
 
@@ -146,7 +146,7 @@ class Navbar extends React.Component {
                                     </div>
                                     
                                     <button className="button is-light" onClick={this.logout} >
-                                        <IoIosLogOut/>Logout
+                                        <IoIosLogOut/>ออกจากระบบ
                                     </button>
                                     
                                 </div>
@@ -184,14 +184,14 @@ class Navbar extends React.Component {
                         <div className="navbar-start">
                             <div className="navbar-item">
                                 <Link to="/">
-                                        <button className="button is-link"><TiHome/>Home</button>
+                                        <button className="button is-link"><TiHome/>หน้าหลัก</button>
                                 </Link> 
                             </div>
                 
                             <div className="navbar-item">
                         
                                 <Link to="/admin">
-                                    <button className="button is-warning"><TiUser/>  Admin</button>
+                                    <button className="button is-warning"><TiUser/> ผู้ดูแลหอพัก </button>
                                 </Link> 
                             </div>
                         
@@ -200,7 +200,7 @@ class Navbar extends React.Component {
                             <div className="navbar-end" >
                                 <div className="navbar-item">
                                     <Link to ="/register">
-                                        <button className="button is-warning" > <MdAssignmentInd/>Register</button>
+                                        <button className="button is-warning" > <MdAssignmentInd/>สมัครสมาชิก</button>
                                     </Link>
                                     
 
@@ -208,7 +208,7 @@ class Navbar extends React.Component {
                                     
                                 <div  className="navbar-item" >
                                     <Link to ="/login">
-                                        <button className="button is-success"><IoIosLogIn/>Login</button>
+                                        <button className="button is-success"><IoIosLogIn/>เข้าสู่ระบบ</button>
                                     </Link>  
                                 </div>
                             </div>  

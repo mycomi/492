@@ -25,10 +25,10 @@ import { app } from 'firebase';
 // import mobileImage from './f14.png';
 import { TiUser } from "react-icons/ti";
 
-class Create_dorm extends React.Component {
+class CreateDorm_admin extends React.Component {
     
     state = {
-        title: '',
+        dorm: null,
         name: '',
         floors: 1,
         rooms: 1,
@@ -69,6 +69,32 @@ class Create_dorm extends React.Component {
     };
 
     componentDidMount = () => {
+        this.getDorm();
+    }
+
+    getDorm = () =>{
+        const token = localStorage.getItem('token-admin')
+        
+        if(token){
+            Axios.get(`/auth/admin/admin_dorm`,{ 
+                headers: {
+                    "access-token": token
+                }
+            })
+           .then(res => {
+               console.log(res.data)
+               const data = res.data
+               this.setState({ dorm: data});
+               console.log('GG');
+               console.log(data)
+    
+           })
+           .catch(e => {
+            //    alert('help')
+            console.log(e)
+           })
+
+        }
         
     }
 
@@ -190,7 +216,6 @@ class Create_dorm extends React.Component {
         // const room = document.getElementsByName("room");
         // const price = document.getElementsByName("price");
         const token = localStorage.getItem('token-admin')
-
         var rooms = document.querySelectorAll('input[name="room"]');
         var prices = document.querySelectorAll('input[name="price"]');
         var airs = document.querySelectorAll('input[name="air"]:checked');
@@ -349,7 +374,7 @@ render() {
     // const {message,currentUser} = this.state
     // const rooms = parseInt(this.state.rooms);
     const token = localStorage.getItem('token-admin')
-    if (this.state.toDashboard === true || !token) {
+    if (this.state.toDashboard === true || !token || this.state.dorm !== null) {
         return <Redirect to='/admin' />
       }
     
@@ -519,6 +544,7 @@ render() {
                 })
 
             }
+            <button className="button is-light" type="button" onClick={this.onSubmit}>Submit</button>
 
         </div>
     )
@@ -531,4 +557,4 @@ render() {
 
 export default GoogleApiWrapper({
     apiKey: 'AIzaSyBqAvFRHpVzQYD6kI97T2XgLjcuU1jxWFs'
-  })(Create_dorm);
+  })(CreateDorm_admin);

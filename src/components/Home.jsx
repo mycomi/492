@@ -98,9 +98,9 @@ class Home extends React.Component {
                             {/* <h2 > Dorm id: {post.id} </h2> */}
                                 <div className="content" >
                                     <h3 className="card-header-title-center"> ชื่อหอ: {post.name } </h3>
-                                    <p> ราคา/เดือน: {post.lowPrice} - {post.highPrice} </p>
+                                    <p> ราคา/เดือน: {post.lowPrice} - {post.highPrice} บาท</p> 
                                     <p> โทร: {post.phone} </p>
-                                    <p> ระยะทาง: {post.distance/1000} km.</p>
+                                    <p> ระยะทาง: {post.distance/1000} กม.</p>
                                     <p> แผนที่: <a href={map = "https://www.google.com/maps/search/?api=1&query="+post.lat+"%2C"+post.lng} target="_blank">คลิ๊ก <GrMap/></a></p>
                                     {post.isPet 
                                        ? <p style={{color :'hsl(171, 100%, 29%)'}}> <MdPets/> สามารถเลี้ยงสัตว์ได้</p>
@@ -224,6 +224,7 @@ render() {
                             <input type="text" id="highPrice" name="highPrice" onChange={this.onChange}></input> บาท
 
                             <p></p>
+                            <br></br>
 
                             <label for="pet" > ประเภทหอพัก : </label>
                             <input type="checkbox" id="pet" name="pet" onChange={this.onToggle} ></input> <label> อนุญาตให้เลี้ยงสัตว์ได้ </label> 

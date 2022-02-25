@@ -50,7 +50,7 @@ class Register extends React.Component {
             console.log(res.data)
             
             
-            alert("register success")
+            alert("สมัครสมาชิกสำเร็จ")
 
             // localStorage.setItem('token',res.data)
             
@@ -72,7 +72,7 @@ class Register extends React.Component {
             alert(e.response.data)
             console.log(user.email)
             console.log(user.password)
-            // alert('มีผู้ใช้นี้แล้ว')
+            alert('มีผู้ใช้นี้แล้ว')
         })
 
         
@@ -90,7 +90,7 @@ render() {
             <section className="section container">
                 <div className="columns is-centered">
                     <div className="column is-half">
-                    <center><label className="label"> <h1> Register </h1></label></center>
+                    <center><label className="label"> <h1> สมัครสมาชิก </h1></label></center>
                     
                         <form onSubmit={this.onSubmit} > {/*action="http://localhost:3000/api/users"*/}
                             {/* <div className="field">
@@ -106,27 +106,27 @@ render() {
                                 </div>
                             </div> */}
                             <div className="field">
-                                <label className="label" htmlFor="">Name</label>
+                                <label className="label" htmlFor="">ชื่อ</label>
                                 <div className="control">
                                     <input className="input" type="text" name="name" onChange={this.onChange} required></input>
                                 </div>
                             </div>
                             <div className="field">
-                                <label className="label" htmlFor="">Email</label>
+                                <label className="label" htmlFor="">E-mail</label>
                                 <div className="control">
                                     <input className="input" type="email" name="email" onChange={this.onChange} required></input>
                                 </div>
                             </div>
 
                             <div className="field">
-                                <label className="label" htmlFor="">Password</label>
+                                <label className="label" htmlFor="">รหัสผ่าน</label>
                                 <div className="control">
                                     <input className="input" type="password" name="password" pattern=".{6,}" title="รหัสผ่านอย่างน้อย 6 ตัว" onChange={this.onChange} required></input>
                                 </div>
                             </div>
 
                             <div className="field">
-                                <label className="label" htmlFor="">Phone</label>
+                                <label className="label" htmlFor="">เบอร์โทรติดต่อ</label>
                                 <div className="control">
                                     <input className="input" type="tel" name="phone" onChange={this.onChange} pattern="[0]{1}[0-9]{9}" required></input>
                                 </div>
@@ -135,12 +135,12 @@ render() {
                             <div className="field is-grouped">
                                 <div className="control">
 
-                                    <button className="button is-link">Submit</button>
+                                    <button className="button is-link">ยืนยัน</button>
 
                                 </div>
                             </div>
                             <Link to ="/login">
-                                <button className="button is-success">Login</button>
+                                <button className="button is-success">ไปหน้าเข้าสู่ระบบ</button>
                             </Link> 
                         </form>
                         

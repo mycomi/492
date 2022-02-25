@@ -1,6 +1,6 @@
 import React from 'react'
 import 'bulma/css/bulma.css'
-import { Link,useParams } from 'react-router-dom';
+import { Link,useParams,Redirect } from 'react-router-dom';
 import Navbar from './Navbar_admin'
 import Axios from 'axios';
 
@@ -188,6 +188,8 @@ class AddPhoto_admin extends React.Component {
     
 render() {  
     const photos = this.state.photos;
+    const token = localStorage.getItem('token-admin')
+    if(token){
         return(
             <div>
                 <div id="navbar">
@@ -250,6 +252,13 @@ render() {
                 
             </div>
         )
+    }else{
+        return (
+            <Redirect to='/admin/' />
+
+        )
+    }
+        
     } 
     
 
