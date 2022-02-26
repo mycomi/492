@@ -77,7 +77,7 @@ class AddPhoto_admin extends React.Component {
                             </div>
                             <footer className="card-footer" style={{justifyContent: 'center'}}>
                                 
-                                <button className="button is-danger" onClick={() => this.delete(photo.id)} > Delete </button>
+                                <button className="button is-danger" onClick={() => this.delete(photo.id)} > ลบรูปภาพนี้ </button>
   
                             </footer>
                         </div>
@@ -216,7 +216,7 @@ render() {
                                 <br></br>
                                 <h1> รูปภาพเพิ่มเติม </h1>
                                 <br></br>
-                                <p> คลิ๊กที่ปุ่ม เพิ่มรูปภาพ เพื่อเพิ่มรูปภาพของหอพัก สูงสุด 5 รูป</p>
+                                <p> คลิ๊กที่ปุ่ม Choose File เพื่อเพิ่มรูปภาพของหอพัก สูงสุด 5 รูป</p>
 
                                 <div>
                                 <br></br>
@@ -233,7 +233,7 @@ render() {
                                 }
                                 <br></br>
                                 {this.state.showUploadButton &&
-                                    <button type="button" onClick={this.uploadPhoto} >upload </button>
+                                    <button type="button" onClick={this.uploadPhoto} >ยืนยัน </button>
                                 }
                                 </div>
                             </div>

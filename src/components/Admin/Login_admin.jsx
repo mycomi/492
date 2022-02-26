@@ -70,7 +70,7 @@ class Login_admin extends React.Component {
             
             window.localStorage.setItem('token-admin', res.data.acsessToken)
             window.localStorage.setItem('name', res.data.name)
-            alert("login success")
+            alert("เข้าสู่ระบบสำเร็จ")
 
             // localStorage.setItem('token',res.data)
             window.location.reload(false); 
@@ -87,7 +87,7 @@ class Login_admin extends React.Component {
             console.log(e)
             console.log(user.email)
             console.log(user.password)
-            alert('Invalid E-mail or password')
+            alert('E-mail หรือ รหัสผ่าน ไม่ถูกต้อง')
         })
 
         
@@ -115,18 +115,19 @@ render() {
                         <div className="columns is-centered">
                             
                             <div className="column is-half">
-                                <h1>admin</h1>
+                                <center><h1>ผู้ดูแลหอพัก</h1></center>
+                                <br></br>
                                 <form onSubmit={this.onSubmit}>
                                 {/* action="http://localhost:3000/api/users/login" method="post" */}
                                     <div className="field">
-                                        <label className="label" htmlFor="">Email</label>
+                                        <label className="label" htmlFor="">E-mail</label>
                                         <div className="control">
                                             <input className="input" type="email" name="email" onChange={this.onChange} required></input>
                                         </div>
                                     </div>
         
                                     <div className="field">
-                                        <label className="label" htmlFor="">Password</label>
+                                        <label className="label" htmlFor="">รหัสผ่าน</label>
                                         <div className="control">
                                             <input className="input" type="password" name="password" onChange={this.onChange} required></input>
                                         </div>
@@ -135,12 +136,12 @@ render() {
                                     <div className="field is-grouped">
                                         <div className="control">
                                             
-                                            <button className="button is-link">Login</button>
+                                            <button className="button is-link">เข้าสู่ระบบ</button>
                                         </div>
                                     </div>
 
                                     <Link to ="/admin/register">
-                                        <button className="button is-warning" > Register</button>
+                                        <button className="button is-warning" > ไปหน้าสมัครสมาชิก </button>
                                     </Link>
                                     
                                 </form>

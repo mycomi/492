@@ -91,8 +91,6 @@ class AddUser_admin extends React.Component {
            console.log(res.data)
            const data = res.data
            this.setState({ rooms: data});
-           console.log('GG');
-           console.log("data"+data)
 
        })
        .catch(e => {
@@ -114,7 +112,7 @@ class AddUser_admin extends React.Component {
                             {/* <h2 className="card-header-title-center"> Room id: {post.id} </h2>
                             <h2> Dorm id: {post.dorm_id} </h2> */}
                             <h2> เลขห้อง: {post.roomNum } </h2>
-                            <p> ราคา/เดือน: {post.price}</p>
+                            <p> ราคา: {post.price} บาท/เดือน</p>
 
                             {localStorage.getItem('token-admin') &&
                                 <button className="button is-success" onClick={() => this.book(post)}>เพิ่มผู้เช่า</button>

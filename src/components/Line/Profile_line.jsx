@@ -37,11 +37,31 @@ class Profile_line extends React.Component {
         return room.map( (post,index) => (
             
             <div key={index} className="blog-post__display">
+                <br></br>
                 <h3> ชื่อหอ: {post.dorm } </h3>
+                <br></br>
                 <p> เลขห้อง: {post.room} </p>
-                {post.haveRoom &&
-                    <button className="button is-link" onClick={this.dropRoom} > Drop </button>
+                <br></br>
+                {post.price &&
+                    <h4> ราคา: {post.price} บาท/เดือน</h4>
                 }
+                <br></br>
+                {post.image &&
+                    <img src={post.image} alt="dorm-image" style={{ width: '80%' }}></img>
+                }
+                <br></br>
+                <br></br>
+                {post.Isconfirm
+                    ?   <button className="button is-link" disabled style={{backgroundColor: 'lightgreen'}}> ยืนยันแล้ว </button>
+                    :   post.haveRoom &&
+                        <div>
+                            <p>รอการติดต่อจากเจ้าของหอ</p>
+                            <br></br>
+                            <button className="button is-danger" onClick={this.dropRoom} > ยกเลิกการจองห้อง </button>
+                        </div>
+                        
+                }
+                
                 <p> --------------------------------------------- </p>
                 
             </div>
@@ -103,12 +123,15 @@ class Profile_line extends React.Component {
 
                     <center> 
                         <div className="column is-half">
-                            {name}
+                            <br></br>
+                            ผู้ใช้: {name}
+                            
                             <div className="blog-" >
                                 {this.displayPost(this.state.room)}
                                 
                             </div>
-                            <button onClick={this.logout}>logout</button>
+                            
+                            {/* <button onClick={this.logout}>logout</button> */}
                         </div>
                     </center>
                 </div>

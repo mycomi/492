@@ -170,14 +170,22 @@ render() {
         return(
             <div>
 
-                <div className="bg2">
-                    <center><div className="column is-half">
+                <div className="bg2" style={{
+                    
+                    height: '800px',width: '1900px',
+                }}>
+                    <center>
+                        <div className="column is-half" style={{
+                            position: 'absolute', left: '50%', top: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            
+                        }}>
                         <div className="blog-" >
                             {/* {this.displayDorms(this.state.dorms)} */}
 
                             <div id="register">
 
-                                <button className="button is-warning" onClick={this.register}> Register</button>
+                                <button className="button is-warning" onClick={this.register}> สมัครสมาชิก</button>
 
                             </div>
 
@@ -185,14 +193,15 @@ render() {
 
                             <div id="login">
 
-                                <button className="button is-warning" onClick={this.login}> Login</button>
+                                <button className="button is-warning" onClick={this.login}> เข้าสู่ระบบ</button>
 
                             </div>
                             
 
 
                         </div>
-                    </div></center>
+                    </div>
+                    </center>
                 </div>
 
             </div>

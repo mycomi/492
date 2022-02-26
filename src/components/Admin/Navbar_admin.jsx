@@ -55,7 +55,7 @@ class Navbar_admin extends React.Component {
             
             localStorage.clear('token-admin')  
             localStorage.clear('name')  
-            alert("logout success")
+            alert("ออกจากระบบสำเร็จ")
             window.location.reload(false);      
         
         })
@@ -115,7 +115,7 @@ class Navbar_admin extends React.Component {
                         <div className="navbar-start">
                             <div className="navbar-item">
                                 <Link to="/admin">
-                                    <button className="button is-link"><TiHome/>Home</button>
+                                    <button className="button is-link"><TiHome/>หน้าหลัก</button>
                                 </Link> 
                             </div>
     
@@ -138,15 +138,15 @@ class Navbar_admin extends React.Component {
                             <div className="navbar-item">
                                 <div className="buttons">
                                     <div className="navbar-item">
-                                        <Link to="/admin/profile">
+                                        {/* <Link to="/admin/profile"> */}
                                             <button className="button is-warning" >
                                                 <TiUser/>   {currentUser }
                                             </button>
-                                        </Link>
+                                        {/* </Link> */}
                                     </div>
                                     
                                     <button className="button is-light" onClick={this.logout} >
-                                        <IoIosLogOut/>Logout
+                                        <IoIosLogOut/>ออกจากระบบ
                                     </button>
                                     
                                 </div>
@@ -184,7 +184,7 @@ class Navbar_admin extends React.Component {
                         <div className="navbar-start">
                             <div className="navbar-item">
                                 <Link to="/admin">
-                                        <button className="button is-link"><TiHome/>Home</button>
+                                        <button className="button is-link"><TiHome/>หน้าหลัก</button>
                                 </Link> 
                             </div>
                 
@@ -200,7 +200,7 @@ class Navbar_admin extends React.Component {
                             <div className="navbar-end" >
                                 <div className="navbar-item">
                                     <Link to ="/admin/register">
-                                        <button className="button is-warning" > <MdAssignmentInd/>Register</button>
+                                        <button className="button is-warning" > <MdAssignmentInd/>สมัครสมาชิก</button>
                                     </Link>
                                     
 
@@ -208,7 +208,7 @@ class Navbar_admin extends React.Component {
                                     
                                 <div  className="navbar-item" >
                                     <Link to ="/admin/login">
-                                        <button className="button is-success"><IoIosLogIn/>Login</button>
+                                        <button className="button is-success"><IoIosLogIn/>เข้าสู่ระบบ</button>
                                     </Link>  
                                 </div>
                             </div>  

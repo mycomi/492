@@ -48,8 +48,12 @@ class Profile extends React.Component {
                             
                             </h3>
                             <h4> เลขห้อง: {post.room} </h4>
+                            {post.price &&
+                                <h4> ราคา: {post.price} บาท/เดือน</h4>
+                            }
+                            
                             {post.image &&
-                                <img src={post.image} alt="firebase-image" style={{ width: '80%' }}></img>
+                                <img src={post.image} alt="dorm-image" style={{ width: '80%' }}></img>
                             }
                             
                             <br></br>
@@ -59,6 +63,7 @@ class Profile extends React.Component {
                                 :   post.haveRoom &&
                                     <div>
                                         <p>รอการติดต่อจากเจ้าของหอ</p>
+                                        <br></br>
                                         <button className="button is-danger" onClick={this.dropRoom} > ยกเลิกการจองห้อง </button>
                                     </div>
                                     

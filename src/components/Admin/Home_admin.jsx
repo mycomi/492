@@ -79,7 +79,7 @@ class Home_admin extends React.Component {
                     <div className="card" style={{ width: '600px',height: 'auto'}}>
                     <div key={index} className="card-content" >
                         <div className="content" >
-                            <h3> ชื่อหอ: {post.dorm } </h3>
+                            <h3> ชื่อหอ: {post.name } </h3>
                             <br></br>
                             <img src={post.imageUrl} alt="firebase-image" style={{ width: '80%' }}></img>
 
@@ -149,6 +149,7 @@ class Home_admin extends React.Component {
                                 <form >
                                 <h3> เลขห้อง: {post.roomNum} </h3>
                                 <p> ชื่อผู้เช่า: {post.name } </p>
+                                <p> ราคา: {post.price } บาท/เดือน </p>
                                 <p> เบอร์โทรศัพท์: {post.phone } </p>
                                 {post.status === 2 
                                     ?   <button className="button is-success is-light" disabled  >ยืนยันแล้ว</button>
@@ -195,8 +196,6 @@ class Home_admin extends React.Component {
                const data = res.data
                this.setState({ users: data});
                this.setState({ haveUsers: true});
-               console.log('GG');
-               console.log(data)
     
            })
            .catch(e => {
@@ -221,10 +220,10 @@ class Home_admin extends React.Component {
         Axios.post(`/auth/admin/user_pass`,{ 
             roomId: roomId,
         },header)
-       .then(res => {
+        .then(res => {
            console.log(res.data)
            const data = res.data
-           alert("user approve")
+           alert("ยืนยันการจองสำเร็จ")
            window.location.reload(false); 
 
        })
@@ -249,10 +248,10 @@ class Home_admin extends React.Component {
         Axios.post(`/auth/admin/user_fail`,{ 
             roomId: roomId,
         },header)
-       .then(res => {
+        .then(res => {
            console.log(res.data)
            const data = res.data
-           alert("user drop")
+           alert("ลบผู้เข้าจองสำเร็จ")
            window.location.reload(false); 
 
        })
@@ -270,7 +269,7 @@ render() {
     const token = localStorage.getItem('token-admin');
     var floor = 2;
     var temps = []
-    
+    const dorm = this.state.dorm
     if(token){
         return(
             <div>
@@ -304,7 +303,7 @@ render() {
                 <div className="bg2" >
                     <br></br>
 
-                    <h1 className="filterHeader" style={{backgroundColor:'white'}}>admin</h1>
+                    <h1 className="filterHeader" style={{backgroundColor:'white'}}>ผู้ดูแลหอพัก</h1>
                     
                     <br></br>
                         <div className="" >
@@ -316,43 +315,60 @@ render() {
 
                     {/* <div className="bar"></div> */}
                     <br></br>
-                        <h1 className="filterHeader" style={{backgroundColor:'white'}}> รายชื่อผู้จองหอพัก </h1>
+
+                    <div className="header2"> รูปแผนผังหอพัก </div>
+                    {this.state.dorm && 
+                    
+                        <div style={{width:'80%', backgroundColor:"hsl(0, 0%, 96%)"}}>
+                            <br></br>
+                            <img src={dorm[0].imageFloorUrl} style={{ width: '80%' }}></img>
+                            <label></label>
+                        </div>
+                    
+                    }            
+                    
+                    <br></br>
+
+                    <h1 className="filterHeader" style={{backgroundColor:'white'}}> รายชื่อผู้จองหอพัก </h1>
+                            
+                        {/* <div className="wrapper " >
+                            {this.state.haveUsers && 
                                 
-                            {/* <div className="wrapper " >
-                                {this.state.haveUsers && 
-                                    
-                                    this.displayUsers(this.state.users)
-                                    
-                                }
-                            </div> */}
-                            {this.state.users.map((object, i) => {
-                                console.log(object.roomFloor);
-                                temps.push( [] );
-                                if(object.roomFloor < floor ){
-                                    temps[object.roomFloor-1].push(object);
-                                }else{
-                                    while(object.roomFloor >= floor){
-                                        floor++
-                                        temps.push( [] );
-                                    }
-                                    temps[object.roomFloor-1].push(object);
-                                }
-                            })}
-
-                            {temps.length > 0 
-                                ? temps.map((temp, i) => {
-                                    return (
-                                        
-                                        <div className="wrapper">
-                                            
-                                            {this.displayUsers(temp)}
-                                        </div>
-                                        
-                                    )
-                                })
-
-                                : <div><h2 style={{color: 'red'}}>ไม่มีห้องว่าง</h2></div>
+                                this.displayUsers(this.state.users)
+                                
                             }
+                        </div> */}
+                        {this.state.users.map((object, i) => {
+                            console.log(object.roomFloor);
+                            temps.push( [] );
+                            if(object.roomFloor < floor ){
+                                temps[object.roomFloor-1].push(object);
+                            }else{
+                                while(object.roomFloor >= floor){
+                                    floor++
+                                    temps.push( [] );
+                                }
+                                temps[object.roomFloor-1].push(object);
+                            }
+                        })}
+
+                        {temps.length > 0 
+                            ? temps.map((temp, i) => {
+                                return (
+                                    
+                                    <div className="wrapper">
+                                        
+                                        {this.displayUsers(temp)}
+                                    </div>
+                                    
+                                )
+                            })
+
+                            : <div>
+                                <br></br>
+                                <h2 style={{color: 'red'}}>ไม่มีผู้จองห้องพัก</h2>
+                            </div>
+                        }
                     <br></br>
 
                 </div>
@@ -373,7 +389,7 @@ render() {
                     <center><div className="column is-half" style={{height:'700px'}}>
                         <div className="blog-" >
                             <br></br>
-                            <h1>admin</h1>
+                            <h1>ผู้ดูแลหอพัก</h1>
                             <br></br>
                             กรุณาสมัครสมาชิก หรือ เข้าสู่ระบบก่อนใช้งาน
 

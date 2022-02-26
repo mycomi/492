@@ -38,7 +38,10 @@ class CreateDorm_admin extends React.Component {
         isPet: false,
         isAir: false,
         image: null,
+        imageFloor: null,
+
         imageUrl: null,
+        imageFloorUrl: null,
 
         show: false,
 
@@ -48,9 +51,9 @@ class CreateDorm_admin extends React.Component {
 
         toDashboard: false,
 
-        showUploadButton: false,
 
-        progress: "0",
+        imageUrlProgress: "0",
+        imageFloorUrlProgress: "0",
 
         markers: [
             {
@@ -115,13 +118,18 @@ class CreateDorm_admin extends React.Component {
                         <div key={index} className="card-content" >
                             <h2 > ชั้นที่: {card[0]}</h2>
                                 <div className="content" >
+                                    <br></br>
                                     <p > เลขห้อง: </p>
                                     <input className="input" type="number" id="room" name="room" defaultValue={(card[0]*100)+card[1]} required></input>
                                     
+                                    <br></br>
+                                    <br></br>
                                     <p> ราคา/เดือน:  </p>
                                     <input className="input" type="number" id="price" name="price" defaultValue={price} required></input>
 
                                     {/* <label > มีเครื่องปรับอากาศ</label> */}
+                                    <br></br>
+                                    <br></br>
                                     {this.state.isAir
                                         ? <div>
                                             <input type="radio" id="air1" name="air" value="1" defaultChecked></input>
@@ -181,7 +189,15 @@ class CreateDorm_admin extends React.Component {
     }
 
     upload = (e) =>{
-        let file = this.state.image;
+        const {name} = e.target;
+        let file
+        if(name === 'imageUrl'){
+            file = this.state.image;
+        }
+        if(name === 'imageFloorUrl'){
+            file = this.state.imageFloor;
+        }
+        
         let token = localStorage.getItem('token-admin')
         let date = Date.now();
         var storage = firebase.storage();
@@ -191,7 +207,9 @@ class CreateDorm_admin extends React.Component {
         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
             (snapshot) =>{
             var progress = Math.round((snapshot.bytesTransferred/snapshot.totalBytes))*100
-            this.setState({progress})
+            this.setState({
+                [name+'Progress']: progress
+            })
             },(error) =>{
             throw error
             },() =>{
@@ -199,7 +217,7 @@ class CreateDorm_admin extends React.Component {
 
             uploadTask.snapshot.ref.getDownloadURL().then((url) =>{
                 this.setState({
-                    imageUrl: url
+                    [name]: url
                 })
                 console.log(url)
                 alert("upload success")
@@ -245,7 +263,7 @@ class CreateDorm_admin extends React.Component {
         // }
 
         if(!this.state.imageUrl){
-            alert("Please upload photo!!!")
+            alert("กรุณาอัพโหลดรูปภาพของหอพักก่อน")
             return
         }
         
@@ -260,6 +278,7 @@ class CreateDorm_admin extends React.Component {
             isAir: this.state.isAir,
             isAirs: air_array,
             imageUrl: this.state.imageUrl,
+            imageFloorUrl: this.state.imageFloorUrl,
             distance: this.state.distance,
             position: this.state.position,
         }
@@ -335,15 +354,17 @@ class CreateDorm_admin extends React.Component {
     }
 
     onHandleChange = e =>{
+        const {name} = e.target;
         if(e.target.files[0]){
             this.setState({ 
-                image: e.target.files[0],
+                [name] : e.target.files[0],
                 showUploadButton : true,
             })
         }
 
-        console.log("image: "+ this.state.image);
+        
     }
+
 
     onMarkerDragEnd = (coord, index) => {
         const { latLng } = coord;
@@ -387,40 +408,42 @@ render() {
             <div className="bg2">
                 <center><div className="column is-half">
                     <div className="blog-" >
-                        <h1>Create_dorm</h1>
+                        <h1>สร้างหอพัก</h1>
 
                         <form onSubmit={this.onHandle} > {/*action="http://localhost:3000/api/users"*/}
 
                         <div className="field">
-                            
+                            <br></br>
                             <div className="control">
                                 <label className="label" htmlFor="">ชื่อหอพัก</label>
                                 <input className="input" type="text" name="name" onChange={this.onChange} required></input>
                             </div>
 
+                            <br></br>
                             <div className="control">
                                 <label className="label" htmlFor="">จำนวนชั้น</label>
                                 <input className="input" type="number" name="floors" min="1" max="10" onChange={this.onChange} required></input>
                             </div>
 
-                            
+                            <br></br>
                             <div className="control">
                                 <label className="label" htmlFor="">จำนวนห้อง</label> 
                                 <input className="input" type="number" name="rooms" min="1" max="30" onChange={this.onChange}  required></input>
                             </div>
 
-                            
+                            <br></br>
                             <div className="control">
-                                <label className="label" htmlFor="">ราคา</label>
+                                <label className="label" htmlFor="">ราคา/เดือน</label>
                                 <input className="input" type="number" name="prices" onChange={this.onChange} required></input>
                             </div>
 
+                            <br></br>
                             <div className="control">
-                                <label className="label" htmlFor="">Phone</label>
+                                <label className="label" htmlFor="">เบอร์โทรติดต่อ</label>
                                 <input className="input" type="tel" name="phone" onChange={this.onChange} pattern="[0]{1}[0-9]{9}" required></input>
                             </div>
                             
-
+                            <br></br>
                             <div className="control">
                                 <label className="label" htmlFor="">พิกัด</label>
                                 <div>
@@ -480,34 +503,72 @@ render() {
                             <div className="control">
                                 <br></br>
                                 <p > อัพโหลดรูปภาพ </p>
-                                <input type="file" onChange={this.onHandleChange} ></input>
+                                <input type="file" name="image" onChange={this.onHandleChange} ></input>
+                            </div>
 
+                            <div className="control">
+                                <br></br>
+                                {this.state.image &&
+                                    <progress className="progress is-small is-success" style={{width: '18rem'}} value={this.state.imageUrlProgress} max="100"></progress>
+                                }
                                 
+                                {this.state.image &&
+                                    <button type="button" name="imageUrl" onClick={this.upload} >อัพโหลด </button>
+                                }
+                                
+                                {this.state.imageUrl &&
+                                    <div>
+                                        <br></br>
+                                        <p>ตัวอย่างรูปหอพัก</p>
+                                        <br></br>
+                                        <img src={this.state.imageUrl} style={{width:'300px',height:'300px'}} alt="dorm pic"></img>
+
+                                    </div>
+                                    
+                                }
+
+                            </div>
+
+                            <div className="control">
+                                <br></br>
+                                <p > อัพโหลดรูปแผนผังหอพัก </p>
+                                <input type="file" name="imageFloor" onChange={this.onHandleChange} ></input>
                             </div>
                             <div className="control">
                                 <br></br>
-                                {this.state.showUploadButton &&
-                                    <progress className="progress is-small is-success" style={{width: '18rem'}} value={this.state.progress} max="100"></progress>
+                                {this.state.imageFloor &&
+                                    <progress className="progress is-small is-success" style={{width: '18rem'}} value={this.state.imageFloorUrlProgress} max="100"></progress>
                                 }
                                 
-                                {this.state.showUploadButton &&
-                                    <button type="button" onClick={this.upload} >upload </button>
+                                {this.state.imageFloor &&
+                                    <button type="button" name="imageFloorUrl" onClick={this.upload} >อัพโหลด </button>
                                 }
                                 
-                                
+                                {this.state.imageFloorUrl &&
+                                    <div>
+                                        <br></br>
+                                        <p>ตัวอย่างรูปแผนผังหอพัก</p>
+                                        <br></br>
+                                        <img src={this.state.imageFloorUrl} alt="floorPlan pic"></img>
+
+                                    </div>
+                                    
+                                }
+
                             </div>
+
                         </div>
 
                         <div className="field is-grouped">
                             <div className="control">
 
-                                <button className="button is-link" type="submit">Next</button>
+                                <button className="button is-link" type="submit">ต่อไป</button>
 
                             </div>
 
                             <div className="control">
 
-                                <button className="button is-light" type="reset">Reset</button>
+                                <button className="button is-light" type="reset">ล้างข้อมูล</button>
 
                             </div>
 
@@ -518,7 +579,11 @@ render() {
                             <button className="button is-success">Login</button>
                         </Link>  */}
                     </form>
-                    <button className="button is-light" type="button" onClick={this.onSubmit}>Submit</button>
+                    <br></br>
+                    {this.state.show &&
+                        <button className="button is-success" type="button" onClick={this.onSubmit}>ยืนยัน</button>
+                    }
+                    
 
                     </div>
                 </div></center>
@@ -544,7 +609,15 @@ render() {
                 })
 
             }
-            <button className="button is-light" type="button" onClick={this.onSubmit}>Submit</button>
+            <center>
+                <br></br>
+                {this.state.show &&
+                    <button className="button is-success" type="button" onClick={this.onSubmit}>ยืนยัน</button>
+                }
+                
+                <p></p>
+                <br></br>
+            </center>
 
         </div>
     )

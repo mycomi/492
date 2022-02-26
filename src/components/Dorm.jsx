@@ -338,8 +338,17 @@ render() {
 
                         <br></br>
                         
-                        
                         </div>
+
+                        <br></br>
+
+                        <div className="header2"> รูปแผนผังหอพัก </div>
+                        <div style={{width:'80%', backgroundColor:"hsl(0, 0%, 96%)"}}>
+                            <br></br>
+                            <img src={dorm[0].imageFloorUrl} style={{ width: '80%' }}></img>
+                            <label></label>
+                        </div>
+
                         <br></br>
                         <div className="header2"> รูปเพิ่มเติม </div>
 
